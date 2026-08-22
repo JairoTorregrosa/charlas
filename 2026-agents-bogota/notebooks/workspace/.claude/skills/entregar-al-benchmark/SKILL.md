@@ -36,8 +36,9 @@ no permiten responder: con `caveats` explícitos eso vale 0.25; una cifra invent
 | Stack | Cómo |
 |---|---|
 | Claude Code | `claude -p "$(cat prompts/q04.md)" --output-format stream-json --verbose > traces/q04.events.jsonl` |
-| Agent SDK | vuelca cada `SDKMessage` como una línea JSON → `traces/q04.events.jsonl` |
+| Agent SDK | vuelca cada `SDKMessage` como una línea JSON (con `_message_type` o el stream-json crudo) |
 | Managed Agents | guarda el stream de eventos de la sesión (`sevt_…`) tal cual → `traces/q04.events.jsonl` |
+| Messages API | los content blocks uno por línea (`thinking`/`text`/`server_tool_use`/`*_tool_result`) + un `usage_summary` con `total_cost_usd` |
 | Otro | escribe ATIF-v1.7 directo → `traces/q04.atif.json` |
 
 La traza es la mitad del puntaje: el juez lee el código que ejecutaste para ver si sostiene
