@@ -8,6 +8,7 @@ Charla de apertura del *Bogotá | Claude Workshop | AI Agents for business analy
 |---|---|
 | [`slides/`](slides/) | El deck (HTML puro, 23 slides, modo presentador con notas). `python3 -m http.server 3030 --directory slides` |
 | [`slides/demo/`](slides/demo/) | Las demos: `agent.py` (el loop en ~100 líneas, Messages API), `managed.py` (Managed Agents), `CLAUDE.md` (contexto para Claude Code), `contabilidad.csv` (sintético) y el `RUNBOOK.md` con los comandos exactos |
+| [`hackathon/`](hackathon/) | Instrucciones del reto: las 7 preguntas, convenciones contables, cómo entregar respuesta + traza y cómo se puntúa. Leaderboard: <https://quick-golden-bench.vercel.app> |
 | [`notebooks/`](notebooks/) | Cuatro notebooks ejecutados, una palanca por celda: Messages API, Claude Agent SDK, `claude -p`, Managed Agents. Mismo CSV, mismo modelo (`claude-sonnet-5`), salidas reales |
 
 ## La pregunta que resuelven todos
