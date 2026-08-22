@@ -7,7 +7,7 @@ Reto del *Claude Workshop | AI Agents for business analytics competition* (Quick
 ## Pasos
 1. Lee [`SUBMIT.md`](SUBMIT.md): formato de `answers/qNN.json`, cómo guardar la traza según tu stack, cómo se puntúa (calidad × coste → valor).
 2. Lee [`CONVENTIONS.md`](CONVENTIONS.md): reglas contables del golden (ingreso, costo, margen, línea, facturación real, retroactivo). Si usas otra convención, decláralo.
-3. Los datos (CSV contable mayo–julio + nómina + ausencias) los entregan los organizadores en el evento; **no están en este repo**.
+3. Descarga los datos: [`data/CASO-FINANCIERO.zip`](data/CASO-FINANCIERO.zip) (14 MB; datos reales pseudonimizados de Quick, publicados con su OK; sha256 `93c74fd279349d3419d28f8019c73c8ddbcccbc23848ea2cf1a5f8dbf627139d`). Dentro: `Caso Financiero.docx`, `Preguntas.docx`, `MAYO-JUNIO-JULIO 2026.csv.zip` (descomprímelo también) y `Nomina/0{5,6,7}. …/` con nómina y ausencias por mes. Los enunciados los referencian como `/data/…`: móntalos o ajusta la ruta a tu agente.
 4. Entrega con un comando (sin cuenta ni token):
    ```bash
    curl -sO https://quick-golden-bench.vercel.app/submit.py
