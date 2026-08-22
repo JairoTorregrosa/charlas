@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="el loop contexto, modelo, tool rodeado de las tools de Claude Code: Read, Edit, Bash, Grep, Web, permisos">
+  <defs>
+    <marker id="ah-claude-code-loop" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#D97757"/>
+    </marker>
+  </defs>
+  <g font-family='"Anthropic Sans", "Inter", system-ui, sans-serif' font-weight="500" text-anchor="middle" dominant-baseline="central">
+    <!-- ring arrows (clay), clockwise: contexto -> modelo -> tool -> contexto -->
+    <path class="loop-arrow" d="M712,150 Q850,190 800,343" fill="none" stroke="#D97757" stroke-width="4" marker-end="url(#ah-claude-code-loop)"/>
+    <path class="loop-arrow" d="M690,457 C640,545 548,545 504,457" fill="none" stroke="#D97757" stroke-width="4" marker-end="url(#ah-claude-code-loop)"/>
+    <path class="loop-arrow" d="M400,343 Q350,190 488,150" fill="none" stroke="#D97757" stroke-width="4" marker-end="url(#ah-claude-code-loop)"/>
+    <!-- loop boxes -->
+    <rect x="490" y="65"  width="220" height="110" rx="12" fill="#FAF9F5" stroke="#141413" stroke-width="3"/>
+    <rect x="680" y="345" width="220" height="110" rx="12" fill="#FAF9F5" stroke="#141413" stroke-width="3"/>
+    <rect x="300" y="345" width="220" height="110" rx="12" fill="#FAF9F5" stroke="#141413" stroke-width="3"/>
+    <text x="600" y="120" font-size="40" fill="#141413">contexto</text>
+    <text x="790" y="400" font-size="40" fill="#141413">modelo</text>
+    <text x="410" y="400" font-size="40" fill="#141413">tool</text>
+    <!-- satellites: outlined pills, no connectors -->
+    <g fill="none" stroke="#141413" stroke-width="3">
+      <rect x="80"   y="48"  width="180" height="64" rx="32"/>
+      <rect x="60"   y="268" width="180" height="64" rx="32"/>
+      <rect x="80"   y="488" width="180" height="64" rx="32"/>
+      <rect x="940"  y="48"  width="180" height="64" rx="32"/>
+      <rect x="960"  y="268" width="180" height="64" rx="32"/>
+      <rect x="930"  y="488" width="200" height="64" rx="32"/>
+    </g>
+    <g font-size="30" fill="#141413">
+      <text x="170"  y="80">Read</text>
+      <text x="150"  y="300">Bash</text>
+      <text x="170"  y="520">Web</text>
+      <text x="1030" y="80">Edit</text>
+      <text x="1050" y="300">Grep</text>
+      <text x="1030" y="520">permisos</text>
+    </g>
+  </g>
+</svg>

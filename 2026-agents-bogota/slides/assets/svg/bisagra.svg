@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="cinco piezas atenuadas arriba; abajo tres controles que tú configuras: system prompt, tools, skills">
+  <g font-family='"Anthropic Sans", "Inter", system-ui, sans-serif' font-weight="500" text-anchor="middle" dominant-baseline="central">
+    <!-- five pieces, attenuated (220x110 scaled 0.7 = 154x77) -->
+    <g fill="none" stroke="#87867F" stroke-width="3">
+      <rect x="135" y="60" width="154" height="77" rx="9"/>
+      <rect x="329" y="60" width="154" height="77" rx="9"/>
+      <rect x="523" y="60" width="154" height="77" rx="9"/>
+      <rect x="717" y="60" width="154" height="77" rx="9"/>
+      <rect x="911" y="60" width="154" height="77" rx="9"/>
+    </g>
+    <g font-size="30" fill="#87867F">
+      <text x="212" y="98.5">modelo</text>
+      <text x="406" y="98.5">tools</text>
+      <text x="600" y="98.5">contexto</text>
+      <text x="794" y="98.5">loop</text>
+      <text x="988" y="98.5">parada</text>
+    </g>
+    <!-- slider labels -->
+    <g font-size="40" fill="#141413">
+      <text x="260" y="252">system prompt</text>
+      <text x="600" y="252">tools</text>
+      <text x="940" y="252">skills</text>
+    </g>
+    <!-- slider tracks -->
+    <g fill="#FAF9F5" stroke="#141413" stroke-width="3">
+      <rect x="120" y="323" width="280" height="14" rx="7"/>
+      <rect x="460" y="323" width="280" height="14" rx="7"/>
+      <rect x="800" y="323" width="280" height="14" rx="7"/>
+    </g>
+    <!-- knobs (clay) -->
+    <g fill="#D97757" stroke="#141413" stroke-width="3">
+      <circle cx="232" cy="330" r="22"/>
+      <circle cx="614" cy="330" r="22"/>
+      <circle cx="912" cy="330" r="22"/>
+    </g>
+    <!-- brace -->
+    <path d="M120,396 q0,26 26,26 H574 q26,0 26,26 q0,-26 26,-26 H1054 q26,0 26,-26" fill="none" stroke="#141413" stroke-width="3"/>
+    <!-- caption -->
+    <text x="600" y="506" font-size="40" fill="#141413">tú configuras</text>
+  </g>
+</svg>

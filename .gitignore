@@ -2,3 +2,6 @@
 .env
 *.env
 node_modules/
+workspace/out/
+.ipynb_checkpoints/
+.venv/

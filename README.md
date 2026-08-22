@@ -18,7 +18,7 @@ Los kits se construyen con commits reales: puedes ver cada charla evolucionar de
 
 | Kit | Tema | Cuándo |
 |---|---|---|
-| [`2026-remote-agents/`](2026-remote-agents/) | Agentes de código remotos: de tu laptop al VPS y a los managed agents | Julio 2026 |
+| [`2026-agents-bogota/`](2026-agents-bogota/) | Construye tu primer agente de AI con Claude — qué es un agente, las tres palancas, dónde corre (Claude Community Bogotá, hackathon de Quick) | Agosto 2026 |
 
 *El bestiario crece — sigue el repo para ver aparecer las próximas.*
 

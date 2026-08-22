@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-label="modelo responde, más tools actúa, más loop continúa o termina">
+  <defs>
+    <marker id="ah-three-steps" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#D97757"/>
+    </marker>
+  </defs>
+  <g font-family='"Anthropic Sans", "Inter", system-ui, sans-serif' font-weight="500" text-anchor="middle" dominant-baseline="central">
+    <!-- boxes -->
+    <rect x="150" y="180" width="220" height="110" rx="12" fill="none" stroke="#141413" stroke-width="3"/>
+    <rect x="490" y="180" width="220" height="110" rx="12" fill="none" stroke="#141413" stroke-width="3"/>
+    <rect x="830" y="180" width="220" height="110" rx="12" fill="#D97757" stroke="#141413" stroke-width="3"/>
+    <!-- arrows -->
+    <path d="M371,235 H489" fill="none" stroke="#D97757" stroke-width="4" marker-end="url(#ah-three-steps)"/>
+    <path d="M711,235 H829" fill="none" stroke="#D97757" stroke-width="4" marker-end="url(#ah-three-steps)"/>
+    <!-- labels -->
+    <text x="260" y="235" font-size="40" fill="#141413">modelo</text>
+    <text x="600" y="235" font-size="40" fill="#141413">+ tools</text>
+    <text x="940" y="235" font-size="40" fill="#FFFFFF">+ loop</text>
+    <!-- captions -->
+    <text x="260" y="345" font-size="30" fill="#87867F">responde</text>
+    <text x="600" y="345" font-size="30" fill="#87867F">actúa</text>
+    <text x="940" y="345" font-size="30" fill="#87867F">continúa o termina</text>
+  </g>
+</svg>

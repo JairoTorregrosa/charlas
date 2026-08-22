@@ -1,0 +1,14 @@
+[project]
+name = "charla-notebooks"
+version = "0.1.0"
+description = "Notebooks: una palanca por celda (Messages API, Agent SDK, claude -p, Managed Agents)"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=1.0",
+    "claude-agent-sdk>=0.2",
+    "jupyterlab>=4",
+    "pandas>=2",
+]
+
+[tool.uv]
+package = false
