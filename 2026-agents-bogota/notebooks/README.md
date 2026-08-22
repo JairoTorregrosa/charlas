@@ -13,7 +13,7 @@ Equivalencia con `pi`: `-nt` ≈ sin tools · `-ns` ≈ sin skills · `-ne` ≈ 
 
 ## Correr
 ```
-export ANTHROPIC_API_KEY=...
+export ANTHROPIC_API_KEY=...       # o en notebooks/.env (ANTHROPIC_API_KEY=..., una por línea)
 export MANAGED_ENV_ID=env_...      # solo 03 (Console → Managed Agents → Environments)
 cd notebooks
 uv sync && uv run jupyter lab

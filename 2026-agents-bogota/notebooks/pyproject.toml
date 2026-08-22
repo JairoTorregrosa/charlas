@@ -8,6 +8,7 @@ dependencies = [
     "claude-agent-sdk>=0.2",
     "jupyterlab>=4",
     "pandas>=2",
+    "python-dotenv>=1",
 ]
 
 [tool.uv]
