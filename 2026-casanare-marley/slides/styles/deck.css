@@ -1,0 +1,810 @@
+/* deck.css — layouts, chrome y estados. Lee tokens.css. Sin sombras, sin
+   gradientes, sin glassmorphism, sin emojis. Oro solo como acento. */
+
+/* ---------- fuentes self-hosted (sin <link> a Google Fonts) ---------- */
+
+@font-face {
+  font-family: "Libre Caslon Display"; font-style: normal; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonDisplay-Regular-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Libre Caslon Display"; font-style: normal; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonDisplay-Regular-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Libre Caslon Display no trae itálica. Se registra la itálica real de Libre
+   Caslon Text bajo la misma familia: mismo tipo, itálica de verdad en vez de
+   una oblicua sintética (los reveals «¿Y si...?» y «la palabra real»). */
+@font-face {
+  font-family: "Libre Caslon Display"; font-style: italic; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Libre Caslon Display"; font-style: italic; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Italic-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Libre Caslon Text"; font-style: normal; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Regular-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Libre Caslon Text"; font-style: normal; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Regular-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Libre Caslon Text"; font-style: italic; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Libre Caslon Text"; font-style: italic; font-weight: 400; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Italic-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Libre Caslon Text"; font-style: normal; font-weight: 700; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Bold-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Libre Caslon Text"; font-style: normal; font-weight: 700; font-display: block;
+  src: url("../assets/fonts/LibreCaslonText-Bold-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------- base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* 1rem = 16px exactos a 1920x1080 (la pantalla del evento). En ventanas más
+   pequeñas todo escala proporcionalmente, así que el layout nunca cambia. */
+html { font-size: min(calc(100vw / 120), calc(100vh / 67.5)); }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: var(--lh-body);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+main#deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;      /* título siempre arriba, misma y */
+  padding: var(--slide-pad-y) var(--slide-pad-x);
+  padding-bottom: 5.75rem;          /* deja aire para el footer */
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+}
+.slide.is-active { display: flex; }
+
+.slide[data-tone="dark"] { background: var(--bg-deep); color: var(--bg); }
+
+/* ---------- tipografía ---------- */
+
+.slide-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-title);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.005em;
+  color: var(--fg);
+  margin: 0 0 var(--title-gap);
+  /* loop 1: 26ch (≈1027 px) partía en dos los títulos de 5, 9, 15, 17 y 18 y la
+     lámina saltaba 69 px entre slides consecutivas. 79rem = 1264 px: el título
+     más largo (18, ≈1211 px) cabe en una línea y quedan 496 px de canalón. */
+  max-width: 79rem;
+}
+.slide[data-tone="dark"] .slide-title { color: var(--bg); }
+
+.slide-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.slide p { margin: 0; font-size: var(--fs-body); line-height: var(--lh-body); max-width: 46ch; }
+.lead    { font-size: var(--fs-lead) !important; max-width: 30ch; }
+.meta    { font-size: var(--fs-meta) !important; color: var(--muted); max-width: 60ch; }
+.fine    { font-size: var(--fs-meta) !important; color: var(--muted); max-width: 46ch; }
+/* El oro como texto sobre papel da 2.24:1. Cuando una palabra tiene que ir en
+   oro sobre papel, va como marca: tinta sobre oro (7.81:1). */
+.gold-mark { background: var(--accent); color: var(--fg); padding: 0.04em 0.3em; border-radius: 6px; }
+.slide[data-tone="dark"] .meta,
+.slide[data-tone="dark"] .fine { color: var(--paper-2); }
+
+/* estrella de 8 puntas, viñeta y marcador del loop */
+.star { width: 0.62em; height: 0.62em; flex: 0 0 auto; fill: var(--accent); }
+#star-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.reveal-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap-md); }
+.reveal-list li { display: flex; align-items: baseline; gap: var(--gap-sm); font-size: var(--fs-lead); line-height: var(--lh-body); }
+.reveal-list li .star { align-self: center; }
+
+/* ---------- pre.terminal ---------- */
+
+pre.terminal {
+  margin: 0;
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);        /* 40px */
+  line-height: 1.28;
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  white-space: pre;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* ---------- ilustraciones ya montadas ---------- */
+
+/* ---------- el robot solo (1, 3, 6, 23, 24) ---------- */
+/* `assets/plancha/estado-0*.png` son lienzos de 1672x941 en los que la figura
+   ocupa el 25.2 % del ancho y el 65.7 % del alto (medido sobre el canal alfa).
+   Puesta tal cual, una imagen de 70vh deja un robot de 46vh y, al toparse con
+   `max-width`, de 30vh. Esta caja recorta el aire: escala el lienzo a
+   `--robot / 0.657` y lo centra por el centro real de la figura
+   (50.7 %, 51.9 % del lienzo), así que `--robot` ES el alto del robot. */
+.robot {
+  position: relative; overflow: hidden;
+  height: var(--robot);
+  width: calc(var(--robot) * 0.75);   /* la figura mide 0.681 de su alto + aire */
+  flex: 0 0 auto;
+}
+.robot img {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50.7%, -51.9%);
+  height: calc(var(--robot) / 0.657);
+  width: auto; max-width: none; display: block;
+}
+.robot--cover { --robot: 70vh; }   /* portada (1) */
+.robot--hero  { --robot: 72vh; }   /* la anatomía (6) */
+.robot--mid   { --robot: 62vh; }   /* 3, 23, 24 */
+
+/* texto a la izquierda, figura a la derecha (3) */
+.fig-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--gap-xl); flex: 1 1 auto; min-height: 0; width: 100%;
+}
+
+/* figura centrada con su pie debajo (5, 24) */
+.fig-center {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--gap-md); flex: 1 1 auto; min-height: 0; width: 100%;
+}
+/* el pie va centrado y en una sola línea: 46ch dejaba «mal.» huérfano */
+.fig-center .lead { max-width: 70ch; text-align: center; }
+
+/* la ventanilla (5): grande, centrada, sin borde ni caja */
+.wide-figure {
+  max-height: 62vh; width: auto; max-width: 100%;
+  display: block; flex: 0 1 auto; min-height: 0; object-fit: contain;
+}
+
+/* QR del kit (22): cuadrado y nítido, sin suavizado en la LED */
+.qr-img {
+  width: 32vh; height: 32vh; display: block;
+  border: var(--rule) solid var(--fg);
+  image-rendering: pixelated;
+}
+
+/* ---------- tarjeta de mensaje (fallback de captura: 2, 16, 17) ---------- */
+/* Texto real y redactado; el <figure> se conserva para poder cambiar la
+   tarjeta por la captura de Jairo sin tocar el layout. */
+
+/* loop 1: la tarjeta arrancaba en x=258 mientras el resto del deck arranca en
+   x=80. Ahora ocupa el ancho útil completo y alinea con el título. */
+figure.msg-figure { margin: 0; align-self: stretch; width: 100%; display: flex; }
+.pane figure.msg-figure { width: 100%; align-self: stretch; flex: 0 1 auto; min-height: 0; }
+
+.msg-card {
+  width: 100%;
+  border: 4px solid var(--fg);
+  border-left: 8px solid var(--accent);   /* regla de procedencia */
+  background: var(--bg);
+  color: var(--fg);
+  padding: 0;
+  display: flex; flex-direction: column; gap: 0;
+  text-align: left;
+  overflow: hidden;
+}
+/* banda de procedencia: de dónde salió la captura, en versalitas */
+.msg-card-head {
+  font-family: var(--font-body);
+  font-size: 1.875rem;                    /* 30px */
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  background: var(--paper-2);
+  border-bottom: 4px solid var(--fg);
+  min-height: 2.75rem;                    /* 44px */
+  display: flex; align-items: center;
+  padding: 0.3rem 1.5rem;
+}
+.msg-card-body { font-size: var(--fs-bubble); line-height: 1.34; padding: 1.4rem 1.75rem 1.6rem; }
+.msg-card-body p {
+  font-size: inherit !important; line-height: inherit;
+  max-width: none; margin: 0 0 0.55em;
+}
+.msg-card-body p:last-child { margin-bottom: 0; }
+.msg-card-body code { font-family: var(--font-mono); font-size: 0.9em; }
+
+/* Discord: canal con riel de tinta a la izquierda, esquinas casi rectas. */
+.msg-card--discord { border-radius: 4px; }
+/* Telegram: burbuja de chat, con la esquina de la cola cuadrada. */
+.msg-card--telegram { border-radius: 18px 18px 18px 4px; }
+
+/* sola en la slide (2, 17) la tarjeta puede respirar a cuerpo */
+.slide[data-layout="figure"] .msg-card-body { font-size: var(--fs-body); }
+
+/* ---------- layout: cover (slide 1, noche) ---------- */
+
+.slide[data-layout="cover"] {
+  display: none;
+  padding: var(--slide-pad-y) var(--slide-pad-x);
+}
+.slide[data-layout="cover"].is-active { display: grid; }
+.slide[data-layout="cover"] {
+  grid-template-columns: 44% 1fr;
+  column-gap: var(--gap-xl);
+  align-items: center;
+}
+.cover-art { align-self: center; display: flex; justify-content: center; min-height: 0; }
+/* la figura entera manda: alta, sin recuadro, centrada en su columna */
+.cover-art .robot { margin: 0 auto; }
+.cover-text { display: flex; flex-direction: column; gap: var(--gap-lg); }
+.cover-text h1 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: var(--fs-cover); line-height: var(--lh-tight);
+  margin: 0; color: var(--bg); max-width: 16ch;
+}
+.cover-rule { width: 8rem; height: var(--rule); background: var(--accent); }
+.cover-meta { font-size: var(--fs-body); line-height: 1.3; color: var(--paper-2); max-width: 40ch; }
+/* La marca CETUS salió de la portada. Loop 1 la bajó de 8vh a fuera y el loop 2
+   la volvió a sacar tras 12vh: dos críticos independientes la leen como una
+   mancha sobre el negro a 15 m. La marca vive en el kit, no en la pantalla.
+   El recorte al trazo sigue en assets/brand/logo-cetus-dark-512.png.
+   .cover-logo { height: 12vh; width: auto; display: block; align-self: flex-start; margin-top: 2vh; } */
+
+/* ---------- layout: figure ---------- */
+
+.slide[data-layout="figure"] .slide-body { justify-content: center; align-items: stretch; }
+
+/* ---------- layout: big-quote ---------- */
+
+.slide[data-layout="big-quote"] .slide-body { justify-content: center; }
+/* loop 2: 22ch (≈880 px) era el único sitio del deck donde un título de
+   contenido partía en dos («…tres / cosas.», slide 4). 58rem = 928 px. */
+.slide[data-layout="big-quote"] .slide-title { max-width: 58rem; }
+
+/* ---------- layout: cta ---------- */
+
+.slide[data-layout="cta"] .slide-body {
+  flex-direction: row; align-items: center; gap: var(--gap-lg); justify-content: space-between;
+}
+/* sin base flexible el párrafo se quedaba con 440 px y rompía en 5 líneas */
+.cta-text { flex: 1 1 42%; display: flex; flex-direction: column; gap: var(--gap-md); }
+/* loop 2: 34ch estrangulaba el párrafo a ~410 px dentro de una caja de 739 y lo
+   partía en cinco líneas de tres palabras. La caja ya limita. */
+.cta-text .lead { max-width: none; }
+.cta-side { display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); }
+.cta-url { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--muted); }
+
+/* ---------- layout: close (slide 22, noche) ---------- */
+
+.slide[data-layout="close"] .slide-body {
+  flex-direction: row; align-items: center; justify-content: space-between;
+  gap: var(--gap-xl); padding-right: 4rem;
+}
+.close-lines { flex: 1 1 auto; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5vh; }
+.close-lines li { display: flex; align-items: center; gap: var(--gap-sm); font-size: 3.25rem; color: var(--bg); }
+.close-figure { flex: 0 0 auto; }
+/* .close-thesis: el cierre ya no lleva velo de tesis (loop 1 lo retiró; el loop 2
+   borró el CSS huérfano). Las tres líneas de `.close-lines` son la tesis. */
+/* .sello: el cierre ya no lleva sello. `brand/sello-impresor-alpha.png` está
+   recortado y limpio, pero a 9vh la tinta no se distingue del negro (loop 1).
+.sello { position: absolute; right: var(--slide-pad-x); bottom: 6.5rem; height: 9vh; width: auto; z-index: 5; } */
+
+/* ---------- layout: figure-labels (la lámina del robot) ---------- */
+
+.slide[data-layout="figure-labels"] .slide-body {
+  flex-direction: column;
+  /* gap-sm y no gap-md: con la lámina a 56vh, el `pre` de tres líneas de las
+     slides 11 y 13 solo cabe si el canal horizontal baja a 16 px. */
+  gap: var(--gap-sm);
+}
+/* El canal entre lámina y columna derecha es ancho a propósito: «3 recetas»
+   es la única etiqueta que se sale de la lámina (59 px a la derecha), y aun
+   así quedan 37 px de aire hasta la columna. */
+.fl-row {
+  display: flex; align-items: flex-start;
+  gap: 6rem; width: 100%;
+  flex: 1 1 auto; min-height: 0;
+}
+
+/* ---------- la lámina (7, 9, 11, 13, 15, 16, 20, 22) ---------- */
+/* Un estado = UNA imagen coherente (assets/plancha/estado-*.png, 1672x941,
+   RGBA, registro medido de 2 px entre estados). No hay capas ni registro que
+   cuadrar en CSS: se cambia el `src` y ya. Las etiquetas son HTML y viven en
+   porcentajes de la lámina, sobre zonas que el canal alfa de `estado-full.png`
+   confirma vacías: ninguna cae encima de un objeto. */
+figure.plancha {
+  position: relative; margin: 0;
+  aspect-ratio: 1672 / 941;
+  container-type: inline-size;
+}
+figure.plancha > img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; display: block;
+}
+figure.plancha .lbl {
+  position: absolute;
+  font-family: var(--font-body);
+  /* 4.5cqw sobre los 1075 px de lámina = 48.4 px reales: el piso de rótulo
+     para la LED del evento (pitch 3.9, público a 15 m). */
+  font-size: clamp(3rem, 4.5cqw, 3.4rem);
+  line-height: 1.1;
+  color: var(--fg);
+  white-space: nowrap;
+  display: none;
+}
+/* Cada etiqueta al lado exterior de su objeto:
+   1 a la DERECHA de la burbuja, 2 encima de la mano, 3 a la derecha de la
+   tarjeta, 4 y 5 debajo del cuaderno y del despertador.
+   loop 2: con `right: 45%` la 1 acababa en x=671 y la burbuja empieza en 740,
+   así que 1 y 2 se leían como una leyenda apilada en la esquina. La burbuja
+   ocupa 57,06–74,16 % en x y 6,59–28,91 % en y (PLANCHA.md), y el margen
+   exterior 84–100 % está vacío a propósito. */
+figure.plancha .lbl-1 { left: 74.5%; right: auto; top: 8%; }
+figure.plancha .lbl-2 { left: 16.5%;  top: 11%; }
+figure.plancha .lbl-3 { left: 85%;    top: 39.5%; }
+figure.plancha .lbl-4 { left: 15%;    top: 88.5%; }
+figure.plancha .lbl-5 { left: 60%;    top: 88.5%; }
+
+/* el estado N muestra 1..N; `full` las cinco; `data-labels="off"` ninguna */
+figure.plancha[data-state="1"] .lbl-1,
+figure.plancha[data-state="2"] :is(.lbl-1, .lbl-2),
+figure.plancha[data-state="3"] :is(.lbl-1, .lbl-2, .lbl-3),
+figure.plancha[data-state="4"] :is(.lbl-1, .lbl-2, .lbl-3, .lbl-4),
+figure.plancha[data-state="5"] :is(.lbl-1, .lbl-2, .lbl-3, .lbl-4, .lbl-5),
+figure.plancha[data-state="full"] .lbl { display: block; }
+
+/* la pieza que entra en esta slide, en negrita */
+figure.plancha[data-state="1"] .lbl-1,
+figure.plancha[data-state="2"] .lbl-2,
+figure.plancha[data-state="3"] .lbl-3,
+figure.plancha[data-state="4"] .lbl-4,
+figure.plancha[data-state="5"] .lbl-5 { font-weight: 700; }
+
+/* ...y además una barra de oro a su izquierda: en miniatura la negrita sola no
+   se distingue, y «la pieza nueva» es la única lectura que la sala necesita de
+   la lámina. Va absoluta para no correr el rótulo (la 1 solo tiene 34 px de
+   aire hasta la columna derecha). */
+figure.plancha[data-state="1"] .lbl-1::before,
+figure.plancha[data-state="2"] .lbl-2::before,
+figure.plancha[data-state="3"] .lbl-3::before,
+figure.plancha[data-state="4"] .lbl-4::before,
+figure.plancha[data-state="5"] .lbl-5::before {
+  content: "";
+  position: absolute; left: -0.42em; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 1.15em;
+  background: var(--accent);
+  border: 1px solid var(--fg);
+}
+
+figure.plancha[data-labels="off"] .lbl { display: none; }
+
+/* La lámina mide exactamente lo mismo en las seis slides (7, 9, 11, 13, 15,
+   20): nada salta al pasar de una a otra. 56vw de ancho = 1075 px y, con el
+   1672:941 de la imagen, 605 px de alto = 56.0vh. 60vh (648 px) no cabe: el
+   cuerpo de la slide tiene 815 px y el `pre` de tres líneas de la 11 y la 13
+   se come 186. */
+[data-layout="figure-labels"] .fl-row > .plancha { flex: 0 0 56vw; max-width: 56vw; }
+/* con la lámina a 56vh el `pre` va justo: 8 px de aire con este relleno */
+[data-layout="figure-labels"] pre.terminal { padding: 1rem 1.5rem; }
+
+/* .plancha--small: retirada en el loop 2 junto con la lámina pequeña de la 22.
+   La columna del QR mide 655 px (la URL en mono a 32 px), no 346, así que las
+   tres columnas no caben en los 1760 px de ancho útil. */
+
+/* ---------- el recorrido del mensaje (16, reveal) ---------- */
+/* `estado-recorrido.png` ya trae la cinta dorada con un punto en cada parada;
+   aquí solo van los números encima de esos puntos. Los centros salen de
+   detectar los puntos dorados en el PNG (concuerdan con las anclas de
+   assets/plancha/PLANCHA.md §Paradas). */
+.plancha--recorrido { width: 100%; margin-top: var(--gap-sm); }
+.plancha--recorrido .parada {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 6.4cqw; height: 6.4cqw;
+  border-radius: 50%;
+  background: var(--accent);
+  border: var(--rule) solid var(--fg);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 3.8cqw; line-height: 1;
+  color: var(--fg);
+}
+.parada-1 { left: 67.35%; top: 84.37%; }   /* despertador */
+.parada-2 { left: 49.93%; top: 16.54%; }   /* cerebro */
+.parada-3 { left: 25.38%; top: 40.96%; }   /* manos */
+/* loop 2: a 52.66 % el número 4 caía en el hueco de 19 px entre la tarjeta y el
+   despertador, y desde el fondo 1 y 4 se leían las dos sobre el reloj.
+   47 % = y 652, dentro de la tarjeta de receta (590–688). */
+.parada-4 { left: 76.65%; top: 47%; }      /* receta */
+.parada-5 { left: 72.71%; top: 25.44%; }   /* burbuja */
+
+/* los objetos grandes de la columna derecha (7, 11, 13, 15): sin caja.
+   `align-self` es obligatorio: en una columna flex el stretch por defecto
+   les daría el ancho de la columna y deformaría el PNG. */
+.obj { height: 24vh; width: auto; max-width: 100%; display: block; flex: 0 0 auto; align-self: flex-start; }
+/* Los recortes de `plancha/obj-*.png` arrastran un pedazo del vecino: la
+   cabeza del robot bajo la burbuja y la línea guía que unía cuaderno y
+   despertador con el cuerpo. Se recortan aquí, no en el PNG. */
+.obj--cuaderno     { clip-path: polygon(65% 0, 100% 42%, 100% 100%, 0 100%, 0 0); }
+.obj--despertador  { clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%, 0 40%, 24% 40%); }
+
+.side { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: var(--gap-md); }
+.palabra-real { display: flex; flex-direction: column; gap: 0.25rem; }
+.pr-label { font-size: var(--fs-meta); color: var(--muted); }
+.pr-word {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 2.5rem; line-height: 1.1; color: var(--fg);
+  border-bottom: var(--rule) solid var(--accent);
+  align-self: flex-start; padding-bottom: 0.15em;
+  text-wrap: balance;   /* «herramientas (tools) · adaptador (MCP)» no cabe de una línea */
+}
+.alarm-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap-sm); }
+.alarm-lines li { font-size: var(--fs-body); display: flex; align-items: center; gap: 0.75rem; }
+
+/* ---------- el loop del agente (9) ---------- */
+/* `loop.png` deja vacías las bandas y 0–22.3 % y 77.8–100 %: ahí van las dos
+   etiquetas. La de vuelta no cabe en una línea en una columna de 589 px a
+   46 px de cuerpo (necesitaría 661), así que va en dos y la figura reserva
+   2.5rem por debajo del lienzo, que es transparente. */
+figure.loop {
+  position: relative; margin: 0; width: 100%;
+  padding-bottom: 2.5rem;
+  container-type: inline-size;
+}
+figure.loop img { width: 100%; height: auto; display: block; }
+figure.loop .loop-lbl {
+  position: absolute; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: clamp(2.875rem, 7.9cqw, 3.25rem);   /* 46.5 px reales */
+  line-height: 1.1;
+  color: var(--fg);
+  max-width: none;
+}
+figure.loop .loop-lbl--ida     { top: 1%; font-weight: 700; }
+figure.loop .loop-lbl--vuelta  { bottom: 0; }
+
+/* ---------- layout: split (Antes / Después) ---------- */
+
+.slide[data-layout="split"] .slide-body { gap: var(--gap-md); justify-content: center; }
+.ask { align-self: stretch; }
+.panes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-lg); flex: 1 1 auto; min-height: 0; }
+.panes--three { grid-template-columns: repeat(3, 1fr); flex: 0 0 auto; }
+.pane { display: flex; flex-direction: column; gap: var(--gap-sm); min-width: 0; }
+.pane-label {
+  font-family: var(--font-display); font-size: var(--fs-body);
+  color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+.bubble {
+  border: var(--rule) solid var(--fg);
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
+  font-size: var(--fs-bubble);
+  line-height: 1.35;
+  max-width: none;
+  color: var(--fg);
+  background: var(--bg);
+}
+/* «Antes» iguala la altura de «Después»: las dos columnas leen como par */
+.panes .pane > .bubble { flex: 0 0 auto; }
+/* loop 2: la burbuja «Antes» estirada a la altura de «Después» era una caja vacía con tres palabras; se deja corta y arriba. */
+.bubble--me    { border-color: var(--muted); background: var(--paper-2); }
+/* --line-soft da 1.66:1 sobre papel: un borde de 3 px desaparece en la LED */
+.bubble--quiet { border-color: var(--muted); color: var(--muted); }
+
+/* las tres tarjetas de la 18 comparten borde inferior */
+.panes--three .pane .card { flex: 1 1 auto; display: flex; align-items: center; }
+.card {
+  border: var(--rule) solid var(--fg);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  font-size: var(--fs-bubble);
+  line-height: 1.35;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--gap-xs); }
+.chip {
+  border: var(--rule) solid var(--fg);
+  border-radius: 999px;
+  padding: 0.3em 0.9em;
+  font-size: var(--fs-chip);
+  line-height: 1.2;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.chip--new  { background: var(--accent); }
+.chip--none { border-color: var(--muted); color: var(--muted); }
+
+/* ---------- reveal «¿Y si…?» ---------- */
+
+.slide [data-step] { opacity: 0; transition: opacity 200ms ease-out; }
+.slide [data-step].is-visible { opacity: 1; }
+
+.andif {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 10rem;
+  background: var(--bg);   /* opaco: al 92% los glifos se entrelazaban con el texto de abajo */
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-andif);
+  line-height: 1.15;
+  text-align: center;
+  color: var(--fg);
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Con `?steps=all` (el PDF que se entrega y quien presenta sin animaciones) el
+   velo arranca visible y tapaba la slide entera desde el primer fotograma: el
+   par Antes/Después, que es la demostración de la charla, no salía en el PDF.
+   En ese modo el velo deja de ser velo y se coloca DEBAJO del cuerpo. */
+html.steps-all .andif {
+  position: static; inset: auto;
+  background: transparent;
+  padding: var(--gap-md) 10rem 0;
+  flex: 0 0 auto;
+}
+
+/* ---------- chrome ---------- */
+
+footer.deck-chrome {
+  position: fixed; bottom: 2rem; left: 0; right: 0;
+  padding: 0 var(--slide-pad-x);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-body);
+  font-size: var(--fs-meta);
+  color: var(--muted);
+  pointer-events: none;
+  z-index: 8;
+}
+body.is-dark-slide footer.deck-chrome { color: var(--paper-2); }
+.deck-counter { font-variant-numeric: tabular-nums; }
+
+.kbd-hint {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  background: var(--paper-2); color: var(--muted);
+  padding: 0.5rem 1rem; border-radius: 6px;
+  font-family: var(--font-mono); font-size: 1rem;
+  display: none; z-index: 9;
+}
+.kbd-hint.is-visible { display: block; }
+
+.slide aside.notes { display: none; }
+
+/* ---------- sin movimiento (?motion=0, capturas) ---------- */
+
+html.no-motion *, html.no-motion *::before, html.no-motion *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ---------- presenter view (?presenter=1) ---------- */
+
+html.is-presenter { font-size: min(calc(100vw / 210), calc(100vh / 118)); }
+body.is-presenter { overflow: auto; background: var(--paper-2); }
+
+body.is-presenter main#deck {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 1.5rem; padding: 1.5rem;
+  width: 100vw; height: 100vh;
+}
+body.is-presenter .slide.is-active {
+  position: relative; inset: auto;
+  grid-row: 1 / 3; grid-column: 1;
+  width: 100%; aspect-ratio: var(--aspect);
+  align-self: start;
+  border: var(--rule) solid var(--muted);
+  border-radius: 8px;
+}
+body.is-presenter .slide-next-preview {
+  grid-row: 1; grid-column: 2;
+  background: var(--bg); border: var(--rule) solid var(--muted); border-radius: 8px;
+  padding: 1.5rem; font-family: var(--font-display); color: var(--muted); overflow: hidden;
+}
+body.is-presenter .presenter-notes {
+  grid-row: 2; grid-column: 2;
+  background: var(--bg); border: var(--rule) solid var(--muted); border-radius: 8px;
+  padding: 1.5rem; color: var(--fg); overflow: auto;
+}
+body.is-presenter .presenter-notes .timer {
+  font-family: var(--font-mono); font-size: 2.5rem; color: var(--fg);
+  border-bottom: var(--rule) solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1rem;
+}
+body.is-presenter .presenter-notes .notes-body { font-size: 20px; line-height: 1.45; }
+body.is-presenter footer.deck-chrome { position: static; padding: 0; display: none; }
+
+/* «herramientas (tools) · adaptador (MCP)» es la única palabra real que no
+   cabe de una línea en la columna de 735 px: a 34 px sí, y 34 px sigue siendo
+   el mínimo de cuerpo del deck. */
+#slide-09-manos .pr-word { font-size: 2.125rem; }
+
+/* ---------- recorrido del mensaje (slide 16, reveal) ---------- */
+/* Las columnas de la 16 tienen altura propia (tarjeta + chips): si además
+   crecen, la lámina revelada queda pegada al footer. */
+#slide-16-despertador-prueba .panes { flex: 0 1 auto; }
+
+/* la tesis del cierre: oro sobre noche (8.02:1) */
+.close-lines li.close-gold { color: var(--accent); }
+
+/* ============================================================================
+   Loop 1 — ajustes de composición por slide (pared LED, público a 15 m).
+   Todo lo de aquí abajo es un override puntual: la regla general vive arriba.
+   ========================================================================== */
+
+/* --- 6: la figura sola, grande, a la izquierda; el texto a la derecha ------ */
+#slide-06-anatomia .fig-row { justify-content: flex-start; gap: var(--gap-xl); }
+#slide-06-anatomia .side-text {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; flex-direction: column; gap: var(--gap-lg);
+}
+#slide-06-anatomia .side-text p { font-size: 2.75rem; line-height: 1.28; max-width: 22ch; }
+/* la tarea de la charla, siempre la misma, como tarjeta */
+.task-card {
+  border: 4px solid var(--fg);
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  line-height: 1.3;
+}
+
+/* --- 2 y 17: la tarjeta de mensaje es la evidencia, no una nota al pie ----- */
+#slide-02-mensaje .msg-card { min-height: 40vh; }
+#slide-02-mensaje .msg-card-body {
+  /* loop 2: a 44 px el titular ocupaba 120 px dentro de un recuadro de 425 y la
+     evidencia del cold open flotaba en su propia caja. 56 px lo lleva a 3
+     líneas y llena la tarjeta sin tocar el layout. */
+  font-size: 3.5rem;                  /* 56px: es el titular del cold open */
+  flex: 1 1 auto; display: flex; align-items: center;
+}
+
+
+/* --- 15: las dos alarmas van a todo el ancho, donde estaba el `pre` -------- */
+#slide-15-despertador .alarm-lines { gap: 5vh; }
+#slide-15-despertador .alarm-lines li { font-size: 2.625rem; }   /* 42px */
+
+/* --- 16: al clic la lámina toma la columna izquierda ---------------------- */
+#slide-16-despertador-prueba .pane > .bubble { flex: 0 0 auto; }
+#slide-16-despertador-prueba .bubble--quiet { transition: opacity 200ms ease-out; }
+/* loop 2: a 0.25 el texto quedaba en 1,62:1 y el borde de 3 px desaparecía del
+   todo. 0.55 mide 3,18:1: se lee como pasado y sigue cediendo el foco. */
+#slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-visible) .bubble--quiet { opacity: 0.55; }
+/* con todo revelado a la vez (PDF, kit público) no hay transición que contar:
+   la mitad «Antes» tiene que leerse a color pleno. */
+html.steps-all #slide-16-despertador-prueba .bubble--quiet,
+html.steps-all #slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-visible) .bubble--quiet { opacity: 1; }
+
+/* --- 18: línea de tiempo sobre las tres tarjetas -------------------------- */
+/* La línea va de 9vw a 91vw de pantalla; dentro del cuerpo (1760 px que
+   arrancan en x=80) eso es 5.3 % a cada lado. Los nodos caen sobre el centro
+   de cada tarjeta de la rejilla de tres columnas. */
+.timeline { position: relative; height: 24px; flex: 0 0 auto; }
+.timeline::before {
+  content: ""; position: absolute; left: 5.3%; right: 5.3%; top: 9px;
+  height: 6px; background: var(--accent);
+}
+.timeline i {
+  position: absolute; top: 0; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--accent);
+  border: var(--rule) solid var(--fg);
+  transform: translateX(-50%);
+}
+.timeline i:nth-of-type(1) { left: 15.74%; }
+.timeline i:nth-of-type(2) { left: 50%; }
+.timeline i:nth-of-type(3) { left: 84.26%; }
+#slide-18-tres-dias .card { font-size: 2.625rem; }               /* 42px */
+#slide-18-tres-dias .fine { font-size: var(--fs-body) !important; max-width: none; }
+
+/* --- 20: las tres líneas del cierre del acto, grandes y separadas --------- */
+#slide-20-asistente .alarm-lines { gap: 4.5vh; }
+#slide-20-asistente .alarm-lines li {
+  font-size: 3rem; line-height: 1.35; align-items: baseline;     /* 48px */
+}
+
+/* --- 23: texto a la izquierda, maniquí noche a la derecha ------------------ */
+#slide-23-cierre .slide-title { font-size: 4.25rem; }            /* 68px */
+
+/* --- ajustes del segundo pase del loop 1 -------------------------------- */
+#slide-06-anatomia .side-text p { max-width: 28ch; }
+/* 15: la lámina manda su alto; el aire sobrante queda abajo, no contra el footer */
+#slide-15-despertador .fl-row { flex: 0 0 auto; }
+#slide-15-despertador .alarm-lines { gap: 4vh; }
+/* 18: aire entre la línea de tiempo, las tarjetas, el registro y la nota */
+#slide-18-tres-dias .slide-body { gap: var(--gap-lg); }
+/* 17: la tarjeta es la evidencia del acto III */
+#slide-17-tres-am .msg-card { min-height: 30vh; }
+#slide-17-tres-am .msg-card-body { font-size: var(--fs-bubble); }
+
+/* ============================================================================
+   Loop 2 — ajustes de composición por slide (misma regla: override puntual).
+   ========================================================================== */
+
+/* --- 9: la columna derecha pasa de 589 a 637 px ---------------------------- */
+/* «herramientas (tools) · adaptador (MCP)» mide ~625 px a 34 px: con 589 se
+   partía en dos y la regla dorada colgaba 251 px en el aire, hasta x=1839.
+   El canal baja de 96 a 48 px; la lámina sigue en 56vw exactos. */
+#slide-09-manos .fl-row { gap: 3rem; }
+
+/* --- 20: dos columnas del mismo peso -------------------------------------- */
+/* Las tres frases se apiñaban arriba (última tinta en y=590) mientras la lámina
+   llegaba a 763: 236 px muertos abajo en la slide que recoge toda la charla. */
+#slide-20-asistente .fl-row { align-items: stretch; }
+#slide-20-asistente .side   { justify-content: space-between; }
+#slide-20-asistente .alarm-lines { gap: 8vh; }
+
+/* --- 21: la única advertencia de la charla, con peso de advertencia -------- */
+/* Era la slide más vacía del deck (la tinta ocupaba el 15 % del área segura) y
+   su lead iba al mismo cuerpo que una viñeta cualquiera. */
+/* `!important` porque la regla base `.lead` ya lo lleva. `margin-top:auto`
+   reparte el hueco en dos: sin él la frase quedaba pegada al título y todo el
+   vacío se juntaba en el medio. */
+#slide-21-antes-de-armar .lead {
+  font-size: 3.25rem !important;          /* 52px */
+  max-width: 24ch; margin-top: auto;
+}
+#slide-21-antes-de-armar .fine {
+  font-size: var(--fs-body) !important;   /* 36px */
+  max-width: 38ch;
+  margin-top: auto;                       /* ancla la nota al pie del cuerpo */
+}
+
+/* --- 23: la tesis manda; el título y las dos primeras líneas ceden --------- */
+#slide-23-cierre .slide-title { font-size: 3.5rem; }             /* 56px */
+#slide-23-cierre .close-lines li { font-size: 3.125rem; }        /* 50px */
+#slide-23-cierre .close-lines li.close-gold {
+  font-size: 4.25rem; font-weight: 600;                          /* 68px */
+}
+/* el robot se corre a la derecha: medido sobre la captura, deja 138 px (7,2vw)
+   de aire entre la línea dorada (acaba en x=1202) y el brazo del robot */
+#slide-23-cierre .close-figure { margin-right: -2.5vw; }
+
+/* --- 7: aire entre «1 conversación» y la columna -------------------------- */
+/* En la 7 la etiqueta va en negrita y con la barra de oro: mide 368 px (337 en
+   las demás) y acaba en x=1249, a 2 px de la columna. Medido con getBoundingClientRect. */
+#slide-07-conversacion .side { padding-left: 2.5rem; }
+
+/* ---------- loop 3 (verificación final) ---------- */
+/* 20: align-items:stretch deformaba la caja de la lámina (814 px) y descolgaba las etiquetas. */
+#slide-20-asistente .plancha { align-self: flex-start; }
+/* 7 y 11: la barra de oro caía sobre un objeto en oro; anillo de papel para que se lea. */
+figure.plancha .lbl::before { box-shadow: 0 0 0 5px var(--bg); }
+/* 21: dos margin-top:auto partían el hueco en dos y pegaban la advertencia al footer. */
+#slide-21-antes-de-armar .lead { margin-top: 0; }
+#slide-21-antes-de-armar .fine { margin-top: var(--gap-md); }
+/* Tarjetas de evidencia: cabecera al piso de 32 px. */
+.msg-card-head { font-size: var(--fs-meta); }
