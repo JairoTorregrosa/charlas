@@ -857,3 +857,13 @@ figure.plancha[data-state="3"] .lbl-3::before { left: auto; right: -0.5em; }
    lámina 583 + 20 + pre 188 = 791 ≤ 794 de cuerpo. */
 .slide[data-layout="figure-labels"] { padding-bottom: 7rem; }
 .slide[data-layout="figure-labels"] .slide-body { gap: 1.25rem; }
+
+/* ---------- captura real de Telegram (2, 16) ---------- */
+/* v3.5: el cold open es el pantallazo real del mensaje de hoy (Yopal), recortado. */
+figure.shot-figure { margin: 0; flex: 1 1 auto; min-height: 0; display: flex; justify-content: center; align-items: center; }
+figure.shot-figure img.shot {
+  max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain;
+  border: var(--rule) solid var(--fg); border-radius: 14px; display: block;
+}
+.pane figure.shot-figure { flex: 0 1 auto; justify-content: flex-start; align-items: flex-start; }
+.pane figure.shot-figure img.shot { max-height: 52vh; }
