@@ -26,7 +26,15 @@
         <div class="cover-text">
           <h1>Mi agente personal: la IA que crece contigo</h1>
           <div class="cover-rule"></div>
-          <p class="cover-meta">Jairo Torregrosa · Colombia 5.0 ·<br>Yopal, 27 de agosto de 2026</p>
+          <!-- la foto la genera el pase de assets: assets/brand/jairo-perfil-oro.png -->
+          <div class="cover-author">
+            <img class="cover-photo" src="assets/brand/jairo-perfil-oro.png" alt="Jairo Torregrosa">
+            <div class="cover-author-text">
+              <p class="cover-name"><strong>Jairo Torregrosa</strong></p>
+              <p class="cover-role">Sr AI Research Engineer<br>en Mercado Libre · Claude Ambassador</p>
+            </div>
+          </div>
+          <p class="cover-meta">Colombia 5.0 · Yopal, 27 de agosto de 2026</p>
         </div>
         <aside class="notes">Buenos días. Gracias por venir a esta hora. Soy Jairo, y en los próximos 45 minutos les voy a mostrar un programa que me escribe solo. (arrancar en la 2).</aside>
       </section>
@@ -34,34 +42,40 @@
       <section class="slide" id="slide-02-mensaje" data-layout="figure" data-act="Acto I · El mensaje">
         <h2 class="slide-title">Esto me llegó a las 7 de la mañana.</h2>
         <div class="slide-body">
-          <!-- Fallback en HTML mientras no exista la captura real. Texto tal cual,
-               ya redactado, de proceso/grounding/jetson-2026-08-26/briefings-redacted.txt
-               (cron 0 7 * * *, corrida 2026-08-25 07:09).
+          <!-- Abstracción del mensaje real (pedido del ponente 2026-08-27): el
+               briefing de las 7:00 sin su titular técnico. La captura real sigue
+               siendo opcional.
                PARA CAMBIARLO POR LA CAPTURA: borrar el div.msg-card entero y dejar
                dentro de este figure un solo img apuntando al png de data-asset-pending,
-               con alt «Briefing de Marley en el chat, 25 de agosto, 7:00»; después ya
-               se puede borrar el propio atributo data-asset-pending. -->
+               con alt «Briefing de Marley en el chat, 7:00»; después ya se puede
+               borrar el propio atributo data-asset-pending. -->
           <figure class="msg-figure" data-asset-pending="capturas/discord-chat-20260825.png">
             <div class="msg-card msg-card--discord">
-              <div class="msg-card-head">Mensaje real · transcripción redactada · Discord #chat · 25 ago · 07:00</div>
+              <div class="msg-card-head">Marley · Discord · 7:00 a.m.</div>
               <div class="msg-card-body">
-                <p><strong>AINews, 24 de agosto: 50 skills reducen el pass rate a 0,55 y llevan la latencia media a 1.290 segundos</strong></p>
+                <p><strong>Buenos días. Tu resumen de IA de hoy:</strong></p><p>tres novedades y una que te toca de cerca.</p>
               </div>
             </div>
           </figure>
         </div>
-        <aside class="notes">Esta semana, a las 7 de la mañana, me llegó esto al chat. Nadie lo escribió esa mañana. Lo escribió Marley: un programa que corre en un computador del tamaño de un libro, en mi apartamento en Bogotá. Lleva semanas mandándome este briefing, sin que yo le pida nada ese día. En 45 minutos les cuento qué es, de qué está hecho y por qué digo que crece conmigo. No traten de entenderlo. Lo importante es que nadie se lo pidió esa mañana.</aside>
+        <aside class="notes">Esta semana, a las 7 de la mañana, me llegó un mensaje así al chat. Nadie lo escribió esa mañana. Lo escribió Marley: un programa que corre en un computador del tamaño de un libro, en mi apartamento en Bogotá. Lleva semanas mandándome ese resumen, sin que yo le pida nada ese día. En 45 minutos les cuento qué es, de qué está hecho y por qué digo que crece conmigo. Lo importante es que nadie se lo pidió esa mañana.</aside>
       </section>
 
       <section class="slide" id="slide-03-jairo" data-layout="figure" data-act="Acto I · El mensaje">
         <h2 class="slide-title">Soy Jairo. Marley es mi asistente.</h2>
         <div class="slide-body">
           <div class="fig-row">
-            <p class="lead">Samario en Bogotá · Ingeniero de IA en Mercado Libre</p>
+            <!-- la foto la genera el pase de assets: assets/brand/jairo-perfil-oro.png -->
+            <img class="photo--mid" src="assets/brand/jairo-perfil-oro.png" alt="Jairo Torregrosa">
+            <div class="author-block">
+              <p class="lead">Samario en Bogotá</p>
+              <p>Sr AI Research Engineer en Mercado Libre</p>
+              <p>Claude Ambassador</p>
+            </div>
             <div class="robot robot--mid"><img src="assets/plancha/estado-0.png" alt="El robot de la charla: cúpula de vidrio con el cerebro dentro y la estrella de ocho puntas en oro"></div>
           </div>
         </div>
-        <aside class="notes">Soy Jairo, samario, vivo en Bogotá, trabajo en Mercado Libre evaluando agentes de IA. Marley se llama así por mi labrador, que ya no está. El agente lleva su nombre y ahí termina lo sentimental. Marley es un programa, y hoy lo vamos a desarmar pieza por pieza.</aside>
+        <aside class="notes">Soy Jairo, samario, vivo en Bogotá, soy investigador de IA en Mercado Libre y Claude Ambassador de Anthropic. Marley se llama así por mi labrador, que ya no está. El agente lleva su nombre y ahí termina lo sentimental. Marley es un programa, y hoy lo vamos a desarmar pieza por pieza.</aside>
       </section>
 
       <section class="slide" id="slide-04-promesa" data-layout="big-quote" data-act="Acto I · El mensaje">
@@ -111,7 +125,7 @@
               <img src="assets/plancha/estado-1.png" alt="Lámina del robot: la burbuja de conversación, en oro">
               <span class="lbl lbl-1">1 conversación</span>
               <span class="lbl lbl-2">2 manos</span>
-              <span class="lbl lbl-3">3 recetas</span>
+              <span class="lbl lbl-3">3 habilidades</span>
               <span class="lbl lbl-4">4 cuaderno</span>
               <span class="lbl lbl-5">5 despertador</span>
             </figure>
@@ -120,11 +134,11 @@
               <p class="palabra-real"><span class="pr-label">la palabra real</span><span class="pr-word">Telegram · system prompt</span></p>
             </div>
           </div>
-          <!-- real: ~/.hermes/SOUL.md en el Jetson (evidence-slides.txt) -->
-<pre class="terminal">Eres Marley. Leal, presente, sin drama.
-Marley no implementa código directo.</pre>
+          <!-- abstracción del SOUL.md real, pedido del ponente 2026-08-27 -->
+<pre class="terminal">Eres un asistente personal llamado Marley.
+Eres un ángel guardián y amplificador cognitivo.</pre>
         </div>
-        <aside class="notes">Primera pieza: la conversación. Le hablo por Telegram, como le escribo a cualquiera, y siempre vuelvo al mismo chat, de día y de noche. Y antes de responder lee un manual que escribí yo, en español: quién es, cómo me habla, qué evita. Por eso responde como Marley y no como un robot genérico. Esto es lo que dice, tal cual está en su computador.</aside>
+        <aside class="notes">Primera pieza: la conversación. Le hablo por Telegram, como le escribo a cualquiera, y siempre vuelvo al mismo chat, de día y de noche. Y antes de responder lee un manual que escribí yo, en español: quién es, cómo me habla, qué evita. Por eso responde como Marley y no como un robot genérico. Ahí le digo quién es y para qué está.</aside>
       </section>
 
       <section class="slide" id="slide-08-conversacion-prueba" data-layout="split" data-act="El cuerpo">
@@ -137,14 +151,14 @@ Marley no implementa código directo.</pre>
             </div>
             <div class="pane">
               <span class="pane-label">Marley</span>
-              <!-- texto real redactado: charla-col5-agents/slides/capturas/nivel-1.json -->
+              <!-- texto real de charla-col5-agents/slides/capturas/nivel-1.json (sin datos personales) -->
               <div class="bubble">No tengo acceso habilitado a Gmail, así que no puedo revisar tu correo sin inventar. Si me habilitas Gmail, te reviso de una.</div>
               <div class="chips"><span class="chip chip--none">0 botones</span></div>
             </div>
           </div>
         </div>
-        <div class="andif" data-step="1">¿Y si pudiera tocar mi correo?</div>
-        <aside class="notes">(Leer en voz alta la respuesta completa de Marley.) Le pido lo de siempre (respuesta real de Marley). Y me contesta: no tengo acceso. Quería ayudar y no podía. (click; dos segundos de silencio; avanzar).</aside>
+        <div class="andif" data-step="1">¿Y si pudiera leer mi correo?</div>
+        <aside class="notes">(Leer en voz alta la respuesta completa de Marley.) Le pido lo de siempre. Y me contesta: no tengo acceso. Quería ayudar y no podía. (click; dos segundos de silencio; avanzar).</aside>
       </section>
 
       <section class="slide" id="slide-09-manos" data-layout="figure-labels" data-act="El cuerpo">
@@ -152,16 +166,16 @@ Marley no implementa código directo.</pre>
         <div class="slide-body">
           <div class="fl-row">
             <figure class="plancha" data-state="2">
-              <img src="assets/plancha/estado-2-v2.png" alt="Lámina del robot: la burbuja en tinta y la mano con el botón, en oro">
+              <img src="assets/plancha/estado-2-v3.png" alt="Lámina del robot: la burbuja en tinta y la mano con el botón, en oro">
               <span class="lbl lbl-1">1 conversación</span>
               <span class="lbl lbl-2">2 manos</span>
-              <span class="lbl lbl-3">3 recetas</span>
+              <span class="lbl lbl-3">3 habilidades</span>
               <span class="lbl lbl-4">4 cuaderno</span>
               <span class="lbl lbl-5">5 despertador</span>
             </figure>
             <div class="side">
               <figure class="loop">
-                <img src="assets/plancha/loop.png" alt="El loop del agente: el cerebro pide un botón, la mano lo aprieta y le cuenta qué pasó">
+                <img src="assets/plancha/loop-v2.png" alt="El loop del agente: el cerebro pide un botón, la mano lo aprieta y le cuenta qué pasó">
                 <span class="loop-lbl loop-lbl--ida">pide un botón</span>
                 <span class="loop-lbl loop-lbl--vuelta">lo aprieta y<br>le cuenta qué pasó</span>
               </figure>
@@ -184,7 +198,7 @@ Marley no implementa código directo.</pre>
             </div>
             <div class="pane">
               <span class="pane-label">Después</span>
-              <!-- texto real redactado: nivel-2.json -->
+              <!-- texto real de nivel-2.json (sin datos personales) -->
               <div class="bubble">Revisé tu correo. Atención hoy: 1) una factura de energía vence hoy, pendiente por [valor]; 2) una factura de tu abuela aparece vencida, con aviso de cartera por [valor]; 3) otras próximas quedan en radar.</div>
               <div class="chips"><span class="chip chip--new">listar correos</span><span class="chip chip--new">abrir correo</span></div>
             </div>
@@ -194,20 +208,20 @@ Marley no implementa código directo.</pre>
         <aside class="notes">(Leer en voz alta la respuesta completa de Marley.) Le doy dos botones: listar correos y abrir un correo. Mismo pedido. Ahora consulta los correos que necesita y me dice tres cosas. Correcto, pero como lo diría un extraño: todo por igual. (click; pausa).</aside>
       </section>
 
-      <section class="slide" id="slide-11-recetas" data-layout="figure-labels" data-act="El cuerpo">
-        <h2 class="slide-title">La receta le dice en qué orden mirar.</h2>
+      <section class="slide" id="slide-11-habilidades" data-layout="figure-labels" data-act="El cuerpo">
+        <h2 class="slide-title">La habilidad le dice en qué orden mirar.</h2>
         <div class="slide-body">
           <div class="fl-row">
             <figure class="plancha" data-state="3">
-              <img src="assets/plancha/estado-3.png" alt="Lámina del robot: las piezas anteriores en tinta y la tarjeta de receta, en oro">
+              <img src="assets/plancha/estado-3-v2.png" alt="Lámina del robot: las piezas anteriores en tinta y la tarjeta de habilidad, en oro">
               <span class="lbl lbl-1">1 conversación</span>
               <span class="lbl lbl-2">2 manos</span>
-              <span class="lbl lbl-3">3 recetas</span>
+              <span class="lbl lbl-3">3 habilidades</span>
               <span class="lbl lbl-4">4 cuaderno</span>
               <span class="lbl lbl-5">5 despertador</span>
             </figure>
             <div class="side">
-              <img class="obj" src="assets/plancha/obj-recetas-v2.png" alt="Tarjeta de receta en oro con tres renglones">
+              <img class="obj" src="assets/plancha/obj-habilidades-v2.png" alt="Tarjeta de habilidad en oro con tres renglones">
               <p class="palabra-real"><span class="pr-label">la palabra real</span><span class="pr-word">skill</span></p>
             </div>
           </div>
@@ -217,10 +231,10 @@ Marley no implementa código directo.</pre>
 2. Buscar en el correo facturas y pagos de 7 días.
 3. Comparar y reescribir lo que sigue pendiente.</pre>
         </div>
-        <aside class="notes">Tercera pieza: recetas. Una hoja en un archivador. Cuando te pregunte por facturas, busca en el correo las facturas y los pagos de la semana. Compara con la lista. Dime solo lo pendiente. Marley saca esa hoja cuando llega esa tarea. Esta es la real. Se llama skill.</aside>
+        <aside class="notes">Tercera pieza: habilidades. Una hoja en un archivador: cómo quiero que haga una tarea concreta, escrito una vez. Marley la saca cuando llega esa tarea. Esta es la de las facturas, la real. Se llama skill.</aside>
       </section>
 
-      <section class="slide" id="slide-12-recetas-prueba" data-layout="split" data-act="El cuerpo">
+      <section class="slide" id="slide-12-habilidades-prueba" data-layout="split" data-act="El cuerpo">
         <h2 class="slide-title">Ahora responde con mi criterio.</h2>
         <div class="slide-body">
           <div class="ask"><div class="bubble bubble--me">Yo: Marley, revísame el correo: ¿qué necesita mi atención hoy?</div></div>
@@ -231,14 +245,14 @@ Marley no implementa código directo.</pre>
             </div>
             <div class="pane">
               <span class="pane-label">Después</span>
-              <!-- texto real redactado: nivel-3.json -->
-              <div class="bubble">Revisé tu correo y apliqué la receta de facturas. Atención hoy: falta por pagar la factura de la empresa de agua de tu abuela, que aparece vencida por [valor]. No encontré pagos nuevos para registrar hoy.</div>
-              <div class="chips"><span class="chip">correo</span><span class="chip chip--new">receta</span></div>
+              <!-- texto real de nivel-3.json (sin datos personales) -->
+              <div class="bubble">Revisé tu correo y apliqué la habilidad de facturas. Atención hoy: falta por pagar la factura de la empresa de agua de tu abuela, que aparece vencida por [valor]. No encontré pagos nuevos para registrar hoy.</div>
+              <div class="chips"><span class="chip">correo</span><span class="chip chip--new">habilidad</span></div>
             </div>
           </div>
         </div>
         <div class="andif" data-step="1">¿Y si recordara?</div>
-        <aside class="notes">(Leer en voz alta la respuesta completa de Marley.) Mismo pedido, mismo correo, con la receta. La respuesta ya sigue mi orden: primero la factura de la abuela; nada más. Detectarla no es pagarla. Pagarla sigue siendo cosa mía. Pero al día siguiente, en el mismo chat, arranca sin acordarse de nada de esto. (click; pausa).</aside>
+        <aside class="notes">(Leer en voz alta la respuesta completa de Marley.) Mismo pedido, mismo correo, con la habilidad. La respuesta ya sigue mi orden: primero la factura de la abuela; nada más. Detectarla no es pagarla. Pagarla sigue siendo cosa mía. Pero al día siguiente, en el mismo chat, arranca sin acordarse de nada de esto. (click; pausa).</aside>
       </section>
 
       <section class="slide" id="slide-13-cuaderno" data-layout="figure-labels" data-act="El cuerpo">
@@ -246,10 +260,10 @@ Marley no implementa código directo.</pre>
         <div class="slide-body">
           <div class="fl-row">
             <figure class="plancha" data-state="4">
-              <img src="assets/plancha/estado-4.png" alt="Lámina del robot: las piezas anteriores en tinta y el cuaderno, en oro">
+              <img src="assets/plancha/estado-4-v2.png" alt="Lámina del robot: las piezas anteriores en tinta y el cuaderno, en oro">
               <span class="lbl lbl-1">1 conversación</span>
               <span class="lbl lbl-2">2 manos</span>
-              <span class="lbl lbl-3">3 recetas</span>
+              <span class="lbl lbl-3">3 habilidades</span>
               <span class="lbl lbl-4">4 cuaderno</span>
               <span class="lbl lbl-5">5 despertador</span>
             </figure>
@@ -258,10 +272,10 @@ Marley no implementa código directo.</pre>
               <p class="palabra-real"><span class="pr-label">la palabra real</span><span class="pr-word">memoria</span></p>
             </div>
           </div>
-          <!-- real y redactado: memories/USER.md en el Jetson (sin correos, sin IDs) -->
-<pre class="terminal">Jairo · Bogotá · Ingeniero de IA en Mercado Libre
+          <!-- real: memories/USER.md en el Jetson (sin correos, sin IDs) -->
+<pre class="terminal">Jairo · Bogotá · Sr AI Research Engineer en Mercado Libre
 Intereses: café de especialidad, espacio, FC Barcelona
-Prefiere español denso, respuestas cortas</pre>
+Prefiere español directo y en minúsculas</pre>
         </div>
         <aside class="notes">Cuarta pieza: el cuaderno. Mano alzada: ¿quién siente que a ChatGPT hay que explicarle todo cada vez? Marley tiene un cuaderno sobre mí: quién soy, qué me importa, cómo me gusta que me hable. Lo consulta al arrancar y solo guarda hechos estables; lo pasajero no se guarda. Este es el de verdad.</aside>
       </section>
@@ -277,9 +291,9 @@ Prefiere español denso, respuestas cortas</pre>
             </div>
             <div class="pane">
               <span class="pane-label">Después</span>
-              <!-- texto real redactado: nivel-4.json -->
+              <!-- texto real de nivel-4.json (sin datos personales) -->
               <div class="bubble">Como ya sabía que las facturas de tu abuela son prioridad: falta por pagar la de la empresa de agua, con riesgo de suspensión por [valor]. Puede esperar: recibos, newsletters y promociones.</div>
-              <div class="chips"><span class="chip">correo</span><span class="chip">receta</span><span class="chip chip--new">cuaderno</span></div>
+              <div class="chips"><span class="chip">correo</span><span class="chip">habilidad</span><span class="chip chip--new">cuaderno</span></div>
             </div>
           </div>
         </div>
@@ -292,10 +306,10 @@ Prefiere español denso, respuestas cortas</pre>
         <div class="slide-body">
           <div class="fl-row">
             <figure class="plancha" data-state="5">
-              <img src="assets/plancha/estado-5.png" alt="Lámina del robot: las piezas anteriores en tinta y el despertador, en oro">
+              <img src="assets/plancha/estado-5-v2.png" alt="Lámina del robot: las piezas anteriores en tinta y el despertador, en oro">
               <span class="lbl lbl-1">1 conversación</span>
               <span class="lbl lbl-2">2 manos</span>
-              <span class="lbl lbl-3">3 recetas</span>
+              <span class="lbl lbl-3">3 habilidades</span>
               <span class="lbl lbl-4">4 cuaderno</span>
               <span class="lbl lbl-5">5 despertador</span>
             </figure>
@@ -307,10 +321,10 @@ Prefiere español denso, respuestas cortas</pre>
           <!-- las dos alarmas activas del Jetson (hermes cron list, 2026-08-26) -->
           <ul class="alarm-lines">
             <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>3:00 · revisa tu trabajo de ayer</span></li>
-            <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>7:00 · prepara el briefing y mándamelo</span></li>
+            <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>7:00 · prepara el resumen de IA y mándamelo</span></li>
           </ul>
         </div>
-        <aside class="notes">Quinta pieza: despertadores. Una alarma con una nota pegada. A esa hora nadie le escribe. Se levanta, aprieta sus botones, saca su receta y me manda el resultado al chat. Está prendido las 24 horas en un computador en mi casa. Estas son sus dos alarmas activas, sacadas anoche de su computador. La de las 7 arranca otra tarea, distinta del correo: el briefing del principio. Yo definí la tarea y la hora. La alarma solo repite.</aside>
+        <aside class="notes">Quinta pieza: despertadores. Una alarma con una nota pegada. A esa hora nadie le escribe. Se levanta, aprieta sus botones, saca su habilidad y me manda el resultado al chat. Está prendido las 24 horas en un computador en mi casa. Estas son sus dos alarmas activas, sacadas anoche de su computador. La de las 7 arranca otra tarea, distinta del correo: el resumen del principio. Yo definí la tarea y la hora. La alarma solo repite.</aside>
       </section>
 
       <section class="slide" id="slide-16-despertador-prueba" data-layout="split" data-act="El cuerpo">
@@ -321,7 +335,7 @@ Prefiere español denso, respuestas cortas</pre>
               <span class="pane-label">Antes</span>
               <div class="bubble bubble--quiet">Yo abría el chat y pedía.</div>
               <figure class="plancha plancha--recorrido" data-state="recorrido" data-labels="off" data-step="1">
-                <img src="assets/plancha/estado-recorrido.png" alt="El recorrido del mensaje de las 7 sobre la lámina: despertador, cerebro, manos, receta y chat">
+                <img src="assets/plancha/estado-recorrido-v2.png" alt="El recorrido del mensaje de las 7 sobre la lámina: despertador, cerebro, manos, habilidad y chat">
                 <span class="parada parada-1">1</span>
                 <span class="parada parada-2">2</span>
                 <span class="parada parada-3">3</span>
@@ -331,47 +345,47 @@ Prefiere español denso, respuestas cortas</pre>
             </div>
             <div class="pane">
               <span class="pane-label">Después</span>
-              <!-- La misma tarjeta de la slide 2, y el mismo cambio: borrar el
-                   div.msg-card y dejar solo un img al png de data-asset-pending. -->
+              <!-- La misma tarjeta de la slide 2: abstracción del mensaje real
+                   (pedido del ponente 2026-08-27); la captura real sigue siendo
+                   opcional, y el cambio es el mismo: borrar el div.msg-card y
+                   dejar solo un img al png de data-asset-pending. -->
               <figure class="msg-figure" data-asset-pending="capturas/discord-chat-20260825.png">
                 <div class="msg-card msg-card--discord">
-                  <div class="msg-card-head">Mensaje real · transcripción redactada · Discord #chat · 25 ago · 07:00</div>
+                  <div class="msg-card-head">Marley · Discord · 7:00 a.m.</div>
                   <div class="msg-card-body">
-                    <p><strong>AINews, 24 de agosto: 50 skills reducen el pass rate a 0,55 y llevan la latencia media a 1.290 segundos</strong></p>
+                    <p><strong>Buenos días. Tu resumen de IA de hoy:</strong></p><p>tres novedades y una que te toca de cerca.</p>
                   </div>
                 </div>
               </figure>
-              <div class="chips"><span class="chip chip--new">despertador 7:00</span><span class="chip">cerebro</span><span class="chip">Chrome</span><span class="chip">receta</span><span class="chip">chat</span></div>
+              <div class="chips"><span class="chip chip--new">despertador 7:00</span><span class="chip">cerebro</span><span class="chip">Chrome</span><span class="chip">habilidad</span><span class="chip">chat</span></div>
             </div>
           </div>
         </div>
-        <aside class="notes">¿Se acuerdan del mensaje del principio? Era esto. (click) Miren el recorrido: la alarma lo levanta y el cerebro decide. Usa Chrome, sigue su receta y me escribe al chat. Sin un pedido nuevo esa mañana. Lo importante me llega; lo que hay que hacer lo hago yo. Ya tiene las cinco piezas. Falta lo que hace mientras yo duermo.</aside>
+        <aside class="notes">¿Se acuerdan del mensaje del principio? Era esto. (click) Miren el recorrido: la alarma lo levanta y el cerebro decide. Usa Chrome, sigue su habilidad y me escribe al chat. Sin un pedido nuevo esa mañana. Lo importante me llega; lo que hay que hacer lo hago yo. Ya tiene las cinco piezas. Falta lo que hace mientras yo duermo.</aside>
       </section>
 
-      <!-- ====== ACTO III · Por eso funciona como mi asistente (17-22) ====== -->
+      <!-- ====== ACTO III · Por eso funciona como mi asistente (17-21) ====== -->
 
       <section class="slide" id="slide-17-tres-am" data-layout="figure" data-act="Acto III · Por eso funciona como mi asistente">
         <h2 class="slide-title">A las 3 de la mañana revisa su propio trabajo.</h2>
         <div class="slide-body">
-          <!-- Fallback en HTML mientras no exista la captura real. Texto tal cual,
-               ya redactado, de proceso/grounding/jetson-2026-08-26/briefings-redacted.txt
-               (cron 0 3 * * *, corrida 2026-08-26 03:00).
+          <!-- Abstracción del mensaje real de auto-mejora de las 3:00 (pedido del
+               ponente 2026-08-27). La captura real sigue siendo opcional.
                PARA CAMBIARLO POR LA CAPTURA: borrar el div.msg-card entero y dejar
                dentro de este figure un solo img apuntando al png de data-asset-pending,
-               con alt «Reporte de auto-mejora de Marley en Telegram, 26 de agosto, 3:00»;
-               después ya se puede borrar el propio atributo data-asset-pending. -->
+               con alt «Reporte de auto-mejora de Marley en Telegram, 3:00»; después
+               ya se puede borrar el propio atributo data-asset-pending. -->
           <figure class="msg-figure" data-asset-pending="capturas/telegram-self-improvement-20260826.png">
             <div class="msg-card msg-card--telegram">
-              <div class="msg-card-head">Mensaje real · transcripción redactada · Telegram · 26 ago · 03:00</div>
+              <div class="msg-card-head">Marley · Telegram · 3:00 a.m.</div>
               <div class="msg-card-body">
-                <p><strong>Self-improvement 03:00: corrección adoptada en producción</strong></p>
-                <p>132 mensajes revisados, 7 sesiones.</p>
+                <p><strong>Revisé nuestras conversaciones de ayer.</strong></p><p>Encontré dos cosas que corregir y ya las apliqué.</p>
               </div>
             </div>
           </figure>
           <p class="lead">Si no hay nada nuevo, responde una sola palabra: <span class="gold-mark">[SILENT]</span></p>
         </div>
-        <aside class="notes">El otro despertador, a las 3 de la mañana. Repasa lo que hizo el día anterior. Busca dónde se equivocó y me escribe al chat. Lleva cincuenta corridas. Y si no encontró nada nuevo, contesta una sola palabra en inglés: SILENT. Silencio.</aside>
+        <aside class="notes">El otro despertador, a las 3 de la mañana. Repasa lo que hizo el día anterior. Busca dónde se equivocó, lo corrige y me escribe al chat. Y si no encontró nada nuevo, contesta una sola palabra en inglés: SILENT. Silencio.</aside>
       </section>
 
       <section class="slide" id="slide-18-tres-dias" data-layout="split" data-act="Acto III · Por eso funciona como mi asistente">
@@ -379,35 +393,28 @@ Prefiere español denso, respuestas cortas</pre>
         <div class="slide-body">
           <div class="timeline" aria-hidden="true"><i></i><i></i><i></i></div>
           <div class="panes panes--three">
-            <div class="pane"><span class="pane-label">Lunes</span><div class="card">Falló. Escribió la regla en su receta.</div></div>
+            <div class="pane"><span class="pane-label">Lunes</span><div class="card">Falló. Escribió la regla en su habilidad.</div></div>
             <div class="pane"><span class="pane-label">Martes</span><div class="card">Falló otra vez. Movió la regla al despertador.</div></div>
             <div class="pane"><span class="pane-label">Miércoles</span><div class="card">Funcionó. Lo confirmó.</div></div>
           </div>
-          <!-- real, redactado: workspace/self-improvement-runs/2026-08-2{5,6}.md
-               Las fechas del registro (25, 25, 26) contradecían los rótulos
-               Lunes/Martes/Miércoles que Jairo narra: se quedan las tres citas.
-               «Sin tocar su código, su manual ni sus claves» vive en la nota. -->
-<pre class="terminal">"aun así llamó browser_exec primero"
-"el paso 2 ahora exige cargar jetson-browser"
-"cargó jetson-browser al inicio. No apareció browser_exec"</pre>
         </div>
-        <aside class="notes">Un caso real de esta semana. El lunes el briefing de las 7 falló al abrir el navegador. Esa noche Marley escribió una regla en su receta. El martes volvió a fallar: la regla estaba en la hoja equivocada. Esa noche la puso en su propio despertador. El miércoles a las 7 funcionó a la primera. A las 3 revisó y la dio por buena. Eso es crecer: revisa, corrige su receta y su despertador, y la siguiente vez sale mejor. Y en esas noches no tocó su código, ni su manual, ni sus claves.</aside>
+        <aside class="notes">Un caso real de esta semana. El lunes el resumen de las 7 falló al abrir el navegador. Esa noche Marley escribió una regla en su habilidad. El martes volvió a fallar: la regla estaba en la hoja equivocada. Esa noche la puso en su propio despertador. El miércoles a las 7 funcionó a la primera. A las 3 revisó y la dio por buena. Eso es crecer: revisa, corrige su habilidad y su despertador, y la siguiente vez sale mejor. Y en esas noches no tocó su código, ni su manual, ni sus claves.</aside>
       </section>
 
       <section class="slide" id="slide-19-limites" data-layout="figure" data-act="Acto III · Por eso funciona como mi asistente">
         <h2 class="slide-title">Tiene libertad dentro de límites escritos.</h2>
         <div class="slide-body">
           <ul class="reveal-list">
-            <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>Ajusta él mismo sus recetas y sus alarmas.</span></li>
+            <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>Ajusta él mismo sus habilidades y sus alarmas.</span></li>
             <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>Cambiar código, identidad o claves está bloqueado o espera permiso.</span></li>
             <li><svg class="star" aria-hidden="true"><use href="#star8"/></svg><span>Pidió permiso, nadie respondió, no ejecutó.</span></li>
           </ul>
-          <!-- real, redactado: journalctl del gateway, 25 y 26 de agosto de 2026 -->
+          <!-- real: journalctl del gateway, 25 y 26 de agosto de 2026 (sin datos personales) -->
 <pre class="terminal">skill_manage: "User-owned skills are off-limits to autonomous"
 terminal: "BLOCKED. The user has NOT consented to this action."
 terminal: status "pending_approval", approval_pending: true</pre>
         </div>
-        <aside class="notes">¿Y si hace algo que no debe? Sus recetas y sus alarmas las ajusta solo. Lo delicado tiene bloqueos. No puede cambiar código por su cuenta. Intentó tocar una receta que no era suya y su propio cuerpo lo frenó. Pidió permiso, nadie respondió, no ejecutó. Baja el riesgo. No lo vuelve cero. Los límites los escribí yo. (una frase si el reloj aprieta).</aside>
+        <aside class="notes">¿Y si hace algo que no debe? Sus habilidades y sus alarmas las ajusta solo. Lo delicado tiene bloqueos. No puede cambiar código por su cuenta. Intentó tocar una habilidad que no era suya y su propio cuerpo lo frenó. Se quedó esperando y no hizo nada. Baja el riesgo. No lo vuelve cero. Los límites los escribí yo. (una frase si el reloj aprieta).</aside>
       </section>
 
       <section class="slide" id="slide-20-asistente" data-layout="figure-labels" data-act="Acto III · Por eso funciona como mi asistente">
@@ -415,10 +422,10 @@ terminal: status "pending_approval", approval_pending: true</pre>
         <div class="slide-body">
           <div class="fl-row">
             <figure class="plancha" data-state="full">
-              <img src="assets/plancha/estado-full.png" alt="Lámina del robot con las cinco piezas montadas: conversación, manos, recetas, cuaderno y despertador">
+              <img src="assets/plancha/estado-full-v2.png" alt="Lámina del robot con las cinco piezas montadas: conversación, manos, habilidades, cuaderno y despertador">
               <span class="lbl lbl-1">1 conversación</span>
               <span class="lbl lbl-2">2 manos</span>
-              <span class="lbl lbl-3">3 recetas</span>
+              <span class="lbl lbl-3">3 habilidades</span>
               <span class="lbl lbl-4">4 cuaderno</span>
               <span class="lbl lbl-5">5 despertador</span>
             </figure>
@@ -431,40 +438,35 @@ terminal: status "pending_approval", approval_pending: true</pre>
             </div>
           </div>
         </div>
-        <aside class="notes">Vuelvo a la promesa del principio: por qué funciona como mi asistente. Me conoce, por el cuaderno. Puede actuar, con las manos y con permiso. Y me escribe antes de que yo abra el chat, por los despertadores. Siempre en la misma conversación, como con una persona. Un cerebro alquilado con un cuerpo que armé yo.</aside>
+        <aside class="notes">Vuelvo a la promesa del principio: por qué funciona como mi asistente. Me conoce, por el cuaderno. Puede actuar, con las manos y con permiso. Y me escribe antes de que yo abra el chat, por los despertadores. Siempre en la misma conversación, como con una persona. Un cerebro alquilado con un cuerpo que armé yo. Y ese cuerpo no lo tienes que inventar desde cero.</aside>
       </section>
 
-      <section class="slide" id="slide-21-antes-de-armar" data-layout="big-quote" data-act="Acto III · Por eso funciona como mi asistente">
-        <h2 class="slide-title">Para casi todo, ChatGPT basta.</h2>
-        <div class="slide-body">
-          <p class="lead">Un agente vale la pena cuando la tarea se repite.</p>
-          <p class="fine">Lo que le mandas viaja a la nube. Cuesta. Lo delicado pide permiso.</p>
-        </div>
-        <aside class="notes">Antes de que se antojen, la parte incómoda. Para preguntar, redactar, estudiar: ChatGPT. Un agente vale la pena cuando la tarea se repite todos los días y toca varias cosas tuyas. Aquí en Casanare se cosecha un tercio del arroz del país. Tareas que se repiten, sobran. Y antes de armar uno: lo que le mandas al cerebro viaja a la nube. Cuesta una suscripción y un computador encendido. Y lo delicado requiere permiso.</aside>
-      </section>
-
-      <section class="slide" id="slide-22-tu-marley" data-layout="cta" data-act="Acto III · Por eso funciona como mi asistente">
+      <section class="slide" id="slide-21-tu-marley" data-layout="cta" data-act="Acto III · Por eso funciona como mi asistente">
         <h2 class="slide-title">Puedes partir del cuerpo de Hermes.</h2>
         <div class="slide-body">
-          <div class="cta-text">
-            <p class="lead">El programa base es abierto y gratuito. Tú le pones tu chat, tus cuentas, tus permisos y tus tareas.</p>
-          </div>
-          <!-- loop 2: la lámina pequeña salió de esta slide. Medido: la columna
-               del QR ocupa 655 px (la manda la URL en mono a 32 px, no el QR de
-               346), así que con lámina el párrafo se quedaba en 356 px y siete
-               líneas de tres palabras; y para dejarle 620 px al texto la lámina
-               tendría que bajar a 389 px, con el robot en 144 px de alto. -->
-          <div class="cta-side">
-            <img class="qr-img" src="assets/qr-kit.png" alt="Código QR al kit de la charla en github.com/JairoTorregrosa/charlas">
-            <span class="cta-url">github.com/JairoTorregrosa/charlas</span>
+          <p class="lead cta-lead">El programa base es abierto y gratuito. Tú le pones tu chat, tus cuentas, tus permisos y tus tareas.</p>
+          <!-- Dos QR grandes (40vh): el kit de la charla y el proyecto del que
+               sale el cuerpo de Marley. `assets/qr-hermes.png` lo genera el pase
+               de assets; la ruta ya es la definitiva. -->
+          <div class="cta-row">
+            <div class="cta-side">
+              <span class="pane-label cta-label">El kit</span>
+              <img class="qr-img" src="assets/qr-kit.png" alt="Código QR al kit de la charla en github.com/JairoTorregrosa/charlas">
+              <span class="cta-url">github.com/JairoTorregrosa/charlas</span>
+            </div>
+            <div class="cta-side">
+              <span class="pane-label cta-label">Hermes</span>
+              <img class="qr-img" src="assets/qr-hermes.png" alt="Código QR a Hermes Agent en hermes-agent.nousresearch.com">
+              <span class="cta-url">hermes-agent.nousresearch.com</span>
+            </div>
           </div>
         </div>
-        <aside class="notes">Este QR lleva a la guía con las cinco piezas. Y al programa que usa Marley, Hermes Agent, abierto y gratuito. Lo que cuesta es el cerebro y el computador. Primero decidan qué tarea vale la pena. Después, las piezas. (20 segundos). (Si el kit aún no aparece en GitHub: “lo subo hoy mismo”.)</aside>
+        <aside class="notes">Dos códigos. El de la izquierda lleva al kit de hoy: la guía con las cinco piezas. El de la derecha, al programa del que sale el cuerpo de Marley, Hermes Agent, abierto y gratuito. Lo que cuesta es el cerebro y el computador. Primero decidan qué tarea vale la pena. Después, las piezas. (20 segundos). (Si el kit aún no aparece en GitHub: “lo subo hoy mismo”.)</aside>
       </section>
 
-      <!-- ================= Cierre (23-24) ================= -->
+      <!-- ================= Cierre (22-23) ================= -->
 
-      <section class="slide" id="slide-23-cierre" data-layout="close" data-tone="dark" data-act="Cierre">
+      <section class="slide" id="slide-22-cierre" data-layout="close" data-tone="dark" data-act="Cierre">
         <h2 class="slide-title">Tú sigues decidiendo.</h2>
         <div class="slide-body">
           <ul class="close-lines">
@@ -477,7 +479,7 @@ terminal: status "pending_approval", approval_pending: true</pre>
         <aside class="notes">Un agente es un cerebro con cuerpo. El de Marley tiene cinco piezas, y a las 7 de la mañana me escribe solo. (click) ChatGPT cambió cómo respondemos. (click) Los agentes cambian quién responde. (click, pausa) El que decide sigues siendo tú. Gracias.</aside>
       </section>
 
-      <section class="slide" id="slide-24-preguntas" data-layout="big-quote" data-act="Cierre">
+      <section class="slide" id="slide-23-preguntas" data-layout="big-quote" data-act="Cierre">
         <h2 class="slide-title">Preguntas.</h2>
         <div class="slide-body">
           <div class="fig-center">
@@ -491,7 +493,7 @@ terminal: status "pending_approval", approval_pending: true</pre>
 
     <footer class="deck-chrome">
       <span class="deck-act" data-act-label></span>
-      <span class="deck-counter"><span data-current>1</span> / <span data-total>24</span></span>
+      <span class="deck-counter"><span data-current>1</span> / <span data-total>23</span></span>
     </footer>
 
     <div class="kbd-hint">-&gt; siguiente &middot; &lt;- anterior &middot; g N ir a &middot; ? ayuda &middot; ?presenter=1 vista de orador</div>

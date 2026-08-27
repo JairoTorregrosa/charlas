@@ -14,7 +14,7 @@ El **cuerpo** lo armas tú, pieza por pieza. Marley tiene cinco:
 |---|---|---|---|
 | 1 | **La conversación** (el chat y el manual) | Siempre le hablo por el mismo chat, como a una persona. Un manual escrito por mí dice cómo responde y dónde se detiene. | Telegram / Discord · system prompt (`SOUL.md`) |
 | 2 | **Las manos** (botones y adaptador) | Cada servicio que uso aparece como un botón con permiso: correo, Drive, X. Un adaptador convierte apps como Chrome en botones. | tools · MCP |
-| 3 | **Las recetas** | Procedimientos escritos una vez, en español, que saca cuando llega esa tarea. | skills |
+| 3 | **Las habilidades** | Procedimientos escritos una vez, en español, que saca cuando llega esa tarea. | skills |
 | 4 | **El cuaderno** | Quién soy y qué me importa; lo consulta al arrancar. Solo hechos estables. | memoria (`USER.md`, `MEMORY.md`) |
 | 5 | **El despertador** | A una hora fija repite una tarea que escribí yo, sin que nadie le escriba ese día. | cron |
 
@@ -26,7 +26,7 @@ Juntos son un agente: el cerebro pide un botón, el cuerpo lo aprieta y le cuent
 - **Puede actuar, con permiso** (manos).
 - **Me escribe antes de que yo abra el chat** (despertador). Yo definí la tarea y la hora; la alarma solo repite.
 
-Y crece: a las 3 de la mañana revisa su propio trabajo, corrige sus recetas y sus alarmas por su cuenta. Lo delicado (código, identidad, claves) queda bloqueado o espera permiso.
+Y crece: a las 3 de la mañana revisa su propio trabajo, corrige sus habilidades y sus alarmas por su cuenta. Lo delicado (código, identidad, claves) queda bloqueado o espera permiso.
 
 ## Antes de armar uno
 
@@ -36,7 +36,7 @@ Para casi todo, ChatGPT basta. Un agente vale la pena cuando la tarea se repite 
 
 Marley corre sobre **Hermes Agent** (Nous Research, licencia MIT, abierto y gratuito): https://github.com/NousResearch/hermes-agent
 
-Orden sugerido: primero decide qué tarea vale la pena. Después, las piezas: chat → manual → botones → receta → cuaderno → despertador.
+Orden sugerido: primero decide qué tarea vale la pena. Después, las piezas: chat → manual → botones → habilidad → cuaderno → despertador.
 
 ## Contenido del kit
 

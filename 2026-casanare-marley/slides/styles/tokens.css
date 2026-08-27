@@ -13,8 +13,10 @@
    Cambiar la paleta SOLO aquí. Nunca hex inline en las slides.
 
    Escala pensada para pantalla LED 16:9, pitch 3.9 (GROUNDING §1):
-   a 1920x1080 → 1rem = 16px, títulos 64px, cuerpo 36px, meta 28px,
-   terminal 31px, burbuja 34px. Ninguna línea por debajo de 3px.
+   a 1920x1080 → 1rem = 16px. v3.4 (2026-08-27) subió toda la escala un 15 %
+   y pasó los títulos a Libre Caslon Text 700 (Display no trae bold): títulos
+   72px, portada 80px, «¿Y si…?» 76px, lead 46px, cuerpo 41.6px, burbuja 44px,
+   terminal 44px, meta y chips 36px. Ninguna línea por debajo de 3px.
    ========================================================================== */
 
 :root {
@@ -34,17 +36,19 @@
   --font-mono:    Menlo, ui-monospace, SFMono-Regular, "SF Mono", monospace;
 
   /* --- escala (1rem = 16px a 1920x1080) --- */
-  --fs-cover:  4.5rem;   /*  72px  portada */
-  --fs-title:  4rem;     /*  64px  título de slide (mínimo LED) */
-  --fs-andif:  4.25rem;  /*  68px  reveal «¿Y si…?» */
-  --fs-thesis: 3.5rem;   /*  56px  tesis final */
-  --fs-lead:   2.5rem;   /*  40px  frase principal */
-  --fs-body:   2.25rem;  /*  36px  cuerpo */
-  --fs-bubble: 2.5rem;   /*  40px  burbujas de chat (loop 1: 34px se leía chico en la LED) */
-  --fs-plate:  2.75rem;  /*  44px  etiquetas de la lámina */
-  --fs-mono:   2.5rem;   /*  40px  pre.terminal (loop 1: máximo 3 líneas por bloque) */
-  --fs-meta:   2rem;     /*  32px  meta, footer, palabra real (piso de cuerpo en LED) */
-  --fs-chip:   2rem;     /*  32px  chips (loop 2: a 26px quedaban bajo el piso de LED) */
+  --fs-cover:  5rem;     /*  80px  portada */
+  --fs-title:  4rem;     /*  64px  título de slide (Libre Caslon Text 700: la Text Bold
+                             es ~43 % mas ancha por em que la Display Regular, y a 68px
+                             los titulos de 9 y 18 partian en dos) */
+  --fs-andif:  4.75rem;  /*  76px  reveal «¿Y si…?» */
+  --fs-thesis: 4rem;     /*  64px  tesis final */
+  --fs-lead:   2.875rem; /*  46px  frase principal */
+  --fs-body:   2.6rem;   /*  41.6px cuerpo */
+  --fs-bubble: 2.75rem;  /*  44px  burbujas de chat */
+  --fs-plate:  3rem;     /*  48px  etiquetas de la lámina */
+  --fs-mono:   2.75rem;  /*  44px  pre.terminal (máximo 3 líneas por bloque) */
+  --fs-meta:   2.25rem;  /*  36px  meta, footer, palabra real (piso de cuerpo en LED) */
+  --fs-chip:   2.25rem;  /*  36px  chips */
 
   --lh-tight: 1.08;
   --lh-body:  1.32;

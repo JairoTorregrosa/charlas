@@ -95,17 +95,18 @@ main#deck { position: relative; width: 100vw; height: 100vh; }
 /* ---------- tipografía ---------- */
 
 .slide-title {
-  font-family: var(--font-display);
-  font-weight: 400;
+  /* v3.4: Libre Caslon Display no trae bold; el título va en Libre Caslon Text
+     700, que sí tiene @font-face Bold self-hosted arriba. */
+  font-family: var(--font-body);
+  font-weight: 700;
   font-size: var(--fs-title);
   line-height: var(--lh-tight);
   letter-spacing: -0.005em;
   color: var(--fg);
   margin: 0 0 var(--title-gap);
-  /* loop 1: 26ch (≈1027 px) partía en dos los títulos de 5, 9, 15, 17 y 18 y la
-     lámina saltaba 69 px entre slides consecutivas. 79rem = 1264 px: el título
-     más largo (18, ≈1211 px) cabe en una línea y quedan 496 px de canalón. */
-  max-width: 79rem;
+  /* v3.4: a 72px bold ningún tope de ancho deja los títulos de 7/9/11/13/15/20
+     en una línea; el ancho útil de la slide (1760 px) es el único límite. */
+  max-width: 100%;
 }
 .slide[data-tone="dark"] .slide-title { color: var(--bg); }
 
@@ -118,7 +119,7 @@ main#deck { position: relative; width: 100vw; height: 100vh; }
 }
 
 .slide p { margin: 0; font-size: var(--fs-body); line-height: var(--lh-body); max-width: 46ch; }
-.lead    { font-size: var(--fs-lead) !important; max-width: 30ch; }
+.lead    { font-size: var(--fs-lead) !important; font-weight: 700; max-width: 30ch; }
 .meta    { font-size: var(--fs-meta) !important; color: var(--muted); max-width: 60ch; }
 .fine    { font-size: var(--fs-meta) !important; color: var(--muted); max-width: 46ch; }
 /* El oro como texto sobre papel da 2.24:1. Cuando una palabra tiene que ir en
@@ -132,7 +133,7 @@ main#deck { position: relative; width: 100vw; height: 100vh; }
 #star-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .reveal-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap-md); }
-.reveal-list li { display: flex; align-items: baseline; gap: var(--gap-sm); font-size: var(--fs-lead); line-height: var(--lh-body); }
+.reveal-list li { display: flex; align-items: baseline; gap: var(--gap-sm); font-size: var(--fs-lead); font-weight: 700; line-height: var(--lh-body); }
 .reveal-list li .star { align-self: center; }
 
 /* ---------- pre.terminal ---------- */
@@ -172,7 +173,7 @@ pre.terminal {
   height: calc(var(--robot) / 0.657);
   width: auto; max-width: none; display: block;
 }
-.robot--cover { --robot: 70vh; }   /* portada (1) */
+.robot--cover { --robot: 46vh; }   /* portada (1): baja para dejar sitio a la foto del ponente */
 .robot--hero  { --robot: 72vh; }   /* la anatomía (6) */
 .robot--mid   { --robot: 62vh; }   /* 3, 23, 24 */
 
@@ -182,7 +183,24 @@ pre.terminal {
   gap: var(--gap-xl); flex: 1 1 auto; min-height: 0; width: 100%;
 }
 
-/* figura centrada con su pie debajo (5, 24) */
+/* la foto del ponente dentro de una fila de figura (3) */
+.photo--mid {
+  width: 40vh; height: 40vh; flex: 0 0 auto;
+  border-radius: 50%;
+  /* la foto lleva el disco de oro dentro del PNG (jairo-perfil-oro.png: el
+     recorte transparente dejaba motas del fondo entre los rizos); sobre papel
+     el aro de tinta define el borde */
+  border: 4px solid var(--fg);
+  object-fit: cover;
+  background: var(--accent);
+  display: block;
+}
+.author-block { display: flex; flex-direction: column; gap: var(--gap-sm); min-width: 0; flex: 1 1 auto; }
+.author-block p { max-width: none; }
+.author-block .lead { max-width: none; }
+.author-block p:not(.lead) { color: var(--muted); }
+
+/* figura centrada con su pie debajo (5, 23) */
 .fig-center {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: var(--gap-md); flex: 1 1 auto; min-height: 0; width: 100%;
@@ -196,15 +214,18 @@ pre.terminal {
   display: block; flex: 0 1 auto; min-height: 0; object-fit: contain;
 }
 
-/* QR del kit (22): cuadrado y nítido, sin suavizado en la LED */
+/* QR del kit y de Hermes (21): cuadrados y nítidos, sin suavizado en la LED.
+   40vh = 432 px. Presupuesto vertical medido a 1080: 64 (pad) + 78 (título) +
+   40 (title-gap) + 122 (lead en dos líneas) + 32 (gap) + 48 (rótulo) + 16 +
+   432 (QR) + 16 + 48 (URL) + 92 (footer) = 988. Quedan 92 px de aire. */
 .qr-img {
-  width: 32vh; height: 32vh; display: block;
+  width: 40vh; height: 40vh; display: block;
   border: var(--rule) solid var(--fg);
   image-rendering: pixelated;
 }
 
 /* ---------- tarjeta de mensaje (fallback de captura: 2, 16, 17) ---------- */
-/* Texto real y redactado; el <figure> se conserva para poder cambiar la
+/* Abstracción del mensaje real; el <figure> se conserva para poder cambiar la
    tarjeta por la captura de Jairo sin tocar el layout. */
 
 /* loop 1: la tarjeta arrancaba en x=258 mientras el resto del deck arranca en
@@ -269,12 +290,26 @@ figure.msg-figure { margin: 0; align-self: stretch; width: 100%; display: flex; 
 .cover-art .robot { margin: 0 auto; }
 .cover-text { display: flex; flex-direction: column; gap: var(--gap-lg); }
 .cover-text h1 {
-  font-family: var(--font-display); font-weight: 400;
+  /* v3.4: mismo criterio que .slide-title (Display no trae bold) */
+  font-family: var(--font-body); font-weight: 700;
   font-size: var(--fs-cover); line-height: var(--lh-tight);
   margin: 0; color: var(--bg); max-width: 16ch;
 }
 .cover-rule { width: 8rem; height: var(--rule); background: var(--accent); }
 .cover-meta { font-size: var(--fs-body); line-height: 1.3; color: var(--paper-2); max-width: 40ch; }
+/* la foto del ponente en la portada: círculo con aro de oro sobre la noche */
+.cover-author { display: flex; align-items: center; gap: var(--gap-md); }
+.cover-photo {
+  width: 17vh; height: 17vh; flex: 0 0 auto;
+  border-radius: 50%;
+  border: 0;   /* el disco de oro del PNG ya recorta contra la noche */
+  object-fit: cover;
+  background: var(--accent);
+  display: block;
+}
+.cover-author-text { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.cover-name { font-size: var(--fs-body); line-height: 1.2; color: var(--bg); max-width: none; }
+.cover-role { font-size: var(--fs-meta) !important; line-height: 1.25; color: var(--paper-2); max-width: none; }
 /* La marca CETUS salió de la portada. Loop 1 la bajó de 8vh a fuera y el loop 2
    la volvió a sacar tras 12vh: dos críticos independientes la leen como una
    mancha sobre el negro a 15 m. La marca vive en el kit, no en la pantalla.
@@ -288,31 +323,36 @@ figure.msg-figure { margin: 0; align-self: stretch; width: 100%; display: flex; 
 /* ---------- layout: big-quote ---------- */
 
 .slide[data-layout="big-quote"] .slide-body { justify-content: center; }
-/* loop 2: 22ch (≈880 px) era el único sitio del deck donde un título de
-   contenido partía en dos («…tres / cosas.», slide 4). 58rem = 928 px. */
-.slide[data-layout="big-quote"] .slide-title { max-width: 58rem; }
+/* v3.4: a 72px bold el tope de 58rem partía en dos el título de la 4; el ancho
+   útil manda, igual que en el resto del deck. */
+.slide[data-layout="big-quote"] .slide-title { max-width: 100%; }
 
-/* ---------- layout: cta ---------- */
+/* ---------- layout: cta (21: dos QR grandes) ---------- */
 
 .slide[data-layout="cta"] .slide-body {
-  flex-direction: row; align-items: center; gap: var(--gap-lg); justify-content: space-between;
+  flex-direction: column; align-items: stretch; gap: var(--gap-md); justify-content: flex-start;
 }
-/* sin base flexible el párrafo se quedaba con 440 px y rompía en 5 líneas */
-.cta-text { flex: 1 1 42%; display: flex; flex-direction: column; gap: var(--gap-md); }
-/* loop 2: 34ch estrangulaba el párrafo a ~410 px dentro de una caja de 739 y lo
-   partía en cinco líneas de tres palabras. La caja ya limita. */
-.cta-text .lead { max-width: none; }
+/* el lead va a todo el ancho y en dos líneas como mucho */
+.cta-lead { max-width: none; }
+.cta-row {
+  display: flex; justify-content: center; align-items: flex-start;
+  gap: var(--gap-xl); flex: 1 1 auto; min-height: 0;
+}
 .cta-side { display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); }
+.cta-label { font-size: var(--fs-meta) !important; letter-spacing: 0.08em; }
 .cta-url { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--muted); }
 
 /* ---------- layout: close (slide 22, noche) ---------- */
 
 .slide[data-layout="close"] .slide-body {
   flex-direction: row; align-items: center; justify-content: space-between;
-  gap: var(--gap-xl); padding-right: 4rem;
+  /* v3.4: la tesis en oro subió a 72 px y necesita 1131 px de línea; con 4rem
+     de reserva a la derecha solo tenía 1106 y partía en dos. A 1.5rem le quedan
+     1149 y siguen sobrando ~90 px de aire hasta el robot. */
+  gap: var(--gap-xl); padding-right: 1.5rem;
 }
 .close-lines { flex: 1 1 auto; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5vh; }
-.close-lines li { display: flex; align-items: center; gap: var(--gap-sm); font-size: 3.25rem; color: var(--bg); }
+.close-lines li { display: flex; align-items: center; gap: var(--gap-sm); font-size: 3.75rem; font-weight: 700; color: var(--bg); }
 .close-figure { flex: 0 0 auto; }
 /* .close-thesis: el cierre ya no lleva velo de tesis (loop 1 lo retiró; el loop 2
    borró el CSS huérfano). Las tres líneas de `.close-lines` son la tesis. */
@@ -416,9 +456,12 @@ figure.plancha[data-labels="off"] .lbl { display: none; }
    1672:941 de la imagen, 605 px de alto = 56.0vh. 60vh (648 px) no cabe: el
    cuerpo de la slide tiene 815 px y el `pre` de tres líneas de la 11 y la 13
    se come 186. */
-[data-layout="figure-labels"] .fl-row > .plancha { flex: 0 0 56vw; max-width: 56vw; }
-/* con la lámina a 56vh el `pre` va justo: 8 px de aire con este relleno */
-[data-layout="figure-labels"] pre.terminal { padding: 1rem 1.5rem; }
+[data-layout="figure-labels"] .fl-row > .plancha { flex: 0 0 54vw; max-width: 54vw; }
+/* loop 4: a 56vw el pre.terminal acababa a 19 px del footer; a 54vw (1037x583) quedan ~40 px. */
+/* v3.4: con la terminal a 44 px las tres líneas de la 11 y la 13 miden 169 px;
+   con el relleno de 1rem la fila de la lámina se quedaba 5 px corta. A 0.6rem
+   el `pre` mide 188 px y a la lámina (605 px) le quedan 611. */
+[data-layout="figure-labels"] pre.terminal { padding: 0.6rem 1.5rem; }
 
 /* .plancha--small: retirada en el loop 2 junto con la lámina pequeña de la 22.
    La columna del QR mide 655 px (la URL en mono a 32 px), no 346, así que las
@@ -433,14 +476,15 @@ figure.plancha[data-labels="off"] .lbl { display: none; }
 .plancha--recorrido .parada {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 6.4cqw; height: 6.4cqw;
+  width: 7.4cqw; height: 7.4cqw;
   border-radius: 50%;
-  background: var(--accent);
+  /* loop 4: disco de tinta = parada del recorrido; el oro queda para la cinta y la barra de pieza nueva */
+  background: var(--fg);
   border: var(--rule) solid var(--fg);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-body); font-weight: 700;
-  font-size: 3.8cqw; line-height: 1;
-  color: var(--fg);
+  font-size: 4.4cqw; line-height: 1;
+  color: var(--bg);
 }
 .parada-1 { left: 67.35%; top: 84.37%; }   /* despertador */
 .parada-2 { left: 49.93%; top: 16.54%; }   /* cerebro */
@@ -472,7 +516,7 @@ figure.plancha[data-labels="off"] .lbl { display: none; }
   text-wrap: balance;   /* «herramientas (tools) · adaptador (MCP)» no cabe de una línea */
 }
 .alarm-lines { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap-sm); }
-.alarm-lines li { font-size: var(--fs-body); display: flex; align-items: center; gap: 0.75rem; }
+.alarm-lines li { font-size: var(--fs-body); font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
 
 /* ---------- el loop del agente (9) ---------- */
 /* `loop.png` deja vacías las bandas y 0–22.3 % y 77.8–100 %: ahí van las dos
@@ -502,10 +546,10 @@ figure.loop .loop-lbl--vuelta  { bottom: 0; }
 .slide[data-layout="split"] .slide-body { gap: var(--gap-md); justify-content: center; }
 .ask { align-self: stretch; }
 .panes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-lg); flex: 1 1 auto; min-height: 0; }
-.panes--three { grid-template-columns: repeat(3, 1fr); flex: 0 0 auto; }
+.panes--three { grid-template-columns: repeat(3, 1fr); flex: 0 0 auto; align-items: stretch; }
 .pane { display: flex; flex-direction: column; gap: var(--gap-sm); min-width: 0; }
 .pane-label {
-  font-family: var(--font-display); font-size: var(--fs-body);
+  font-family: var(--font-body); font-size: var(--fs-body); font-weight: 700;
   color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase;
 }
 
@@ -533,6 +577,7 @@ figure.loop .loop-lbl--vuelta  { bottom: 0; }
   border-radius: 10px;
   padding: 1.2rem 1.4rem;
   font-size: var(--fs-bubble);
+  font-weight: 700;
   line-height: 1.35;
 }
 
@@ -653,7 +698,7 @@ body.is-presenter footer.deck-chrome { position: static; padding: 0; display: no
 /* «herramientas (tools) · adaptador (MCP)» es la única palabra real que no
    cabe de una línea en la columna de 735 px: a 34 px sí, y 34 px sigue siendo
    el mínimo de cuerpo del deck. */
-#slide-09-manos .pr-word { font-size: 2.125rem; }
+#slide-09-manos .pr-word { font-size: var(--fs-meta); } /* loop 4: 34 px estaba bajo el piso de 36; parte en dos líneas */
 
 /* ---------- recorrido del mensaje (slide 16, reveal) ---------- */
 /* Las columnas de la 16 tienen altura propia (tarjeta + chips): si además
@@ -684,13 +729,13 @@ body.is-presenter footer.deck-chrome { position: static; padding: 0; display: no
 }
 
 /* --- 2 y 17: la tarjeta de mensaje es la evidencia, no una nota al pie ----- */
-#slide-02-mensaje .msg-card { min-height: 40vh; }
+#slide-02-mensaje .msg-card { min-height: 30vh; }
 #slide-02-mensaje .msg-card-body {
-  /* loop 2: a 44 px el titular ocupaba 120 px dentro de un recuadro de 425 y la
-     evidencia del cold open flotaba en su propia caja. 56 px lo lleva a 3
-     líneas y llena la tarjeta sin tocar el layout. */
-  font-size: 3.5rem;                  /* 56px: es el titular del cold open */
-  flex: 1 1 auto; display: flex; align-items: center;
+  /* 56 px: es el titular del cold open. v3.4: el mensaje pasó a dos párrafos, así
+     que la caja centrada tiene que apilar (antes los ponía uno al lado del otro). */
+  font-size: 3.5rem;
+  flex: 1 1 auto;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
 }
 
 
@@ -703,7 +748,7 @@ body.is-presenter footer.deck-chrome { position: static; padding: 0; display: no
 #slide-16-despertador-prueba .bubble--quiet { transition: opacity 200ms ease-out; }
 /* loop 2: a 0.25 el texto quedaba en 1,62:1 y el borde de 3 px desaparecía del
    todo. 0.55 mide 3,18:1: se lee como pasado y sigue cediendo el foco. */
-#slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-visible) .bubble--quiet { opacity: 0.55; }
+#slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-visible) .bubble--quiet { opacity: 0.7; } /* loop 4: 0.55 daba 3.2:1; 0.7 = 4.8:1 */
 /* con todo revelado a la vez (PDF, kit público) no hay transición que contar:
    la mitad «Antes» tiene que leerse a color pleno. */
 html.steps-all #slide-16-despertador-prueba .bubble--quiet,
@@ -727,8 +772,10 @@ html.steps-all #slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-vis
 .timeline i:nth-of-type(1) { left: 15.74%; }
 .timeline i:nth-of-type(2) { left: 50%; }
 .timeline i:nth-of-type(3) { left: 84.26%; }
-#slide-18-tres-dias .card { font-size: 2.625rem; }               /* 42px */
-#slide-18-tres-dias .fine { font-size: var(--fs-body) !important; max-width: none; }
+/* 18: sin el `pre` las tarjetas se quedan con todo el alto del cuerpo; crecen
+   y el texto va centrado dentro de cada una. */
+#slide-18-tres-dias .card { font-size: var(--fs-lead); min-height: 30vh; padding: 1.6rem 1.8rem; align-items: flex-start; } /* 46px; v3.4: sin terminal, tarjetas compactas centradas, no cajas vacías */
+#slide-18-tres-dias .panes--three .pane { justify-content: center; }
 
 /* --- 20: las tres líneas del cierre del acto, grandes y separadas --------- */
 #slide-20-asistente .alarm-lines { gap: 4.5vh; }
@@ -736,8 +783,8 @@ html.steps-all #slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-vis
   font-size: 3rem; line-height: 1.35; align-items: baseline;     /* 48px */
 }
 
-/* --- 23: texto a la izquierda, maniquí noche a la derecha ------------------ */
-#slide-23-cierre .slide-title { font-size: 4.25rem; }            /* 68px */
+/* --- 22: texto a la izquierda, maniquí noche a la derecha ------------------ */
+#slide-22-cierre .slide-title { font-size: 4.25rem; }            /* 68px */
 
 /* --- ajustes del segundo pase del loop 1 -------------------------------- */
 #slide-06-anatomia .side-text p { max-width: 28ch; }
@@ -745,9 +792,9 @@ html.steps-all #slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-vis
 #slide-15-despertador .fl-row { flex: 0 0 auto; }
 #slide-15-despertador .alarm-lines { gap: 4vh; }
 /* 18: aire entre la línea de tiempo, las tarjetas, el registro y la nota */
-#slide-18-tres-dias .slide-body { gap: var(--gap-lg); }
+#slide-18-tres-dias .slide-body { gap: var(--gap-lg); justify-content: center; }
 /* 17: la tarjeta es la evidencia del acto III */
-#slide-17-tres-am .msg-card { min-height: 30vh; }
+#slide-17-tres-am .msg-card { min-height: 22vh; }   /* v3.4: dos líneas, no cuatro */
 #slide-17-tres-am .msg-card-body { font-size: var(--fs-bubble); }
 
 /* ============================================================================
@@ -767,31 +814,20 @@ html.steps-all #slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-vis
 #slide-20-asistente .side   { justify-content: space-between; }
 #slide-20-asistente .alarm-lines { gap: 8vh; }
 
-/* --- 21: la única advertencia de la charla, con peso de advertencia -------- */
-/* Era la slide más vacía del deck (la tinta ocupaba el 15 % del área segura) y
-   su lead iba al mismo cuerpo que una viñeta cualquiera. */
-/* `!important` porque la regla base `.lead` ya lo lleva. `margin-top:auto`
-   reparte el hueco en dos: sin él la frase quedaba pegada al título y todo el
-   vacío se juntaba en el medio. */
-#slide-21-antes-de-armar .lead {
-  font-size: 3.25rem !important;          /* 52px */
-  max-width: 24ch; margin-top: auto;
-}
-#slide-21-antes-de-armar .fine {
-  font-size: var(--fs-body) !important;   /* 36px */
-  max-width: 38ch;
-  margin-top: auto;                       /* ancla la nota al pie del cuerpo */
-}
+/* v3.4: la vieja slide 21 («Para casi todo, ChatGPT basta») salió del deck por
+   decisión del ponente; su CSS se fue con ella. El Plan B de preguntas cubre
+   costo y datos. */
 
-/* --- 23: la tesis manda; el título y las dos primeras líneas ceden --------- */
-#slide-23-cierre .slide-title { font-size: 3.5rem; }             /* 56px */
-#slide-23-cierre .close-lines li { font-size: 3.125rem; }        /* 50px */
-#slide-23-cierre .close-lines li.close-gold {
-  font-size: 4.25rem; font-weight: 600;                          /* 68px */
+/* --- 22: la tesis manda; el título y las dos primeras líneas ceden --------- */
+/* v3.4: los tres valores suben un 15 % como el resto de la escala. */
+#slide-22-cierre .slide-title { font-size: 4rem; }               /* 64px */
+#slide-22-cierre .close-lines li { font-size: 3.5rem; }          /* 56px */
+#slide-22-cierre .close-lines li.close-gold {
+  font-size: 4.5rem; font-weight: 700;                           /* 72px */
 }
 /* el robot se corre a la derecha: medido sobre la captura, deja 138 px (7,2vw)
    de aire entre la línea dorada (acaba en x=1202) y el brazo del robot */
-#slide-23-cierre .close-figure { margin-right: -2.5vw; }
+#slide-22-cierre .close-figure { margin-right: -2.5vw; }
 
 /* --- 7: aire entre «1 conversación» y la columna -------------------------- */
 /* En la 7 la etiqueta va en negrita y con la barra de oro: mide 368 px (337 en
@@ -803,8 +839,21 @@ html.steps-all #slide-16-despertador-prueba .pane:has(.plancha--recorrido.is-vis
 #slide-20-asistente .plancha { align-self: flex-start; }
 /* 7 y 11: la barra de oro caía sobre un objeto en oro; anillo de papel para que se lea. */
 figure.plancha .lbl::before { box-shadow: 0 0 0 5px var(--bg); }
-/* 21: dos margin-top:auto partían el hueco en dos y pegaban la advertencia al footer. */
-#slide-21-antes-de-armar .lead { margin-top: 0; }
-#slide-21-antes-de-armar .fine { margin-top: var(--gap-md); }
 /* Tarjetas de evidencia: cabecera al piso de 32 px. */
 .msg-card-head { font-size: var(--fs-meta); }
+
+/* v3.4: «3 habilidades» es más larga que «3 recetas» y a 48 px llegaba a
+   x≈1320; en la 20 pisaba «Puede actuar, con permiso.». La columna de texto
+   arranca 4rem más a la derecha. */
+#slide-20-asistente .side { padding-left: 4rem; }
+
+/* loop 4: en los estados 1 y 3 la barra de oro caía sobre el objeto dorado
+   (burbuja, tarjeta): oro sobre oro. En esos dos, la barra va a la derecha. */
+figure.plancha[data-state="1"] .lbl-1::before,
+figure.plancha[data-state="3"] .lbl-3::before { left: auto; right: -0.5em; }
+
+/* loop 4: el pre.terminal de 7/11/13 acababa a 19 px del footer porque el
+   cuerpo llena la slide hasta el padding. Más aire abajo y menos gap arriba:
+   lámina 583 + 20 + pre 188 = 791 ≤ 794 de cuerpo. */
+.slide[data-layout="figure-labels"] { padding-bottom: 7rem; }
+.slide[data-layout="figure-labels"] .slide-body { gap: 1.25rem; }
