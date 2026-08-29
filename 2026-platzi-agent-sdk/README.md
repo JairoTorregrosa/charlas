@@ -52,7 +52,7 @@ Los otros dos MCP del taller (Exa y Firecrawl, en `workspace_vivienda/.mcp.json`
 
 ## Otros cerebros
 
-El SDK habla la API de Anthropic; cualquier servicio que hable ese formato sirve. `proveedores.py` arma las variables de entorno y el notebook las aplica con una línea:
+El SDK habla la API de Anthropic; cualquier servicio que hable ese formato sirve. Claude Code sigue siendo el subproceso (pasos 1, 2 y 5 de arriba), pero sin `/login`: la llave del proveedor va en variables de entorno que `proveedores.py` arma y el notebook aplica en una celda:
 
 ```python
 PROVEEDOR = "openrouter"   # "claude" · "openrouter" · "opencode" · "codex"
@@ -65,7 +65,30 @@ PROVEEDOR = "openrouter"   # "claude" · "openrouter" · "opencode" · "codex"
 | `"opencode"` | OpenCode Zen, modelo `big-pickle` (sin verificar) | 0 | `OPENCODE_API_KEY` en `.env` |
 | `"codex"` | Suscripción de ChatGPT, vía LiteLLM, modelo `gpt-5.6-luna` | suscripción | Proxy local: `litellm/start.sh` |
 
-`cp .env.example .env` y llena la llave que uses. El paso a paso de cada uno, con el curl para probar antes de abrir el notebook, está en [`docs/proveedores.md`](docs/proveedores.md). Dos límites: los conectores MCP de claude.ai (y con ellos El Monitor) van solo con `"claude"`, y la tool nativa `WebSearch` es la búsqueda del servidor de Anthropic; por eso el Buscador de vivienda busca por MCP.
+Dos límites: los conectores MCP de claude.ai (y con ellos El Monitor) van solo con `"claude"`, y la tool nativa `WebSearch` es la búsqueda del servidor de Anthropic; por eso el Buscador de vivienda busca por MCP. Con estos proveedores cada celda imprime dos avisos en `stderr` (`connectors are disabled`, `unrecognized_model`); son avisos, no errores. El detalle de cada uno, con un `curl` para probar antes de abrir el notebook, está en [`docs/proveedores.md`](docs/proveedores.md).
+
+### OpenRouter (gratis)
+
+1. Crea una llave en https://openrouter.ai/settings/keys. Ponle límite de crédito; los modelos `:free` cuestan 0.
+2. `cp .env.example .env` y pon `OPENROUTER_API_KEY=sk-or-v1-...`.
+3. En el notebook, `PROVEEDOR = "openrouter"`. Otro modelo gratis: `proveedor("openrouter", "z-ai/glm-5.2:free")`.
+
+### OpenCode Zen (gratis)
+
+1. Entra a https://opencode.ai/auth con GitHub o Google y copia la API key.
+2. En `.env`, `OPENCODE_API_KEY=...`.
+3. `PROVEEDOR = "opencode"`. Si el `curl` de `docs/proveedores.md` devuelve 401, el header es `x-api-key`; el cambio en `proveedores.py` está indicado ahí.
+
+### Suscripción de ChatGPT (Codex) vía LiteLLM
+
+El backend de Codex habla Responses API; LiteLLM lo traduce al formato de Anthropic y usa el login OAuth de Codex.
+
+1. `uv tool install "litellm[proxy]==1.98.0"` (evita 1.82.7 y 1.82.8, que salieron con malware).
+2. Arranca el proxy: `litellm/start.sh` (puerto 4000). Déjalo corriendo en su terminal.
+3. Primera petición: en el log del proxy sale `Visit https://auth0.openai.com/codex/device` con un código. Entras, pegas el código, y LiteLLM guarda los tokens en `~/.config/litellm/chatgpt/auth.json`.
+4. `PROVEEDOR = "codex"`. Modelos: `gpt-5.6-luna` (default), `gpt-5.6-sol`, `gpt-5.6-terra`, los tres con razonamiento `high`.
+
+`litellm/fix_system.py` es un hook del proxy: el backend de ChatGPT rechaza los mensajes con `role: system`, y el hook los mueve al `system` antes de enviar.
 
 ## Cómo está armado
 
