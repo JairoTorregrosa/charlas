@@ -106,6 +106,7 @@ El backend de Codex habla Responses API; LiteLLM lo traduce al formato de Anthro
 ├── workspace_vivienda/     ← misma forma, más .mcp.json (Exa, Firecrawl)
 ├── workspace_monitor/      ← misma forma
 ├── litellm/                ← proxy para la suscripción de ChatGPT
+├── .claude/skills/         ← setup-taller y crear-agente, para tu agente de código
 └── docs/                   ← cheat sheets
 ```
 
@@ -115,6 +116,15 @@ El backend de Codex habla Responses API; LiteLLM lo traduce al formato de Anthro
 ## Cuánto cuesta una corrida
 
 Medido con `claude-sonnet-5`: Parcero ≈ USD 0.31 (108 s), Vivienda ≈ USD 0.70 (91 s), Monitor ≈ USD 0.36 (75 s). El notebook completo, unos USD 3.5. Todos los agentes tienen `max_budget_usd` como tope; con una suscripción el costo es el estimado del SDK, no un cobro.
+
+## Dos skills para tu agente de código
+
+Abre Claude Code (o Codex) en esta carpeta y tienes dos skills:
+
+- `/setup-taller`: deja el notebook corriendo en tu máquina. Revisa uv, git, Node, Claude Code, el login, las variables `ANTHROPIC_*`, el SDK, la llave del proveedor, los MCP (Exa, Firecrawl, alphaXiv) y hace una llamada real al modelo; arregla lo que sea un comando y te pide lo que sea un login o una llave. Con `--notebook` ejecuta la sección 0 y la celda 3.1. El chequeo también corre solo: `uv run python .claude/skills/setup-taller/scripts/check.py --proveedor claude`.
+- `/crear-agente`: arma un agente nuevo en la forma del taller (`agent_<nombre>.py` + `workspace_<nombre>/`) preguntando un primitivo a la vez: qué hace, personaje, manos, skill, ayudante, MCP, tope y cerebro. Lo escribe desde plantillas y lo corre una vez antes de decir que está listo.
+
+Viven en `.claude/skills/` (`.agents/skills` apunta ahí para Codex).
 
 ## Cheat sheets
 

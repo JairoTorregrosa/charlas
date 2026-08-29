@@ -21,16 +21,17 @@ from claude_agent_sdk import (
     AssistantMessage,
     ClaudeAgentOptions,
     HookMatcher,
+    ResultError,
     ResultMessage,
     ToolUseBlock,
     query,
 )
+from claude_agent_sdk.types import StreamEvent
 
 from proveedores import proveedor
 
 # Con qué cerebro corre: "claude" (suscripción de Claude Code) u otro de docs/proveedores.md.
 MODELO, ENV = proveedor(os.environ.get("TALLER_PROVEEDOR", "claude"))
-from claude_agent_sdk.types import StreamEvent
 
 WORKSPACE = (Path(__file__).parent / "workspace_parcero").resolve()
 
@@ -116,21 +117,25 @@ async def parcero(repo_url: str) -> ResultMessage | None:
 
     recibo = None
     USER_PROMPT = f"Roastea {repo_url}."
-    async for m in query(prompt=USER_PROMPT, options=opciones):
-        if isinstance(m, StreamEvent) and m.parent_tool_use_id is None:
-            # Texto del Parcero llegando letra por letra (los ayudantes no se imprimen).
-            delta = m.event.get("delta", {})
-            if delta.get("type") == "text_delta":
-                print(delta["text"], end="", flush=True)
-        elif isinstance(m, AssistantMessage):
-            quien = "  [inspector]" if m.parent_tool_use_id else "[parcero]"
-            for b in m.content:
-                if isinstance(b, ToolUseBlock):
-                    detalle = b.input.get("command") or b.input.get("file_path") or b.input.get("pattern") or b.input.get("skill") or b.input.get("description") or ""
-                    print(f"\n{quien} usa {b.name}: {str(detalle)[:90]}")
-        elif isinstance(m, ResultMessage):
-            recibo = m
-            print(f"\n\n[fin] {m.num_turns} vueltas · USD {m.total_cost_usd:.3f} · {m.duration_ms / 1000:.0f}s")
+    try:
+        async for m in query(prompt=USER_PROMPT, options=opciones):
+            if isinstance(m, StreamEvent) and m.parent_tool_use_id is None:
+                # Texto del Parcero llegando letra por letra (los ayudantes no se imprimen).
+                delta = m.event.get("delta", {})
+                if delta.get("type") == "text_delta":
+                    print(delta["text"], end="", flush=True)
+            elif isinstance(m, AssistantMessage):
+                quien = "  [inspector]" if m.parent_tool_use_id else "[parcero]"
+                for b in m.content:
+                    if isinstance(b, ToolUseBlock):
+                        detalle = b.input.get("command") or b.input.get("file_path") or b.input.get("pattern") or b.input.get("skill") or b.input.get("description") or ""
+                        print(f"\n{quien} usa {b.name}: {str(detalle)[:90]}")
+            elif isinstance(m, ResultMessage):
+                recibo = m
+                print(f"\n\n[fin] {m.num_turns} vueltas · USD {m.total_cost_usd:.3f} · {m.duration_ms / 1000:.0f}s")
+    except ResultError as e:
+        # max_turns o max_budget_usd: el recibo ya llegó; se avisa y se sigue.
+        print(f"\n[corte] {e}")
     return recibo
 
 

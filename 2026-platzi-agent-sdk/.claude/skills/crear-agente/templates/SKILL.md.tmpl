@@ -1,0 +1,30 @@
+«PLANTILLA: sustituye y borra este bloque. Campos:
+  SKILL        nombre en kebab-case sin acentos; también es el nombre del directorio
+  DESCRIPCION  una frase: qué es y cuándo usarlo, con las palabras que diría el usuario
+  TITULO       encabezado
+  CRITERIO     viñetas: qué mirar, qué cuenta, qué ignorar
+  ARCHIVO      el archivo de salida del agente
+  FORMATO      plantilla del archivo de salida, dentro del bloque de código
+  SI_FALTA     viñetas: qué hacer si no hay datos, si no encuentra algo
+Markdown simple: encabezados, viñetas, backticks. Menos de 150 líneas.
+»
+---
+name: {{SKILL}}
+description: {{DESCRIPCION}}
+---
+
+# {{TITULO}}
+
+## Qué mirar
+
+{{CRITERIO}}
+
+## Formato de `{{ARCHIVO}}`
+
+```
+{{FORMATO}}
+```
+
+## Si falta algo
+
+{{SI_FALTA}}

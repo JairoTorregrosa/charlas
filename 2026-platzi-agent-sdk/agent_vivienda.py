@@ -23,6 +23,7 @@ from claude_agent_sdk import (
     AssistantMessage,
     ClaudeAgentOptions,
     HookMatcher,
+    ResultError,
     ResultMessage,
     TextBlock,
     ToolUseBlock,
@@ -91,18 +92,22 @@ async def vivienda(pedido: str, *, resume: str | None = None) -> ResultMessage |
 
     recibo = None
     USER_PROMPT = pedido
-    async for m in query(prompt=USER_PROMPT, options=opciones):
-        if isinstance(m, AssistantMessage):
-            quien = "  [revisor]" if m.parent_tool_use_id else "[buscador]"
-            for b in m.content:
-                if isinstance(b, TextBlock) and b.text.strip():
-                    print(f"{quien} {b.text.strip()}")
-                elif isinstance(b, ToolUseBlock):
-                    detalle = b.input.get("query") or b.input.get("url") or b.input.get("file_path") or b.input.get("skill") or b.input.get("description") or ""
-                    print(f"{quien} usa {b.name}: {str(detalle)[:90]}")
-        elif isinstance(m, ResultMessage):
-            recibo = m
-            print(f"\n[fin] {m.num_turns} vueltas · USD {m.total_cost_usd:.3f} · {m.duration_ms / 1000:.0f}s · sesión {m.session_id}")
+    try:
+        async for m in query(prompt=USER_PROMPT, options=opciones):
+            if isinstance(m, AssistantMessage):
+                quien = "  [revisor]" if m.parent_tool_use_id else "[buscador]"
+                for b in m.content:
+                    if isinstance(b, TextBlock) and b.text.strip():
+                        print(f"{quien} {b.text.strip()}")
+                    elif isinstance(b, ToolUseBlock):
+                        detalle = b.input.get("query") or b.input.get("url") or b.input.get("file_path") or b.input.get("skill") or b.input.get("description") or ""
+                        print(f"{quien} usa {b.name}: {str(detalle)[:90]}")
+            elif isinstance(m, ResultMessage):
+                recibo = m
+                print(f"\n[fin] {m.num_turns} vueltas · USD {m.total_cost_usd:.3f} · {m.duration_ms / 1000:.0f}s · sesión {m.session_id}")
+    except ResultError as e:
+        # max_turns o max_budget_usd: el recibo ya llegó; se avisa y se sigue.
+        print(f"\n[corte] {e}")
     return recibo
 
 

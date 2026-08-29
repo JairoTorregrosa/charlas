@@ -1,0 +1,146 @@
+«PLANTILLA: sustituye cada {{CAMPO}} y borra este bloque. Campos:
+  NOMBRE        nombre del agente en kebab-case sin acentos (parcero, vivienda, monitor)
+  FUNCION       nombre de la función Python (snake_case), normalmente igual a NOMBRE
+  TITULO        cómo se llama el agente para una persona (El Parcero Crítico)
+  QUE_HACE      una o dos frases: qué recibe y qué entrega
+  ARCHIVO       el único archivo que escribe (roast.md, candidatos.md)
+  SYSTEM_PROMPT bloques "# Quién eres", "# Dónde trabajas", "# Reglas"; usa {cwd} y nombra ARCHIVO; menciona el skill si existe
+  SETTING_SOURCES  ["project"] normalmente; ["user", "project"] si usa alphaXiv
+  ALLOWED_TOOLS lista Python de tools aprobadas (Read, Glob, Grep, Write, Edit, Bash, WebFetch, Skill, Agent, mcp__exa__*, ...)
+  TOOLS         opcional: lista base de tools nativas, o borra la línea para el preset completo
+  DISALLOWED    opcional: por ejemplo ["WebSearch"] cuando busca por MCP; o borra la línea
+  MAX_TURNS     número
+  MAX_BUDGET    número en USD
+  USER_PROMPT_EXPR  expresión Python para el prompt de prueba, por ejemplo f"Roastea {entrada}." o entrada
+  ENTRADA_DEFAULT   texto por defecto cuando se corre sin argumentos
+  ETIQUETA_HIJO     etiqueta del ayudante en el log, por ejemplo "inspector"
+  PERMITIDOS    solo con Bash: set de primeros comandos permitidos, por ejemplo {"ls", "wc", "find", "head", "cat"}
+»
+"""agent_{{NOMBRE}}.py — {{TITULO}}.
+
+{{QUE_HACE}}
+
+Terminal:   uv run agent_{{NOMBRE}}.py "{{ENTRADA_DEFAULT}}"
+Notebook:   from agent_{{NOMBRE}} import {{FUNCION}}; await {{FUNCION}}("...")
+
+Su casa es `workspace_{{NOMBRE}}/`: ahí escribe (`{{ARCHIVO}}`) y de ahí carga lo que haya en
+`.claude/skills`, `.claude/agents` y `.mcp.json`. No tiene tools propias: solo las que trae el
+SDK, el skill, el ayudante y los MCP.
+"""
+
+import asyncio
+import os
+import shlex
+import sys
+from pathlib import Path
+
+from claude_agent_sdk import (
+    AssistantMessage,
+    ClaudeAgentOptions,
+    HookMatcher,
+    ResultError,
+    ResultMessage,
+    ToolUseBlock,
+    query,
+)
+from claude_agent_sdk.types import StreamEvent
+
+from proveedores import proveedor
+
+# Con qué cerebro corre: "claude" (suscripción de Claude Code) u otro de docs/proveedores.md.
+MODELO, ENV = proveedor(os.environ.get("TALLER_PROVEEDOR", "claude"))
+
+WORKSPACE = (Path(__file__).parent / "workspace_{{NOMBRE}}").resolve()
+
+# --- Quién es ------------------------------------------------------------------
+SYSTEM_PROMPT = """{{SYSTEM_PROMPT}}"""
+
+
+# --- Los porteros: código tuyo que corre ANTES de cada herramienta ---------------
+# Un hook recibe lo que el modelo quiere hacer y devuelve {} (sigue) o un "deny" con motivo.
+# El motivo se lo lee el modelo como resultado de la herramienta: no se cae, busca otro camino.
+
+
+def deny(motivo):
+    return {
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "deny",
+            "permissionDecisionReason": motivo,
+        }
+    }
+
+
+async def solo_archivo(input_data, tool_use_id, context):
+    archivo = Path(input_data["tool_input"].get("file_path", "")).name
+    if archivo == "{{ARCHIVO}}":
+        return {}
+    return deny(f"Solo puedes escribir {{ARCHIVO}}. {archivo} se queda como está.")
+
+
+# --- si hay Bash: qué comandos deja pasar ------------------------------------------
+PERMITIDOS = {{PERMITIDOS}}
+
+
+async def solo_comandos(input_data, tool_use_id, context):
+    comando = input_data["tool_input"].get("command", "")
+    palabras = shlex.split(comando) if comando else []
+    if palabras[:2] == ["git", "clone"] or (palabras and palabras[0] in PERMITIDOS):
+        return {}
+    return deny("Bash aquí solo sirve para " + ", ".join(sorted(PERMITIDOS)) + ". Para leer usa Read; para buscar, Grep.")
+# --- fin del bloque de Bash --------------------------------------------------------
+
+
+# --- El agente -------------------------------------------------------------------
+async def {{FUNCION}}(entrada: str, *, resume: str | None = None) -> ResultMessage | None:
+    """Corre una vez. Imprime el texto en vivo y devuelve el recibo. Con `resume` sigue la conversación anterior."""
+    WORKSPACE.mkdir(exist_ok=True)
+
+    opciones = ClaudeAgentOptions(
+        model=MODELO,
+        system_prompt=SYSTEM_PROMPT.format(cwd=WORKSPACE),
+        cwd=str(WORKSPACE),                       # su casa
+        setting_sources={{SETTING_SOURCES}},      # carga .claude/ y .mcp.json de su casa
+        tools={{TOOLS}},                          # tools nativas que existen para el modelo
+        allowed_tools={{ALLOWED_TOOLS}},          # las que se aprueban sin preguntar
+        disallowed_tools={{DISALLOWED}},
+        hooks={
+            "PreToolUse": [
+                HookMatcher(matcher="Write|Edit", hooks=[solo_archivo]),
+                HookMatcher(matcher="Bash", hooks=[solo_comandos]),   # --- si hay Bash
+            ]
+        },
+        include_partial_messages=True,            # texto letra por letra
+        resume=resume,
+        max_turns={{MAX_TURNS}},
+        max_budget_usd={{MAX_BUDGET}},
+        env=ENV,
+        stderr=lambda _: None,
+    )
+
+    recibo = None
+    USER_PROMPT = {{USER_PROMPT_EXPR}}
+    try:
+        async for m in query(prompt=USER_PROMPT, options=opciones):
+            if isinstance(m, StreamEvent) and m.parent_tool_use_id is None:
+                delta = m.event.get("delta", {})
+                if delta.get("type") == "text_delta":
+                    print(delta["text"], end="", flush=True)
+            elif isinstance(m, AssistantMessage):
+                quien = "  [{{ETIQUETA_HIJO}}]" if m.parent_tool_use_id else "[{{NOMBRE}}]"
+                for b in m.content:
+                    if isinstance(b, ToolUseBlock):
+                        detalle = b.input.get("command") or b.input.get("file_path") or b.input.get("pattern") or b.input.get("query") or b.input.get("url") or b.input.get("skill") or b.input.get("description") or ""
+                        print(f"\n{quien} usa {b.name}: {str(detalle)[:90]}")
+            elif isinstance(m, ResultMessage):
+                recibo = m
+                print(f"\n\n[fin] {m.num_turns} vueltas · USD {m.total_cost_usd:.3f} · {m.duration_ms / 1000:.0f}s · sesión {m.session_id}")
+    except ResultError as e:
+        # max_turns o max_budget_usd: el recibo ya llegó; se avisa y se sigue.
+        print(f"\n[corte] {e}")
+    return recibo
+
+
+if __name__ == "__main__":
+    entrada = sys.argv[1] if len(sys.argv) > 1 else "{{ENTRADA_DEFAULT}}"
+    asyncio.run({{FUNCION}}(entrada))

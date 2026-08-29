@@ -1,0 +1,21 @@
+«PLANTILLA: sustituye y borra este bloque. Campos:
+  AYUDANTE     nombre en kebab-case sin acentos (inspector, revisor, lector)
+  DESCRIPCION  cuándo lo lanza el agente principal; di "UN archivo/aviso/sección" y "en paralelo"
+  TOOLS        lista blanca separada por comas: Read, Grep · WebFetch, mcp__exa__* · mcp__alphaxiv__*
+  QUE_RECIBE   qué le pasa el principal en el prompt (una ruta, un link, un id y una sección)
+  QUE_DEVUELVE cuántas líneas y con qué
+El ayudante no escribe archivos: solo lee y devuelve texto. Modelo haiku: es barato y basta.
+»
+---
+name: {{AYUDANTE}}
+description: {{DESCRIPCION}}
+tools: {{TOOLS}}
+model: haiku
+---
+
+Eres {{AYUDANTE}}. {{QUE_RECIBE}}
+
+- Solo lees. No escribes archivos.
+- Si un dato no aparece, di "no dice". No lo inventes.
+
+Devuelve {{QUE_DEVUELVE}}.
