@@ -10,23 +10,24 @@ Taller de 45 minutos (Platzi Conf Bogotá, 29 de agosto de 2026). Un notebook co
 
 Los agentes usan lo que trae el SDK (Read, Bash, WebFetch…), un skill, un ayudante y servidores MCP externos. Ninguno tiene tools propias. Cada uno escribe un solo archivo en su casa; un hook lo garantiza.
 
-## Qué necesitas
+## Correr el notebook con tu suscripción de Claude
 
-- Python 3.13 y [uv](https://docs.astral.sh/uv/).
-- [Claude Code](https://code.claude.com/docs/en/overview) instalado (`npm install -g @anthropic-ai/claude-code`). El SDK lo arranca como subproceso.
-- Un cerebro. Lo más simple es una suscripción de Claude (Pro o Max): `claude` → `/login`. Sin suscripción, ver [Otros cerebros](#otros-cerebros).
-- `git` en el PATH (El Parcero clona repos).
+El SDK no trae el modelo: arranca Claude Code como subproceso y usa la sesión que tengas iniciada ahí. Con una cuenta Pro o Max no necesitas API key.
 
-## Correr el notebook
+1. Instala [uv](https://docs.astral.sh/uv/) (trae Python 3.13 si te falta) y `git`.
+2. Instala Claude Code: `npm install -g @anthropic-ai/claude-code`.
+3. Inicia sesión una vez: `claude` → `/login`. Es el login de Claude Code, no el del navegador.
+4. Revisa que no haya una API key en el entorno: `echo $ANTHROPIC_API_KEY` debe salir vacío. Si sale algo, `unset ANTHROPIC_API_KEY` en esa terminal (una key gana sobre la suscripción y cobra por token).
+5. Clona y corre:
+   ```bash
+   git clone https://github.com/JairoTorregrosa/charlas.git
+   cd charlas/2026-platzi-agent-sdk
+   uv sync
+   uv run jupyter lab demo.ipynb
+   ```
+6. Ejecuta las celdas en orden. La sección 0 comprueba que `claude` responde y que no hay `ANTHROPIC_API_KEY`; la celda `PROVEEDOR = "claude"` elige el cerebro de todo el notebook.
 
-```bash
-git clone https://github.com/JairoTorregrosa/charlas.git
-cd charlas/2026-platzi-agent-sdk
-uv sync
-uv run jupyter lab demo.ipynb
-```
-
-Ejecuta las celdas en orden. La sección 0 comprueba que `claude` responde y que no hay `ANTHROPIC_API_KEY` en el entorno (si la hay, el SDK cobra por la API en vez de usar tu suscripción). La celda `PROVEEDOR = "claude"` elige el cerebro de todo el notebook.
+Lo que gasta es la cuota de tu plan (límite de sesión y semanal), no dinero. El `total_cost_usd` del recibo es un estimado del SDK, útil para comparar corridas. Sin suscripción, ver [Otros cerebros](#otros-cerebros).
 
 En VS Code: abre la carpeta, elige el intérprete `.venv/bin/python` (ya viene en `.vscode/settings.json`) y corre las celdas desde ahí.
 
