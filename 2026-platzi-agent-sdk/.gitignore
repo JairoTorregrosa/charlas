@@ -1,0 +1,11 @@
+.venv/
+.ipynb_checkpoints/
+__pycache__/
+# lo que el agente clona o escribe
+workspace_parcero/repos/
+workspace_parcero/roast.md
+workspace_parcero/defensa.md
+workspace_vivienda/candidatos.md
+workspace_vivienda/libreta.json
+workspace_monitor/explicacion.md
+.env

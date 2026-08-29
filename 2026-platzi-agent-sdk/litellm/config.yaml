@@ -1,0 +1,28 @@
+model_list:
+  - model_name: gpt-5.6-luna
+    model_info:
+      mode: responses          # obligatorio: el backend de Codex solo expone /responses
+    litellm_params:
+      model: chatgpt/gpt-5.6-luna
+      reasoning_effort: high
+      drop_params: true
+  - model_name: gpt-5.6-sol
+    model_info:
+      mode: responses
+    litellm_params:
+      model: chatgpt/gpt-5.6-sol
+      reasoning_effort: medium
+      drop_params: true
+  - model_name: gpt-5.6-terra
+    model_info:
+      mode: responses
+    litellm_params:
+      model: chatgpt/gpt-5.6-terra
+      reasoning_effort: medium
+      drop_params: true
+
+general_settings:
+  master_key: sk-taller-local
+
+litellm_settings:
+  callbacks: fix_system.proxy_handler_instance

@@ -1,0 +1,11 @@
+[project]
+name = "taller-agent-sdk"
+version = "0.1.0"
+description = "Demos del taller: Claude Agent SDK en Python, un notebook y varios agentes"
+requires-python = ">=3.11"
+dependencies = [
+    "claude-agent-sdk>=0.2.148",
+    "jupyterlab>=4.4",
+    "nbconvert>=7.16",
+    "ipykernel>=6.29",
+]

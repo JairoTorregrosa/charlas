@@ -20,6 +20,7 @@ Los kits se construyen con commits reales: puedes ver cada charla evolucionar de
 |---|---|---|
 | [`2026-agents-bogota/`](2026-agents-bogota/) | Construye tu primer agente de AI con Claude — qué es un agente, las tres palancas, dónde corre (Claude Community Bogotá, hackathon de Quick) | Agosto 2026 |
 | [`2026-casanare-marley/`](2026-casanare-marley/) | Mi agente personal: la IA que crece contigo — un agente es un cerebro con cuerpo; las cinco piezas de Marley, mi asistente 24/7 (Colombia 5.0 Casanare, Yopal) | Agosto 2026 |
+| [`2026-platzi-agent-sdk/`](2026-platzi-agent-sdk/) | Crea tu primer agente con Claude Agent SDK — un notebook, tres agentes, un primitivo por celda; corre con la suscripción de Claude o con OpenRouter, OpenCode Zen y la suscripción de ChatGPT (Platzi Conf Bogotá, taller de 45 min) | Agosto 2026 |
 
 *El bestiario crece — sigue el repo para ver aparecer las próximas.*
 
