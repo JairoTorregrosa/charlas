@@ -40,7 +40,6 @@ Orden sugerido: primero decide qué tarea vale la pena. Después, las piezas: ch
 
 ## Contenido del kit
 
-- `slides/` — el deck tal como se proyectó (HTML puro; abre `index.html`; `?presenter=1` para notas).
-- `Mi-agente-personal-Casanare-2026.pdf` — el PDF 16:9 entregado a los organizadores.
+- `Mi-agente-personal-Casanare-2026.pdf` — el deck tal como se proyectó: 23 páginas, 16:9. Es el mismo que se entregó a los organizadores.
 
 Contacto: [@jai_torregrosa](https://x.com/jai_torregrosa)

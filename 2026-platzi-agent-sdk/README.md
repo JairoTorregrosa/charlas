@@ -8,6 +8,8 @@ Taller de 45 minutos (Platzi Conf Bogotá, 29 de agosto de 2026). Un notebook co
 | Buscador de vivienda | `agent_vivienda.py` | `workspace_vivienda/` | Busca avisos reales de arriendo en Bogotá (Exa y Firecrawl por MCP) y deja una tabla en `candidatos.md`. |
 | El Monitor | `agent_monitor.py` | `workspace_monitor/` | Te explica un paper en cinco preguntas (alphaXiv por MCP), en `explicacion.md`. |
 
+El deck: [`Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf`](Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf) — 35 páginas, 16:9.
+
 Los agentes usan lo que trae el SDK (Read, Bash, WebFetch…), un skill, un ayudante y servidores MCP externos. Ninguno tiene tools propias. Cada uno escribe un solo archivo en su casa; un hook lo garantiza.
 
 ## Correr el notebook con tu suscripción de Claude

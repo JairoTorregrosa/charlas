@@ -5,3 +5,5 @@ node_modules/
 workspace/out/
 .ipynb_checkpoints/
 .venv/
+__pycache__/
+*.pyc

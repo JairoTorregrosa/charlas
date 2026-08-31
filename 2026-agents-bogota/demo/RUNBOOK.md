@@ -7,8 +7,8 @@ Regla: cada demo ≤5 min. Si falla, no se debuggea en vivo: captura en `../asse
 - `export MANAGED_ENV_ID=env_...` (tu environment; verlo en Console → Managed Agents → Environments).
 - Smoke test: `python -c "import anthropic; print(anthropic.__version__)"` (se espera ≥1.0). Plan B si el Python del sistema no lo tiene: `uv run --with "anthropic>=1.0" python managed.py`.
 - Console abierta en Managed Agents → Sessions, con una sesión nueva del agente `General Assistant` y `contabilidad.csv` ya subido (D1).
-- `claude` logueado; terminal abierta en `slides/demo/` (D2).
-- Deck servido: `python3 -m http.server 3030 --directory slides` → `http://localhost:3030/` (presenter: `?presenter=1` en la pantalla local).
+- `claude` logueado; terminal abierta en `demo/` (D2).
+- Deck: `Construye-tu-primer-agente-Bogota-2026.pdf` (23 páginas, 16:9).
 
 ## D1 · min ~8 · "Mira cada vuelta del loop" (Console, sin código)
 1. Console → Managed Agents → Sessions → sesión preparada.
@@ -27,10 +27,10 @@ python managed.py
 
 ## D2 · min ~32 · "Claude Code analiza el mismo CSV"
 ```
-cd slides/demo && claude
+cd demo && claude
 ```
 Prompt (el corto de la slide; `CLAUDE.md` aporta las reglas, así que basta): `¿Cómo cambió el margen por proyecto de junio a julio, y por qué? Muestra el código.`
-- `slides/demo/CLAUDE.md` es la palanca "contexto del proyecto": reglas contables, CSV (';', decimal con coma; ingresos en cuentas 4, costos en 6 y 7), `uv run --with pandas` (pandas no está en el Python del sistema) y formato de respuesta (tabla → causa → código). Señalarlo en la slide 18.
+- `demo/CLAUDE.md` es la palanca "contexto del proyecto": reglas contables, CSV (';', decimal con coma; ingresos en cuentas 4, costos en 6 y 7), `uv run --with pandas` (pandas no está en el Python del sistema) y formato de respuesta (tabla → causa → código). Señalarlo en la slide 18.
 - Ensayado con `claude --dangerously-skip-permissions` (la captura y el GIF muestran "bypass permissions on"). En vivo: `claude` a secas; si pide permiso para Bash, aceptar y señalarlo (slide 16: "pide permiso").
 - Ensayado 2 veces (vhs): ~2 min; Claude Code usa `uv run --with pandas` y responde con tabla + código.
 - Señalar las tool calls (Read, Bash) y la respuesta con cifra, código y causa.
@@ -44,4 +44,4 @@ python agent.py "¿Cómo cambió el margen por proyecto de junio a julio, y por 
 Se muestra como código en la slide 5 y va al repo público.
 
 ## Datos
-`contabilidad.csv` es sintético. El generador y la historia plantada están en `../../proceso/demo-meta/` (fuera de `slides/` y del cwd de la demo, para que Claude Code no lea la respuesta).
+`contabilidad.csv` es sintético. El generador y la historia plantada se quedan fuera de este repo, para que Claude Code no lea la respuesta.
