@@ -6,7 +6,7 @@ Salta los pasos que el pedido ya responde. Si la persona dice «decide tú» o e
 
 | Paso | Pregunta | Opciones típicas | Diagrama |
 |---|---|---|---|
-| 0 · Idea | ¿Qué agente quieres? Solo si llega sin idea o con una vaga («de ventas», «automatizar mi trabajo») | 3–4 primeros agentes pequeños tomados de `references/ideas.md`, de la familia más cercana | Arquitecturas por familia |
+| 0 · Idea | ¿Qué agente quieres? Solo si llega sin idea o con una vaga («de ventas», «automatizar mi trabajo») | Opción 1: el «primer agente recomendado» de la familia más cercana en `references/ideas.md`. Opciones 2–3: variantes que tú derivas de las mismas piezas de esa familia (otra pregunta sobre los mismos datos, una más pequeña, una algo más ambiciosa) | Arquitecturas por familia |
 | 1 · Objetivo | ¿Cuál de estas frases describe lo que debe resolver? | 2–3 redacciones del objetivo en una frase, de la más pequeña a la más ambiciosa. Recomienda la pequeña | El loop, con su pedido y su resultado |
 | 2 · Lenguaje | ¿Python o TypeScript? No preguntes si la carpeta ya tiene `pyproject.toml` o `package.json` | Python (uv) · TypeScript (Node o bun) | — (usa `preview` con las 8 primeras líneas del agente en cada lenguaje) |
 | 3 · Cómo corre | ¿Una vez y sale, o conversación? | Una vez y sale (Recomendado) · Conversación con `resume` | «cómo corre» |

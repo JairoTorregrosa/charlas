@@ -9,6 +9,8 @@ Fíjate en que el script corre y termina. Un agente no necesita un chat.
     uv run python 01_query.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 
 from claude_agent_sdk import ClaudeAgentOptions, query

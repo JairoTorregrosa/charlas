@@ -14,6 +14,8 @@ agente recuerda el primero: esa es la prueba.
     uv run python 09_conversar.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import sys
 from pathlib import Path

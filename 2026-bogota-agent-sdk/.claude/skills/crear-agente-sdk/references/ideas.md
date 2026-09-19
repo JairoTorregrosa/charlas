@@ -74,7 +74,7 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
   - Google Workspace, Sheets (`https://sheetsmcp.googleapis.com/mcp/v1`), con las mismas condiciones de la categoría 1.
   - No se verificó MCP oficial de bancos colombianos, de la DIAN ni de proveedores locales de facturación electrónica.
 - **Skill del agente**: `clasificar-gastos`. 1) Lee las reglas de categorías. 2) Clasifica cada movimiento y marca como dudoso lo que ninguna regla cubre. 3) Pide los totales a la tool y verifica que cuadren con el extracto. 4) Detecta cobros repetidos mes a mes. 5) Escribe el informe con tabla de totales, lista de dudosos y descuadre. 6) No recomienda inversiones ni movimientos de dinero.
-- **Guardrail**: nunca pagar, transferir, comprar ni ejecutar órdenes. En Stripe, restricted key de solo lectura y `disallowed_tools=["mcp__stripe__stripe_api_write"]`. Hook que enmascara números de cuenta y de documento antes de escribir en `salidas/`. Sin `WebSearch` ni `WebFetch` mientras haya datos reales. Topes: 12 turns, USD 0.30.
+- **Guardrail**: nunca pagar, transferir, comprar ni ejecutar órdenes. En Stripe, restricted key de solo lectura y `disallowed_tools=["mcp__stripe__stripe_api_write"]`. Hook que rechaza (`deny`) una escritura con números de cuenta o de documento sin enmascarar; el motivo le pide al LLM enmascararlos y reintentar. Un hook `PreToolUse` permite o niega: no reescribe el contenido. Sin `WebSearch` ni `WebFetch` mientras haya datos reales. Topes: 12 turns, USD 0.30.
 - **Qué mirar en el transcript**: si los totales vienen de la tool o si el modelo sumó de memoria, y qué hizo con los movimientos que no entendió.
 
 ## 5. Ventas y prospección (~36)

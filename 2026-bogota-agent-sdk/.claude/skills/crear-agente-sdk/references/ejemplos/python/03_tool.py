@@ -17,6 +17,8 @@ La fecha va fija a propósito: el mismo resultado hoy y el día del taller.
     uv run python 03_tool.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 
 from claude_agent_sdk import ClaudeAgentOptions, create_sdk_mcp_server, query, tool

@@ -15,6 +15,8 @@ Mira en el ARRANQUE el estado de cada servidor: connected · pending · needs-au
     uv run python 04_mcp.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import sys
 from pathlib import Path

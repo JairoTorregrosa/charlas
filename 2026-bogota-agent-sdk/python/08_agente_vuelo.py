@@ -16,6 +16,8 @@ y transcript.md (llamada por llamada: qué le entró al LLM y qué respondió).
     uv run python 08_agente_vuelo.py "¿Tengo algo reservado para el fin de semana?"
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import sys
 from pathlib import Path

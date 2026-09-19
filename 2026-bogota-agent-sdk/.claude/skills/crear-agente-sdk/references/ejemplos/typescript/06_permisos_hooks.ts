@@ -4,6 +4,7 @@
 //   disallowedTools -> qué se niega siempre
 //   permissionMode  -> la política general cuando no hay regla
 // Y encima de todos, los hooks: código tuyo que corre antes de cada llamada.
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { servidorGmail } from "./gmail_mcp.ts";
 

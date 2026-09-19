@@ -18,9 +18,17 @@ la SDK.
 ```
 git clone https://github.com/JairoTorregrosa/charlas
 cd charlas/2026-bogota-agent-sdk
+cp .env.example .env          # pega tu API key
 cd python && uv sync          # o: cd typescript && npm install
 uv run python 01_query.py     # o: npm run 01
 ```
+
+## Tu API key
+
+```
+cp .env.example .env      # en la raíz del kit
+```
+Pega tu key en `ANTHROPIC_API_KEY=`. Se crea en [platform.claude.com/settings/keys](https://platform.claude.com/settings/keys) → «Create Key», en la misma cuenta de Console donde redimiste los créditos. La suscripción de claude.ai (Pro o Max) no trae API key. La leen `python/`, `typescript/` y `managed-agents/`; cada script imprime `[auth]` con la autenticación que quedó. `.env` está en `.gitignore`. Sin key, `python/` y `typescript/` usan la sesión de Claude Code de tu máquina.
 
 ## Requisitos
 

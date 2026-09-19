@@ -1,6 +1,7 @@
 // 05 · Una skill es un archivo en disco: workspace/.claude/skills/buscar-vuelo/SKILL.md
 // No hay API para registrarla. El agente la encuentra por dos opciones juntas:
 // cwd (dónde mira) y settingSources: ["project"] (que lea el .claude de ahí).
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { join } from "node:path";
 import { createSdkMcpServer, query, tool } from "@anthropic-ai/claude-agent-sdk";
 import { servidorGmail } from "./gmail_mcp.ts";

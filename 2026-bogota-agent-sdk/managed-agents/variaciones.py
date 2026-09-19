@@ -20,7 +20,8 @@ from dotenv import load_dotenv
 
 from bandeja import CORREOS
 
-load_dotenv()
+load_dotenv()                                      # managed-agents/.env: AGENT_ID, ENVIRONMENT_ID, SKILL_ID
+load_dotenv(__import__("pathlib").Path(__file__).resolve().parent.parent / ".env")   # .env de la raíz del kit: ANTHROPIC_API_KEY
 cliente = Anthropic()
 AQUI = Path(__file__).parent.resolve()
 SYSTEM_PROMPT = "Eres un asistente personal. Respondes en español, corto y con datos. No adivines."

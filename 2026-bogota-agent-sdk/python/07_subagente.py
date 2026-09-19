@@ -14,6 +14,8 @@ Dos detalles que confunden en vivo:
     uv run python 07_subagente.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import sys
 from pathlib import Path

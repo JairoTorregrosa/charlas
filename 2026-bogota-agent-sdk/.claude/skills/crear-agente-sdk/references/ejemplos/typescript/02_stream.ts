@@ -1,5 +1,6 @@
 // 02 · El stream: query() devuelve mensajes, no un string. Aquí se etiqueta cada uno.
 // La tool hoy() se explica en 03; acá solo sirve para que haya algo que mirar.
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { createSdkMcpServer, query, tool } from "@anthropic-ai/claude-agent-sdk";
 
 const hoy = tool("hoy", "Devuelve la fecha de hoy.", {}, async () => ({

@@ -4,6 +4,8 @@
     uv run python agente.py "otra pregunta"
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import json
 import sys
@@ -25,6 +27,10 @@ Usa tus tools y skills; no adivines TODO."""
 
 
 # TOOL PROPIA: datos o acciones de tu código. Bórrala si no la necesitas.
+# El esquema simple es {"campo": tipo}. Para listas u objetos pasa un JSON Schema completo:
+#   {"type": "object", "properties": {"filas": {"type": "array", "items": {"type": "object",
+#     "properties": {"categoria": {"type": "string"}, "monto": {"type": "number"}}}}}, "required": ["filas"]}
+# Las sumas y los conteos van aquí, en código: el LLM clasifica, tu función calcula.
 @tool("TODO_nombre", "TODO qué devuelve y cuándo pedirla.", {"TODO_arg": str})
 async def mi_tool(args):
     return {"content": [{"type": "text", "text": f"TODO resultado para {args['TODO_arg']}"}]}

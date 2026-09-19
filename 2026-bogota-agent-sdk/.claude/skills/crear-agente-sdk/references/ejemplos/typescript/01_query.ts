@@ -1,5 +1,6 @@
 // 01 · query(): entra un prompt, sale una respuesta. El programa termina solo.
 // Sin ninguna tool. El agente no puede mirar tu correo, y lo dice.
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { query } from "@anthropic-ai/claude-agent-sdk";
 
 const SISTEMA =

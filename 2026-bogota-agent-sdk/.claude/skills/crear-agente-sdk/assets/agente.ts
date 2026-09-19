@@ -1,5 +1,6 @@
 // TODO nombre — TODO qué hace, en una línea.
 // Uso: npx tsx agente.ts "otra pregunta"
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { join } from "node:path";
 import { createSdkMcpServer, query, tool, type HookCallback } from "@anthropic-ai/claude-agent-sdk";
 import { z } from "zod";
@@ -13,6 +14,8 @@ const SYSTEM_PROMPT =
   "Usa tus tools y skills; no adivines TODO.";
 
 // TOOL PROPIA: datos o acciones de tu código. Bórrala si no la necesitas.
+// Para listas u objetos: { filas: z.array(z.object({ categoria: z.string(), monto: z.number() })) }
+// Las sumas y los conteos van aquí, en código: el LLM clasifica, tu función calcula.
 const miTool = tool(
   "TODO_nombre",
   "TODO qué devuelve y cuándo pedirla.",

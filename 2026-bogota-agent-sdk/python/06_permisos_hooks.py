@@ -19,6 +19,8 @@ Ojo con lo verificado: un hook que devuelve "allow" NO salta las reglas deny.
     uv run python 06_permisos_hooks.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import sys
 from pathlib import Path

@@ -1,6 +1,7 @@
 // 07 · Un subagente: otro agente con su propio contexto, sus tools y su prompt.
 // El principal no tiene acceso al correo. Delega, y solo recibe el resumen.
 // Cada mensaje que viene de adentro trae parent_tool_use_id con el id de la delegación.
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { servidorGmail } from "./gmail_mcp.ts";
 

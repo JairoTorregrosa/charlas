@@ -1,6 +1,7 @@
 // 08 · El asistente de viaje completo: tool propia + MCP + skill + topes + bitácora.
 // Cada corrida deja salidas/<fecha-hora>/eventos.jsonl y transcript.md (llamada por llamada).
 // Uso: npm run 08 -- "tu pregunta"   (sin pregunta usa la del taller)
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { join } from "node:path";
 import { createSdkMcpServer, query, tool } from "@anthropic-ai/claude-agent-sdk";
 import { servidorGmail } from "./gmail_mcp.ts";

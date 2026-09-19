@@ -1,5 +1,6 @@
 // 04 · Un servidor MCP entero. gmail_mcp.ts publica dos tools: buscar y leer.
 // Se enchufa igual que una tool suelta: una entrada más en mcpServers.
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { servidorGmail } from "./gmail_mcp.ts";
 

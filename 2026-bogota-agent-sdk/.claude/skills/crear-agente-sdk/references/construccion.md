@@ -47,6 +47,10 @@ Dentro del kit del workshop no crees proyecto nuevo: deja el archivo junto a los
 6. **Hook cuando la regla depende de los argumentos** (qué archivo, qué id, qué comando). El motivo del `deny` lo lee el LLM: escríbelo como instrucción. Un hook que devuelve `allow` no salta las reglas `deny`.
 7. **Modelo**: `claude-sonnet-5` por defecto. Subagentes baratos con `haiku`.
 8. **El system prompt dice qué no adivinar**. El modelo conoce la fecha real y la usa si no le exiges pedirla por tool.
-9. **Credenciales**: nunca escribas una API key en el archivo. El SDK usa la sesión de Claude Code o `ANTHROPIC_API_KEY` del entorno. Producción va con API key.
+9. **Credenciales por `.env`, siempre**: nunca escribas una API key en el código. Copia `assets/entorno.py` o `assets/entorno.ts` junto al agente e impórtalo en la primera línea: lee `ANTHROPIC_API_KEY` de `.env` (raíz del kit o carpeta del agente) e imprime qué autenticación quedó. Copia también `assets/.env.example` y dile a la persona que la key se crea en platform.claude.com/settings/keys (la suscripción de claude.ai no trae key). Verifica que `.env` esté en `.gitignore`. Sin key, el SDK usa la sesión de Claude Code.
 10. **Notebooks**: `await` directo; `asyncio.run` falla dentro de Jupyter.
 
+
+## Dentro del kit del workshop
+
+Deja el agente junto a los `0N_*.py` o `0N_*.ts` como `NN_<nombre>.py|ts` y reutiliza su `pyproject.toml` o `package.json`, su `observar` y su `entorno`. Comparte el `workspace/` del kit: pon los datos en `workspace/datos/` y la skill nueva en `workspace/.claude/skills/<nombre>/`. En el ARRANQUE van a aparecer skills de otros ejercicios y las del repo padre (`setting_sources=["project"]` sube hasta la raíz del repo): es normal. `skills=[...]` es lo único que decide cuáles puede invocar el agente.

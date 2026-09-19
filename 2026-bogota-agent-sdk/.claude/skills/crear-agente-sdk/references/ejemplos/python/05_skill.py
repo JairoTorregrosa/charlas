@@ -17,6 +17,8 @@ Compara el orden de tools con el de 04: allí improvisaba, aquí sigue el proced
     uv run python 05_skill.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 import sys
 from pathlib import Path

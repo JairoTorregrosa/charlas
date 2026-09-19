@@ -1,5 +1,6 @@
 // 03 · Una tool propia. tool() describe la función, createSdkMcpServer la publica.
 // El nombre que ve el agente es mcp__{servidor}__{tool}: aquí mcp__reloj__hoy.
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { createSdkMcpServer, query, tool } from "@anthropic-ai/claude-agent-sdk";
 
 // El tercer argumento es el esquema de entrada en zod. Aquí no recibe nada.

@@ -14,7 +14,8 @@ import os
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv()                                      # managed-agents/.env: AGENT_ID, ENVIRONMENT_ID, SKILL_ID
+load_dotenv(__import__("pathlib").Path(__file__).resolve().parent.parent / ".env")   # .env de la raíz del kit: ANTHROPIC_API_KEY
 
 SYSTEM_PROMPT = """Eres un asistente personal. Respondes en español, corto y con datos.
 Usa tus tools y skills; no adivines fechas ni reservas."""

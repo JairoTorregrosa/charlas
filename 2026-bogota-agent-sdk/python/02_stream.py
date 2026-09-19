@@ -14,6 +14,8 @@ La tool `hoy` está aquí solo para que haya algo que mirar; en 03 la desarmamos
     uv run python 02_stream.py
 """
 
+import entorno  # carga ANTHROPIC_API_KEY de .env
+
 import asyncio
 
 from claude_agent_sdk import ClaudeAgentOptions, create_sdk_mcp_server, query, tool

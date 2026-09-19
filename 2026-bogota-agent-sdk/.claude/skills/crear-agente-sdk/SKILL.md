@@ -36,7 +36,7 @@ Copia este checklist en tu respuesta y márcalo a medida que avanzas:
 | Un síntoma de error en la corrida | `references/gotchas.md` |
 | System prompts, esquemas de tools y datos de ejemplo de nueve agentes pequeños | `references/ejemplos/managed_agents_ideas.py` |
 
-Plantillas para copiar y rellenar (marcas `TODO`): `assets/agente.py`, `assets/agente.ts`, `assets/observar.py`, `assets/observar.ts`, `assets/pyproject.toml`, `assets/package.json`, `assets/tsconfig.json`, `assets/SKILL.plantilla.md`.
+Plantillas para copiar y rellenar (marcas `TODO`): `assets/agente.py`, `assets/agente.ts`, `assets/observar.py`, `assets/observar.ts`, `assets/entorno.py`, `assets/entorno.ts`, `assets/.env.example`, `assets/pyproject.toml`, `assets/package.json`, `assets/tsconfig.json`, `assets/SKILL.plantilla.md`.
 
 ## Ejemplos verificados
 
@@ -59,5 +59,6 @@ Lee completo el archivo de la pieza que vas a escribir, en el lenguaje elegido. 
 1. **Una decisión por pregunta**, con AskUserQuestion y un diagrama ASCII en el `preview`. Sin humano o con «decide tú»: opciones recomendadas.
 2. **Bitácora siempre**: cada corrida guarda todos los eventos crudos en `salidas/<fecha-hora>/eventos.jsonl` y un `transcript.md` llamada por llamada. Son agentes para aprender.
 3. **Topes y aislamiento siempre**: `max_turns`, `max_budget_usd`, `strict_mcp_config`, `setting_sources` explícito, memoria automática desactivada. Nunca `bypassPermissions`.
-4. **Acciones hacia afuera solo como borrador**: enviar, publicar, pagar o comprar requieren aprobación humana.
-5. **No se declara terminado sin una corrida exitosa** y el transcript leído.
+4. **API key por `.env`**: el agente importa `entorno` en la primera línea y lee `ANTHROPIC_API_KEY` de `.env`; nunca va en el código ni en git.
+5. **Acciones hacia afuera solo como borrador**: enviar, publicar, pagar o comprar requieren aprobación humana.
+6. **No se declara terminado sin una corrida exitosa** y el transcript leído.

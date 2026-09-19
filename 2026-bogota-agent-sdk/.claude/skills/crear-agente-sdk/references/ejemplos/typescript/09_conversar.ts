@@ -1,6 +1,7 @@
 // 09 · El contraste. Cada query() arranca una sesión nueva: el agente no recuerda
 // nada del turno anterior. Conversar hay que pedirlo: se guarda el session_id y
 // se pasa en resume. (La otra vía es streaming input: un AsyncIterable de mensajes.)
+import "./entorno.ts"; // carga ANTHROPIC_API_KEY de .env
 import { query, type Options } from "@anthropic-ai/claude-agent-sdk";
 
 const BASE: Options = {

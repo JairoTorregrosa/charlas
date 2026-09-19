@@ -15,3 +15,5 @@
 | Pide ToolSearch antes de usar tu tool (TS) | carga diferida de tools MCP | `alwaysLoad: true` en `createSdkMcpServer` |
 | `npm install` trae una versión anterior a la publicada | cooldown `min-release-age` en `~/.npmrc` | es esperado; respeta el `package-lock.json` |
 | 401 o «invalid API key» | sin sesión de Claude Code y sin `ANTHROPIC_API_KEY` | `claude` y `/login`, o exporta la key de Console (la suscripción de claude.ai no da API key) |
+| En el ARRANQUE aparecen skills de otras carpetas del mismo repo | `setting_sources=["project"]` sube hasta la raíz del repo | es normal; `skills=[...]` decide cuáles se pueden invocar |
+| `[auth] sin API key en .env` y querías usar tu key | falta `.env` o está vacío | `cp .env.example .env` y pega la key de platform.claude.com/settings/keys |
