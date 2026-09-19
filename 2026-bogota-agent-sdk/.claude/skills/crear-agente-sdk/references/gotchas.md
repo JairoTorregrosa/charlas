@@ -17,3 +17,7 @@
 | 401 o «invalid API key» | sin sesión de Claude Code y sin `ANTHROPIC_API_KEY` | `claude` y `/login`, o exporta la key de Console (la suscripción de claude.ai no da API key) |
 | En el ARRANQUE aparecen skills de otras carpetas del mismo repo | `setting_sources=["project"]` sube hasta la raíz del repo | es normal; `skills=[...]` decide cuáles se pueden invocar |
 | `[auth] sin API key en .env` y querías usar tu key | falta `.env` o está vacío | `cp .env.example .env` y pega la key de platform.claude.com/settings/keys |
+| `would be spawned with zero tools` al delegar | las tools nativas del subagente no están en el `tools` del principal | agrégalas ahí también |
+| Dentro de un subagente, `Read` responde «The user doesn't want to take this action right now» | observado el 19-sep-2026 con tools nativas de archivos en subagentes | mueve esa lectura al principal, o dale al subagente una tool propia/MCP que lea |
+| En el `init` salen skills como `deep-research` o agentes como `Explore` que no declaraste | vienen de fábrica con el CLI empaquetado; `setting_sources` no los quita | `skills=[...]` limita lo invocable; no declares `Task` si no defines `agents` |
+| El agente escribió su entrega en un lugar inesperado | `Write` es relativo al `cwd` (`workspace/`); la bitácora va aparte | entregas en `workspace/entregas/`, bitácora en `salidas/<fecha-hora>/` |

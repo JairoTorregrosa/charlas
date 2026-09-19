@@ -13,7 +13,7 @@ Salta los pasos que el pedido ya responde. Si la persona dice «decide tú» o e
 | 4 · Datos y acciones | ¿De dónde salen los datos? (multiSelect) | Archivos locales de ejemplo (Recomendado) · Tool propia · MCP externo · Web | «de dónde salen los datos» |
 | 5 · Procedimiento | ¿El agente debe seguir siempre los mismos pasos? | Sí, con una skill (Recomendado) · No, que decida | «procedimiento» |
 | 6 · Guardrails | ¿Qué no debe hacer nunca? (multiSelect) | Solo lectura (Recomendado) · Acciones hacia afuera solo como borrador · Bloquear por argumentos con un hook · Lista blanca de dominios | «guardrails» |
-| 7 · Subagente | Solo si el trabajo llena el contexto de material que el principal no necesita | Sin subagente (Recomendado) · Con subagente | «subagente, sí o no» |
+| 7 · Subagente | Solo si el trabajo llena el contexto de material que el principal no necesita | Sin subagente (Recomendado) · Con subagente (más llamadas y más costo; sube los topes y lee `references/piezas.md` antes) | «subagente, sí o no» |
 
 Cierra el wizard con un **plano** antes de escribir código: un diagrama ASCII del agente final con sus tools, su skill y sus guardrails reales, y la lista de archivos que vas a crear. Pide confirmación con una última AskUserQuestion: «Construirlo así (Recomendado)» · «Cambiar algo».
 

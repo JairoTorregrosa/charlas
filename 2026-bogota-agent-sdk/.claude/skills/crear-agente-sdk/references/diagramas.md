@@ -84,7 +84,7 @@ contexto principal                  contexto principal
   leer   ▸ correo 1                   ◀── 1 resumen
   leer   ▸ correo 2                 contexto del subagente (aparte)
   …todo se queda ahí                  buscar, leer, leer…
-más barato en total                 más tokens en total, pico más bajo
+más barato en total                 más tokens y más costo; pico más bajo
 ```
 
 ## Arquitecturas por familia (para el brainstorm)

@@ -30,6 +30,9 @@ ClaudeAgentOptions(agents={"lector": LECTOR}, tools=["Agent"], allowed_tools=[..
 ```
 TypeScript (`07_subagente.ts`): mismo bloque dentro de `agents`, con `tools: ["Task"]` en el principal y `forwardSubagentText: true` para ver su texto.
 
+- Las tools **nativas** del subagente (`Read`, `Glob`…) tienen que estar también en el `tools` del principal; si no, el SDK se niega a crearlo («would be spawned with zero tools»). Las tools MCP no lo necesitan: llegan por `mcp_servers`.
+- En la prueba del 19-sep-2026, un `Read` nativo dentro de un subagente quedó negado aun con `dontAsk` y `allowed_tools` correctos, y el mismo `Read` funcionó en el principal. Para un primer agente, deja la lectura de archivos en el principal y usa subagentes con tools MCP o propias, como en `07_subagente`.
+- Un subagente multiplica llamadas y costo (en las pruebas, de USD 0,06 a USD 0,36 cuando algo falla). Con subagente sube los topes a `max_turns=20` y `max_budget_usd=0.50`, y si el principal tiene `Task`/`Agent` sin que tú definas `agents`, puede delegar en agentes de fábrica del CLI (`Explore`, `general-purpose`): declara `Task` solo cuando definas los tuyos.
 - Los permisos no se heredan del bloque `agents`: `tools` del subagente da disponibilidad; la aprobación sale del `allowed_tools` global.
 - Los subagentes corren en background por defecto.
 - Cada mensaje de adentro trae `parent_tool_use_id`.

@@ -4,7 +4,7 @@ Verificado el 2026-09-18. Las URLs y comandos de los MCP cambian: confírmalos e
 
 Las ocho categorías salen de 392 propuestas de asistentes al workshop. Cada sección describe una versión pequeña y local que se termina en una tarde, con datos de ejemplo en `workspace/datos/`. El sistema real se conecta cuando esa versión ya corre bien.
 
-Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive en un servidor en proceso y se llama `mcp__<servidor>__<tool>`; la skill va en `workspace/.claude/skills/<nombre>/SKILL.md` y exige `"Skill"` en `tools`. Topes de partida: `max_turns=12`, `max_budget_usd=0.25`. Cada corrida deja `salidas/<fecha>/eventos.jsonl` y `salidas/<fecha>/transcript.md`.
+Convenciones: el agente escribe sus entregas en `workspace/entregas/`; la bitácora va aparte, en `salidas/<fecha-hora>/`. Además: los MCP se declaran inline en `mcp_servers`; la tool propia vive en un servidor en proceso y se llama `mcp__<servidor>__<tool>`; la skill va en `workspace/.claude/skills/<nombre>/SKILL.md` y exige `"Skill"` en `tools`. Topes de partida: `max_turns=12`, `max_budget_usd=0.25`. Cada corrida deja `salidas/<fecha>/eventos.jsonl` y `salidas/<fecha>/transcript.md`.
 
 ## Contenido
 
@@ -20,7 +20,7 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
 
 ## 1. Asistente personal y gestión de proyectos (~77)
 
-- **Primer agente recomendado**: resumen de la mañana. Lee `datos/agenda.json`, `datos/correos/*.md` y `datos/tareas.md`, y escribe `salidas/hoy.md` con tres prioridades, choques de agenda y correos que piden respuesta.
+- **Primer agente recomendado**: resumen de la mañana. Lee `datos/agenda.json`, `datos/correos/*.md` y `datos/tareas.md`, y escribe `entregas/hoy.md` con tres prioridades, choques de agenda y correos que piden respuesta.
 - **Tools nativas**: `Read`, `Glob`, `Grep` para recorrer los archivos de ejemplo; `Write` solo para el resumen.
 - **Tool propia**: `mcp__agenda__hoy` devuelve la fecha actual, la zona horaria y los eventos del día como JSON. El system prompt exige pedirla siempre y no adivinar fechas.
 - **MCP reales**:
@@ -29,13 +29,13 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
   - Atlassian Rovo (Jira, Confluence): `https://mcp.atlassian.com/v2/mcp`. OAuth 2.1 o API token. Fuente: https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/
   - Google Workspace (Gmail `https://gmailmcp.googleapis.com/mcp/v1`, Calendar `https://calendarmcp.googleapis.com/mcp/v1`, Drive `https://drivemcp.googleapis.com/mcp/v1`). OAuth 2.0 con proyecto de Google Cloud y cliente OAuth propio; está en Developer Preview y pide inscripción al programa. Fuente: https://developers.google.com/workspace/guides/configure-mcp-servers
   - Memory (referencia): `npx -y @modelcontextprotocol/server-memory`, archivo en `MEMORY_FILE_PATH`. Sin auth. Fuente: https://github.com/modelcontextprotocol/servers/tree/main/src/memory
-- **Skill del agente**: `resumen-del-dia`. 1) Pide la fecha con `mcp__agenda__hoy`. 2) Lista los eventos y marca choques de horario. 3) Lee los correos y separa los que piden respuesta de los informativos. 4) Cruza tareas vencidas con huecos de la agenda. 5) Escribe `salidas/hoy.md` con tres prioridades y una línea de justificación por cada una. 6) Si un dato falta, lo dice en el resumen.
-- **Guardrail**: `disallowed_tools` con `Bash`, `Edit`, `WebFetch`. Con Gmail o Calendar reales, niega las tools de envío, borrado y creación de eventos: el agente deja borradores. Hook `PreToolUse` que rechaza `Write` fuera de `salidas/`. Topes: 12 turns, USD 0.25.
+- **Skill del agente**: `resumen-del-dia`. 1) Pide la fecha con `mcp__agenda__hoy`. 2) Lista los eventos y marca choques de horario. 3) Lee los correos y separa los que piden respuesta de los informativos. 4) Cruza tareas vencidas con huecos de la agenda. 5) Escribe `entregas/hoy.md` con tres prioridades y una línea de justificación por cada una. 6) Si un dato falta, lo dice en el resumen.
+- **Guardrail**: `disallowed_tools` con `Bash`, `Edit`, `WebFetch`. Con Gmail o Calendar reales, niega las tools de envío, borrado y creación de eventos: el agente deja borradores. Hook `PreToolUse` que rechaza `Write` fuera de `entregas/`. Topes: 12 turns, USD 0.25.
 - **Qué mirar en el transcript**: que la primera llamada sea `mcp__agenda__hoy` y que cada prioridad cite un archivo que el agente sí leyó.
 
 ## 2. Código, QA y DevOps (~67)
 
-- **Primer agente recomendado**: revisor de un diff local. Recibe `datos/cambio.diff` y el repositorio de ejemplo, y escribe `salidas/revision.md` con hallazgos ordenados por severidad, cada uno con archivo y línea.
+- **Primer agente recomendado**: revisor de un diff local. Recibe `datos/cambio.diff` y el repositorio de ejemplo, y escribe `entregas/revision.md` con hallazgos ordenados por severidad, cada uno con archivo y línea.
 - **Tools nativas**: `Read`, `Glob`, `Grep` para seguir el código que toca el diff; `Bash` únicamente para correr los tests.
 - **Tool propia**: `mcp__repo__correr_tests` ejecuta la suite y devuelve `{pasaron, fallaron, salida_recortada}`. Con esta tool se puede quitar `Bash`.
 - **MCP reales**:
@@ -45,13 +45,13 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
   - Git (referencia): `uvx mcp-server-git --repository path/to/git/repo`. Sin auth. Fuente: https://github.com/modelcontextprotocol/servers/tree/main/src/git
   - Datadog: MCP remoto oficial en GA. El endpoint depende del sitio de la cuenta y la doc lo genera con un selector; aquí no se copia ninguna URL. OAuth, token de acceso como `Authorization: Bearer`, o cabeceras `DD_API_KEY` y `DD_APPLICATION_KEY`. Fuente: https://docs.datadoghq.com/bits_ai/mcp_server/setup/
   - Linear y Atlassian (categoría 1) para leer el ticket que originó el cambio.
-- **Skill del agente**: `revisar-diff`. 1) Lee el diff completo y lista los archivos tocados. 2) Abre cada archivo y las funciones que llaman a lo modificado. 3) Corre los tests y anota cuáles fallan. 4) Clasifica hallazgos en bug, riesgo o estilo. 5) Escribe `salidas/revision.md` con archivo, línea, evidencia y arreglo sugerido. 6) No modifica código.
-- **Guardrail**: `disallowed_tools` con `Edit` y `Write` sobre el repositorio (hook: `Write` solo en `salidas/`). Hook sobre `Bash` que niega `git push`, `git reset`, `rm`, `curl` y cualquier comando distinto al de tests. En GitHub, PAT de solo lectura y sin tools de merge ni de comentario. Topes: 15 vueltas, USD 0.40.
+- **Skill del agente**: `revisar-diff`. 1) Lee el diff completo y lista los archivos tocados. 2) Abre cada archivo y las funciones que llaman a lo modificado. 3) Corre los tests y anota cuáles fallan. 4) Clasifica hallazgos en bug, riesgo o estilo. 5) Escribe `entregas/revision.md` con archivo, línea, evidencia y arreglo sugerido. 6) No modifica código.
+- **Guardrail**: `disallowed_tools` con `Edit` y `Write` sobre el repositorio (hook: `Write` solo en `entregas/`). Hook sobre `Bash` que niega `git push`, `git reset`, `rm`, `curl` y cualquier comando distinto al de tests. En GitHub, PAT de solo lectura y sin tools de merge ni de comentario. Topes: 15 vueltas, USD 0.40.
 - **Qué mirar en el transcript**: cuántos archivos abrió antes de opinar y si cada hallazgo tiene detrás un `Read` o un `Grep` que lo respalde.
 
 ## 3. Datos y análisis (~43)
 
-- **Primer agente recomendado**: auditor de calidad de un CSV. Toma `datos/ventas.csv` y produce `salidas/calidad.md` con nulos, duplicados, rangos imposibles y tres preguntas de negocio respondidas con su consulta SQL.
+- **Primer agente recomendado**: auditor de calidad de un CSV. Toma `datos/ventas.csv` y produce `entregas/calidad.md` con nulos, duplicados, rangos imposibles y tres preguntas de negocio respondidas con su consulta SQL.
 - **Tools nativas**: `Read` para el encabezado y una muestra; `Write` para el informe. El cálculo lo hace la tool propia o DuckDB.
 - **Tool propia**: `mcp__datos__perfil_columna` devuelve tipo inferido, porcentaje de nulos, cardinalidad, mínimo, máximo y cinco valores de ejemplo de una columna.
 - **MCP reales**:
@@ -65,7 +65,7 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
 
 ## 4. Finanzas y contabilidad (~41)
 
-- **Primer agente recomendado**: clasificador de gastos del mes. Lee `datos/extracto.csv` y `datos/categorias.md`, asigna categoría a cada movimiento y entrega `salidas/gastos.md` con totales, suscripciones repetidas y movimientos dudosos para revisión humana.
+- **Primer agente recomendado**: clasificador de gastos del mes. Lee `datos/extracto.csv` y `datos/categorias.md`, asigna categoría a cada movimiento y entrega `entregas/gastos.md` con totales, suscripciones repetidas y movimientos dudosos para revisión humana.
 - **Tools nativas**: `Read` para extracto y reglas; `Write` para el informe; `Grep` para buscar comercios repetidos.
 - **Tool propia**: `mcp__finanzas__sumar_por_categoria` recibe las asignaciones y devuelve totales exactos por categoría y el descuadre contra el saldo del extracto. La suma la hace el código.
 - **MCP reales**:
@@ -79,7 +79,7 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
 
 ## 5. Ventas y prospección (~36)
 
-- **Primer agente recomendado**: investigador de una cuenta. Recibe una fila de `datos/leads.csv`, consulta la web pública de la empresa y escribe `salidas/<empresa>.md` con ficha, tres señales de compra con su URL y un borrador de primer mensaje.
+- **Primer agente recomendado**: investigador de una cuenta. Recibe una fila de `datos/leads.csv`, consulta la web pública de la empresa y escribe `entregas/<empresa>.md` con ficha, tres señales de compra con su URL y un borrador de primer mensaje.
 - **Tools nativas**: `WebSearch` y `WebFetch` para la investigación; `Read` para el lead y la propuesta de valor; `Write` para la ficha.
 - **Tool propia**: `mcp__crm__buscar_cuenta` busca en un `crm.json` local y devuelve etapa, último contacto y dueño, o `null` si la cuenta no existe.
 - **MCP reales**:
@@ -93,7 +93,7 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
 
 ## 6. Marketing, contenido y diseño (~32)
 
-- **Primer agente recomendado**: redactor con guía de marca. Lee `datos/marca.md` y `datos/brief.md`, produce tres variantes de copy para una publicación y una tabla que verifica cada regla de la guía. Entrega `salidas/copys.md`.
+- **Primer agente recomendado**: redactor con guía de marca. Lee `datos/marca.md` y `datos/brief.md`, produce tres variantes de copy para una publicación y una tabla que verifica cada regla de la guía. Entrega `entregas/copys.md`.
 - **Tools nativas**: `Read` para guía y brief; `Write` para las variantes; `WebFetch` opcional para leer la landing a la que apunta la campaña.
 - **Tool propia**: `mcp__marca__validar_copy` devuelve longitud por red, palabras prohibidas encontradas y si el llamado a la acción está presente.
 - **MCP reales**:
@@ -107,7 +107,7 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
 
 ## 7. Investigación y monitoreo (~30)
 
-- **Primer agente recomendado**: vigía de una lista corta de fuentes. Lee `datos/fuentes.md` (cinco URLs: convocatorias, una entidad pública, dos medios), compara contra `datos/visto.json` y escribe `salidas/novedades.md` solo con lo nuevo, con fecha y enlace.
+- **Primer agente recomendado**: vigía de una lista corta de fuentes. Lee `datos/fuentes.md` (cinco URLs: convocatorias, una entidad pública, dos medios), compara contra `datos/visto.json` y escribe `entregas/novedades.md` solo con lo nuevo, con fecha y enlace.
 - **Tools nativas**: `WebFetch` para las fuentes fijas; `WebSearch` para ampliar un hallazgo; `Read` y `Write` para estado e informe.
 - **Tool propia**: `mcp__vigia__ya_visto` recibe una URL o un título y devuelve si ya fue reportado y cuándo. `mcp__vigia__registrar` lo guarda.
 - **MCP reales**:
@@ -130,13 +130,13 @@ Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive e
   - Filesystem (referencia, categoría 3) para acotar el agente a una carpeta de documentos.
   - WhatsApp: Meta publicó el 2026-09-15 el WhatsApp Business Tools MCP, `https://mcp.facebook.com/whatsapp_business_tools`, con OAuth de cuenta de desarrollador de Meta y en beta. Está orientado a configuración: números, plantillas, webhooks y mensajes de prueba; también puede enviar mensajes reales. Un bot de atención en producción se sigue construyendo con la Cloud API y un webhook propio que llama al agente. Fuente: https://developers.facebook.com/documentation/mcp/whatsapp-business-tools-mcp
   - Zapier o n8n (categorías 5 y 7) como puente hacia un sistema de tickets sin MCP propio.
-- **Skill del agente**: `responder-ticket`. 1) Lee el ticket y resume la pregunta en una línea. 2) Busca en la FAQ con la tool. 3) Si hay fragmento que responda, redacta citando su identificador. 4) Si no lo hay, escribe «escalar a humano» con el motivo. 5) Guarda el borrador en `salidas/respuestas/<ticket>.md`. 6) Nunca promete plazos, precios ni reembolsos que la FAQ no contenga.
+- **Skill del agente**: `responder-ticket`. 1) Lee el ticket y resume la pregunta en una línea. 2) Busca en la FAQ con la tool. 3) Si hay fragmento que responda, redacta citando su identificador. 4) Si no lo hay, escribe «escalar a humano» con el motivo. 5) Guarda el borrador en `entregas/respuestas/<ticket>.md`. 6) Nunca promete plazos, precios ni reembolsos que la FAQ no contenga.
 - **Guardrail**: nunca enviar mensajes a clientes: solo borradores. Hook que enmascara cédulas, teléfonos y correos antes de escribir. En verificación de documentos y contratos el agente señala hallazgos y la decisión es humana. En el tutor, la nota final la confirma una persona. Topes: 12 turns, USD 0.30.
 - **Qué mirar en el transcript**: los casos sin respuesta en la FAQ. Ahí se ve si el agente escaló o rellenó con conocimiento propio.
 
 ## Reglas comunes a las ocho
 
-1. **Solo lectura primero.** La primera versión lee y escribe únicamente en `salidas/`. Los servidores que ofrecen modo de lectura lo traen en la URL o en una bandera: Linear `/mcp/readonly`, Supabase `?read_only=true`, GitHub `--read-only`, DBHub `readonly = true`.
+1. **Solo lectura primero.** La primera versión lee y escribe únicamente en `entregas/`. Los servidores que ofrecen modo de lectura lo traen en la URL o en una bandera: Linear `/mcp/readonly`, Supabase `?read_only=true`, GitHub `--read-only`, DBHub `readonly = true`.
 2. **Hacia afuera, borrador.** Enviar, publicar, pagar, comprar, agendar a terceros o modificar un CRM quedan como borrador para que una persona apruebe. Niega esas tools por nombre en `disallowed_tools`; cuando dependa de los argumentos, usa un hook `PreToolUse` cuyo motivo de `deny` sea una instrucción para el modelo.
 3. **Datos de prueba antes que reales.** Archivos de ejemplo en `workspace/datos/`, cuenta sandbox, proyecto de pruebas, canal de pruebas. Con datos reales, enmascara PII antes de escribir y quita `WebFetch` y `WebSearch` si no hacen falta.
 4. **Secretos por variables de entorno.** Ninguna key en el archivo del agente ni en la skill: `os.environ["X"]` o `process.env.X`, pasados al MCP por `env` (stdio) o `headers` (remoto).

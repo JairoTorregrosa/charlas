@@ -5,6 +5,8 @@
 - Qué pieza usar
 - Archivos que se generan
 - Reglas que no se negocian
+- Dentro del kit del workshop
+- Hook sobre tools nativas
 
 ## Qué pieza usar
 
@@ -31,7 +33,9 @@ Estructura de salida, en una carpeta nueva con el nombre del agente:
   observar.py | observar.ts       # la bitácora: cópiala tal cual de assets/
   pyproject.toml | package.json + tsconfig.json
   workspace/.claude/skills/<skill>/SKILL.md
-  salidas/<fecha-hora>/           # eventos.jsonl + transcript.md, una carpeta por corrida
+  workspace/datos/                # datos de ejemplo
+  workspace/entregas/             # lo que el agente escribe (informes, borradores)
+  salidas/<fecha-hora>/           # la bitácora: eventos.jsonl + transcript.md, una carpeta por corrida
 ```
 
 Dentro del kit del workshop no crees proyecto nuevo: deja el archivo junto a los `0N_*.py` o `0N_*.ts` y reutiliza su `pyproject.toml` o `package.json`.
@@ -45,7 +49,7 @@ Dentro del kit del workshop no crees proyecto nuevo: deja el archivo junto a los
 4. **Tres listas distintas**: `tools` define qué existe; `allowed_tools` qué corre sin preguntar; `disallowed_tools` qué nunca corre. `allowed_tools` no restringe nada.
 5. **Nunca `bypassPermissions`** en un agente generado. Para correr sin humano usa `permission_mode="dontAsk"`: lo que no esté aprobado se niega y el agente busca otra ruta.
 6. **Hook cuando la regla depende de los argumentos** (qué archivo, qué id, qué comando). El motivo del `deny` lo lee el LLM: escríbelo como instrucción. Un hook que devuelve `allow` no salta las reglas `deny`.
-7. **Modelo**: `claude-sonnet-5` por defecto. Subagentes baratos con `haiku`.
+7. **Modelo**: `claude-sonnet-5` por defecto. Para subagentes, `sonnet` o `haiku` según lo que tengan que razonar.
 8. **El system prompt dice qué no adivinar**. El modelo conoce la fecha real y la usa si no le exiges pedirla por tool.
 9. **Credenciales por `.env`, siempre**: nunca escribas una API key en el código. Copia `assets/entorno.py` o `assets/entorno.ts` junto al agente e impórtalo en la primera línea: lee `ANTHROPIC_API_KEY` de `.env` (raíz del kit o carpeta del agente) e imprime qué autenticación quedó. Copia también `assets/.env.example` y dile a la persona que la key se crea en platform.claude.com/settings/keys (la suscripción de claude.ai no trae key). Verifica que `.env` esté en `.gitignore`. Sin key, el SDK usa la sesión de Claude Code.
 10. **Notebooks**: `await` directo; `asyncio.run` falla dentro de Jupyter.
@@ -54,3 +58,31 @@ Dentro del kit del workshop no crees proyecto nuevo: deja el archivo junto a los
 ## Dentro del kit del workshop
 
 Deja el agente junto a los `0N_*.py` o `0N_*.ts` como `NN_<nombre>.py|ts` y reutiliza su `pyproject.toml` o `package.json`, su `observar` y su `entorno`. Comparte el `workspace/` del kit: pon los datos en `workspace/datos/` y la skill nueva en `workspace/.claude/skills/<nombre>/`. En el ARRANQUE van a aparecer skills de otros ejercicios y las del repo padre (`setting_sources=["project"]` sube hasta la raíz del repo): es normal. `skills=[...]` es lo único que decide cuáles puede invocar el agente.
+
+## Hook sobre tools nativas
+
+Las tools nativas de archivos reciben `file_path` absoluto (`Read`, `Write`, `Edit`); `Bash` recibe `command`; `WebFetch` recibe `url`. Un hook que limita dónde escribe el agente:
+
+```python
+ENTREGAS = str(AQUI / "workspace" / "entregas")
+
+async def solo_en_entregas(entrada, tool_use_id, contexto):
+    ruta = entrada["tool_input"].get("file_path", "")
+    if ruta.startswith(ENTREGAS):
+        return {}
+    return {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+            "permissionDecisionReason": f"Solo puedes escribir dentro de {ENTREGAS}. Usa esa carpeta."}}
+
+hooks={"PreToolUse": [HookMatcher(matcher="Write", hooks=[solo_en_entregas])]}
+```
+```ts
+const ENTREGAS = join(import.meta.dirname, "workspace", "entregas");
+const soloEnEntregas: HookCallback = async (entrada) => {
+  if (entrada.hook_event_name !== "PreToolUse") return {};
+  const ruta = String((entrada.tool_input as { file_path?: string }).file_path ?? "");
+  if (ruta.startsWith(ENTREGAS)) return {};
+  return { hookSpecificOutput: { hookEventName: "PreToolUse", permissionDecision: "deny",
+    permissionDecisionReason: `Solo puedes escribir dentro de ${ENTREGAS}. Usa esa carpeta.` } };
+};
+hooks: { PreToolUse: [{ matcher: "Write", hooks: [soloEnEntregas] }] }
+```

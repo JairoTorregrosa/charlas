@@ -75,7 +75,7 @@ fuera su configuración personal:
   y el agente termina hablando con el Gmail real de quien proyecta.
 
 Además, todos llevan `maxTurns` y `maxBudgetUsd` para que una corrida en vivo no
-se vaya de las manos. Cada archivo cuesta entre uno y tres centavos de dólar.
+se vaya de las manos. Cada archivo cuesta entre uno y tres centavos de dólar (un agente propio con subagente puede costar diez veces más cuando algo falla: deja siempre los topes).
 
 ## Cosas que muerden
 
