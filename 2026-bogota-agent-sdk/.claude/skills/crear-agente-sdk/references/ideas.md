@@ -6,6 +6,18 @@ Las ocho categorías salen de 392 propuestas de asistentes al workshop. Cada sec
 
 Convenciones: los MCP se declaran inline en `mcp_servers`; la tool propia vive en un servidor en proceso y se llama `mcp__<servidor>__<tool>`; la skill va en `workspace/.claude/skills/<nombre>/SKILL.md` y exige `"Skill"` en `tools`. Topes de partida: `max_turns=12`, `max_budget_usd=0.25`. Cada corrida deja `salidas/<fecha>/eventos.jsonl` y `salidas/<fecha>/transcript.md`.
 
+## Contenido
+
+- 1. Asistente personal y gestión de proyectos (~77)
+- 2. Código, QA y DevOps (~67)
+- 3. Datos y análisis (~43)
+- 4. Finanzas y contabilidad (~41)
+- 5. Ventas y prospección (~36)
+- 6. Marketing, contenido y diseño (~32)
+- 7. Investigación y monitoreo (~30)
+- 8. Documentos, atención y educación (~23 docs, ~16 atención, ~19 tutor)
+- Reglas comunes a las ocho
+
 ## 1. Asistente personal y gestión de proyectos (~77)
 
 - **Primer agente recomendado**: resumen de la mañana. Lee `datos/agenda.json`, `datos/correos/*.md` y `datos/tareas.md`, y escribe `salidas/hoy.md` con tres prioridades, choques de agenda y correos que piden respuesta.

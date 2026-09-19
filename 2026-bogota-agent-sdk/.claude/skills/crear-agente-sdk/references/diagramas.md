@@ -2,6 +2,16 @@
 
 Úsalos en el campo `preview` de AskUserQuestion y en las explicaciones. Adáptalos al agente concreto: cambia los nombres de las tools y del objetivo. Máximo ~16 líneas y ~60 columnas por preview.
 
+## Contenido
+
+- El loop (para explicar qué se va a construir)
+- Paso «cómo corre»
+- Paso «de dónde salen los datos»
+- Paso «procedimiento»
+- Paso «guardrails»
+- Paso «subagente, sí o no»
+- Arquitecturas por familia (para el brainstorm)
+
 ## El loop (para explicar qué se va a construir)
 
 ```
