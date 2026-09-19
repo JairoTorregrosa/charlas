@@ -13,7 +13,7 @@ jueves 24 de septiembre de 2026, 06:15, BOG → MDE, LATAM, reserva ABC123. Entr
 medias le vas dando una pieza por archivo, y esas piezas son los primitivos de
 la SDK.
 
-**Slides:** [Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf](Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf)
+**Slides (PDF, 51 páginas):** [descargar](https://github.com/JairoTorregrosa/charlas/raw/main/2026-bogota-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf). El visor de GitHub no muestra PDFs de este tamaño: descárgalo.
 
 ```
 git clone https://github.com/JairoTorregrosa/charlas
