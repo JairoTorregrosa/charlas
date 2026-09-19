@@ -1,11 +1,11 @@
 ---
 name: crear-agente-sdk
-description: Crea un agente nuevo con la Claude Agent SDK, en Python o en TypeScript, a partir de un objetivo. Úsala cuando pidan "crea un agente", "hazme un agente que...", "agente con el Agent SDK", "claude-agent-sdk", "automatiza esto con un agente" o /crear-agente-sdk. Genera el archivo del agente, su carpeta de trabajo con skills, sus tools, sus guardrails (permisos, hook, topes) y lo corre una vez. No la uses para Claude Managed Agents, para llamadas sueltas a la Messages API ni para configurar subagentes de Claude Code (.claude/agents).
+description: Wizard para crear un agente nuevo con la Claude Agent SDK, en Python o en TypeScript. Pregunta paso a paso con AskUserQuestion y diagramas ASCII (idea, objetivo, lenguaje, datos, skill, guardrails), propone un plano y lo construye. Úsala cuando pidan "crea un agente", "hazme un agente que...", "agente con el Agent SDK", "claude-agent-sdk", "automatiza esto con un agente" o /crear-agente-sdk. Genera el archivo del agente, su carpeta de trabajo con skills, sus tools, sus guardrails (permisos, hook, topes) y lo corre una vez. No la uses para Claude Managed Agents, para llamadas sueltas a la Messages API ni para configurar subagentes de Claude Code (.claude/agents).
 ---
 
 # Crear un agente con la Claude Agent SDK
 
-Tú no escribes el loop: lo pone el SDK. Escribes tres cosas.
+Tú no escribes el loop: lo pone el SDK. Escribes tres cosas, y este wizard las decide contigo una por una.
 
 | Pieza | Qué es | Dónde queda |
 |---|---|---|
@@ -13,26 +13,49 @@ Tú no escribes el loop: lo pone el SDK. Escribes tres cosas.
 | Tools y workspace | tools nativas, tools propias, MCP, skills y archivos | opciones del `query()` y `workspace/` junto al agente |
 | Guardrails | permisos, hooks y topes | opciones del `query()` |
 
-## 1. Entrevista (una sola ronda, máximo cinco preguntas)
+## 1. Wizard: siete pasos, uno por pregunta
 
-Si la idea es vaga («un agente de ventas», «automatizar mi trabajo»), abre `references/ideas.md`: trae las ocho categorías que más se repiten, con un primer agente pequeño, tools, MCP reales, skill y guardrail para cada una. Propón esa versión pequeña y pregunta solo lo que no venga ya en el pedido:
+Conduce la creación como un wizard. En cada paso usa la tool **AskUserQuestion**: una pregunta, de dos a cuatro opciones, la recomendada primero con «(Recomendado)», y un `preview` con un diagrama ASCII que muestre cómo queda el agente con esa opción. Los diagramas base están en `references/diagramas.md`: adáptalos con los nombres reales del agente de la persona. Antes de cada pregunta escribe una o dos líneas que expliquen qué se decide y por qué importa; después de cada respuesta confirma en una línea lo que quedó.
 
-1. **Objetivo**: qué pregunta o tarea resuelve, en una frase. De ahí sale el prompt por defecto.
-2. **Lenguaje**: Python o TypeScript. Si ya hay un `pyproject.toml` o un `package.json` en la carpeta, usa ese y no preguntes.
-3. **Qué necesita tocar**: archivos locales, shell, web, un servicio externo (MCP), datos propios (tool propia).
-4. **Qué no debe hacer nunca**: esto se vuelve `disallowed_tools` o un hook.
-5. **Cómo corre**: una vez y sale (por defecto), o conversación de varios turnos.
+Salta los pasos que el pedido ya responde. Si la persona dice «decide tú» o estás corriendo sin humano (`claude -p`), elige la opción recomendada en todos y sigue. Si AskUserQuestion no está disponible, haz la misma pregunta en texto con las opciones numeradas y el diagrama en un bloque de código.
 
-Si el objetivo se resuelve con pasos fijos y conocidos, dilo: eso es un script o un workflow, y un agente sale más caro y menos predecible. Sigue solo si la persona confirma.
+| Paso | Pregunta | Opciones típicas | Diagrama |
+|---|---|---|---|
+| 0 · Idea | ¿Qué agente quieres? Solo si llega sin idea o con una vaga («de ventas», «automatizar mi trabajo») | 3–4 primeros agentes pequeños tomados de `references/ideas.md`, de la familia más cercana | Arquitecturas por familia |
+| 1 · Objetivo | ¿Cuál de estas frases describe lo que debe resolver? | 2–3 redacciones del objetivo en una frase, de la más pequeña a la más ambiciosa. Recomienda la pequeña | El loop, con su pedido y su resultado |
+| 2 · Lenguaje | ¿Python o TypeScript? No preguntes si la carpeta ya tiene `pyproject.toml` o `package.json` | Python (uv) · TypeScript (Node o bun) | — (usa `preview` con las 8 primeras líneas del agente en cada lenguaje) |
+| 3 · Cómo corre | ¿Una vez y sale, o conversación? | Una vez y sale (Recomendado) · Conversación con `resume` | «cómo corre» |
+| 4 · Datos y acciones | ¿De dónde salen los datos? (multiSelect) | Archivos locales de ejemplo (Recomendado) · Tool propia · MCP externo · Web | «de dónde salen los datos» |
+| 5 · Procedimiento | ¿El agente debe seguir siempre los mismos pasos? | Sí, con una skill (Recomendado) · No, que decida | «procedimiento» |
+| 6 · Guardrails | ¿Qué no debe hacer nunca? (multiSelect) | Solo lectura (Recomendado) · Acciones hacia afuera solo como borrador · Bloquear por argumentos con un hook · Lista blanca de dominios | «guardrails» |
+| 7 · Subagente | Solo si el trabajo llena el contexto de material que el principal no necesita | Sin subagente (Recomendado) · Con subagente | «subagente, sí o no» |
+
+Cierra el wizard con un **plano** antes de escribir código: un diagrama ASCII del agente final con sus tools, su skill y sus guardrails reales, y la lista de archivos que vas a crear. Pide confirmación con una última AskUserQuestion: «Construirlo así (Recomendado)» · «Cambiar algo».
+
+Si el objetivo se resuelve con pasos fijos y conocidos, dilo en el paso 1: eso es un script o un workflow, y un agente sale más caro y menos predecible. Sigue solo si la persona confirma.
+
+### Usa los diagramas también para explicar
+
+Cuando la persona pregunte «¿qué es un hook?», «¿tool o MCP?», «¿por qué una skill?», responde con el diagrama correspondiente de `references/diagramas.md` y la tabla de `references/conceptos.md`, y aterrízalo en su agente. Al entregar, vuelve a dibujar el plano con lo que de verdad quedó.
 
 ## 2. Decide las piezas
+
+Referencias que debes abrir antes de escribir código, según lo elegido:
+
+| Necesitas | Abre |
+|---|---|
+| Un punto de partida para la idea (tools, MCP reales con URL y auth, skill, guardrail) | `references/ideas.md` |
+| Código verificado de cada pieza, en el lenguaje elegido | `references/ejemplos/README.md` → `ejemplos/python/0N_*.py` o `ejemplos/typescript/0N_*.ts` |
+| System prompts, esquemas de tools y datos de ejemplo de nueve agentes pequeños | `references/ejemplos/managed_agents_ideas.py` |
+| Elegir entre tool, MCP, skill, subagente y hook | `references/conceptos.md` |
+| Subagentes, MCP por stdio, `resume`, correr sin humano | `references/piezas.md` |
+| Un error en la corrida | `references/gotchas.md` |
 
 - **Tools nativas** (`Read`, `Write`, `Edit`, `Bash`, `Glob`, `Grep`, `WebSearch`, `WebFetch`): declara en `tools` solo las que el objetivo exige. `tools=[]` deja al agente sin manos.
 - **Tool propia**: para datos o acciones de tu código. Una función con nombre, descripción y esquema. Va dentro de un servidor MCP en proceso (`create_sdk_mcp_server` / `createSdkMcpServer`) y se llama `mcp__<servidor>__<tool>`.
 - **MCP externo**: tools que hizo otro. Decláralo inline en `mcp_servers`. No lo pongas en `.mcp.json`: con `strict_mcp_config` ese archivo se ignora.
 - **Skill**: un procedimiento que el agente debe seguir igual cada vez. `workspace/.claude/skills/<nombre>/SKILL.md`. Exige `setting_sources=["project"]`, `skills=["<nombre>"]` y `"Skill"` dentro de `tools`; sin la tool `Skill` el agente ve la skill y no puede abrirla.
-Para elegir entre tool, MCP, skill, subagente y hook: `references/conceptos.md`.
-
+- **Datos de ejemplo**: crea tú los archivos en `workspace/datos/` (8–12 filas, con dos o tres trampas que obliguen al agente a leer de verdad) y dilo en la entrega. El sistema real se conecta después.
 - **Subagente**: solo cuando una parte del trabajo llena el contexto de papeles que el principal no necesita (leer veinte archivos para devolver una línea). Detalles en `references/piezas.md`.
 
 ## 3. Genera los archivos

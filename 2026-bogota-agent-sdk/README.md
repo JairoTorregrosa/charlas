@@ -83,4 +83,4 @@ La bitácora vive en `observar.py` y `observar.ts`. Úsala en cada agente que co
 
 ## Crea tu propio agente
 
-Abre Claude Code dentro de esta carpeta y escribe `/crear-agente-sdk`. La skill pregunta el objetivo y el lenguaje, genera el agente con su carpeta de trabajo, sus porteros y su bitácora, y lo corre una vez. `references/ideas.md` trae un primer agente pequeño para las ocho familias de ideas que más se repitieron en el workshop.
+Abre Claude Code dentro de esta carpeta y escribe `/crear-agente-sdk`. Es un wizard: pregunta paso a paso (idea, objetivo, Python o TypeScript, datos, skill, guardrails), cada opción con un diagrama ASCII de cómo queda tu agente, te muestra el plano final y lo construye con su bitácora. Trae como referencia el código verificado de las nueve piezas en los dos lenguajes y nueve agentes pequeños de ejemplo. `references/ideas.md` trae un primer agente pequeño para las ocho familias de ideas que más se repitieron en el workshop.
