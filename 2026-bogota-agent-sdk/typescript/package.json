@@ -1,0 +1,28 @@
+{
+  "name": "kit-agent-sdk-bogota-ts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Kit TypeScript del workshop Crea tu primer Agente con la Claude Agent SDK (Claude Community Bogotá)",
+  "scripts": {
+    "01": "tsx 01_query.ts",
+    "02": "tsx 02_stream.ts",
+    "03": "tsx 03_tool.ts",
+    "04": "tsx 04_mcp.ts",
+    "05": "tsx 05_skill.ts",
+    "06": "tsx 06_permisos_hooks.ts",
+    "07": "tsx 07_subagente.ts",
+    "08": "tsx 08_agente_vuelo.ts",
+    "09": "tsx 09_conversar.ts",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.269",
+    "zod": "^4.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}

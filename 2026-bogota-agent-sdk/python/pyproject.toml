@@ -1,0 +1,12 @@
+[project]
+name = "kit-agent-sdk-bogota"
+version = "0.1.0"
+description = "Asistente de viaje con la Claude Agent SDK: un primitivo por archivo"
+requires-python = ">=3.11"
+dependencies = [
+    "claude-agent-sdk>=0.2.157",
+    "mcp>=1.9",
+    "jupyterlab>=4.4",
+    "nbconvert>=7.16",
+    "ipykernel>=6.29",
+]

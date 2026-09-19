@@ -1,0 +1,9 @@
+[project]
+name = "kit-managed-agents-bogota"
+version = "0.1.0"
+description = "El mismo asistente de viaje, pero como Claude Managed Agent por API"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=1.7.0",
+    "python-dotenv>=1.0",
+]
