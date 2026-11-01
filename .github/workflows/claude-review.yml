@@ -1,0 +1,105 @@
+# Managed by gh-guard (github.com/JairoTorregrosa/gh-guard). Edits here are
+# overwritten by the reconciler: change the template in gh-guard instead.
+#
+# Required check `claude-review`: Claude reviews every push to the PR and fails
+# the check on a validated blocking defect. Method follows Anthropic's official
+# code-review plugin (independent finders, then per-finding validation, high
+# signal only), but always re-reviews the latest head commit, and treats the PR
+# description as the author's claims rather than as truth.
+# False positive? Add the `ai-review-override` label to the PR.
+name: Claude Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  claude-review:
+    # Drafts are skipped (a skipped required check counts as passed, but a draft can't merge).
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Override label
+        id: override
+        env:
+          OVERRIDE: ${{ contains(github.event.pull_request.labels.*.name, 'ai-review-override') }}
+        run: |
+          if [ "$OVERRIDE" = true ]; then
+            echo "::warning::ai-review-override label set: Claude review not enforced"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # SUPPLY CHAIN: every `uses:` is pinned to a full commit SHA.
+      - if: steps.override.outputs.skip != 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - id: review
+        if: steps.override.outputs.skip != 'true'
+        uses: anthropics/claude-code-action@d535f5172dec02b204866b393d6b20b9b2aaf98d # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+            HEAD SHA: ${{ github.event.pull_request.head.sha }}
+
+            You are an independent reviewer. You did not write this code and owe its
+            author nothing. Review the CURRENT head commit of this PR, even if earlier
+            commits were already reviewed.
+
+            1. Read the diff (`gh pr diff`) and the PR title/description (`gh pr view`).
+               Treat the description as the author's claims to verify, not as facts.
+               Read the relevant CLAUDE.md / AGENTS.md files in the repo.
+            2. Launch two subagents in parallel that each review independently and
+               return a list of issues with file:line:
+               - A: correctness. Logic errors, wrong results, crashes, broken
+                 callers/contracts, missing error handling that loses data.
+               - B: security and data. Injection, secrets, authz, unsafe input,
+                 destructive operations, migrations, concurrency.
+               Each flags only issues inside the changed code that it can show
+               with evidence. No style, naming, or "consider" suggestions, and
+               nothing CI already enforces (lint, format, types).
+            3. For each issue, launch a separate validator subagent that sees only the
+               issue and the code. It must confirm with a file:line citation from the
+               source, not an inference from names. Drop anything not confirmed.
+            4. Post each confirmed issue as an inline comment with
+               `mcp__github_inline_comment__create_inline_comment` (confirmed: true),
+               with a committable suggestion only when it fully fixes the issue.
+               Then post one short summary comment with `gh pr comment` that names the
+               head SHA you reviewed. If nothing was confirmed, say so in one line.
+            5. Return the structured verdict:
+               - "block" if any confirmed issue would break behaviour, lose or corrupt
+                 data, or open a security hole when merged.
+               - "approve" otherwise.
+          claude_args: |
+            --allowedTools "Task,Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+            --json-schema '{"type":"object","properties":{"verdict":{"type":"string","enum":["approve","block"]},"summary":{"type":"string"},"blocking_issues":{"type":"array","items":{"type":"string"}}},"required":["verdict","summary","blocking_issues"]}'
+
+      - name: Gate on verdict
+        if: steps.override.outputs.skip != 'true'
+        env:
+          OUT: ${{ steps.review.outputs.structured_output }}
+        run: |
+          set -euo pipefail
+          if [ -z "$OUT" ]; then echo "::error::Claude review returned no verdict"; exit 1; fi
+          verdict=$(jq -er .verdict <<<"$OUT")
+          jq -r .summary <<<"$OUT"
+          if [ "$verdict" != approve ]; then
+            jq -r '.blocking_issues[] | "::error::" + .' <<<"$OUT"
+            echo "::error::Fix and push, or add the ai-review-override label if this is a false positive."
+            exit 1
+          fi
