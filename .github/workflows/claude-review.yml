@@ -7,7 +7,18 @@
 # signal only), but always re-reviews the latest head commit, and treats the PR
 # description as the author's claims rather than as truth.
 # False positive? Add the `ai-review-override` label to the PR.
+#
+# Every run on the PR's current head must end in success for the merge, so no run may end
+# without a verdict: there is no `concurrency` (a cancelled run on the head blocks the merge
+# although another run passed). Instead:
+#   - a run whose head is no longer the PR head passes at once (only the current head counts;
+#     codex-nudge cancels old-head reviews still running, to save spend);
+#   - a label event other than the override changes no code, so it adopts the verdict of this
+#     head's latest review run (waiting for it) instead of paying for another review.
+#     codex-nudge re-runs adopted failures once that review is re-run and passes.
 name: Claude Review
+# The mode is in the title so other runs and codex-nudge can tell reviews from adoptions.
+run-name: "Claude Review #${{ github.event.pull_request.number }} [${{ ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'ai-review-override') && 'adopt' || 'review' }}]"
 
 on:
   pull_request:
@@ -17,27 +28,63 @@ permissions:
   contents: read
   pull-requests: write
   issues: write
-
-concurrency:
-  group: claude-review-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+  actions: read
 
 jobs:
   claude-review:
     # Drafts are skipped (a skipped required check counts as passed, but a draft can't merge).
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
-      - name: Override label
+      # Decides whether this run reviews. skip=true means this run's verdict is already
+      # known (override, superseded head, or an adopted passing review); a known failure
+      # exits 1 here.
+      - name: Decide
         id: override
         env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          RUN_ID: ${{ github.run_id }}
           OVERRIDE: ${{ contains(github.event.pull_request.labels.*.name, 'ai-review-override') }}
+          ADOPT: ${{ (github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'ai-review-override' }}
+          WAIT_MIN: "40"
         run: |
+          set -euo pipefail
+          skip() { echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; }
           if [ "$OVERRIDE" = true ]; then
-            echo "::warning::ai-review-override label set: Claude review not enforced"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::ai-review-override label set: Claude review not enforced"; skip
           fi
+          cur=$(gh api "repos/$REPO/pulls/$PR" --jq .head.sha)
+          if [ "$cur" != "$HEAD" ]; then
+            echo "::notice::superseded: the PR head is now $cur, not $HEAD; that head's run decides"; skip
+          fi
+          [ "$ADOPT" = true ] || exit 0
+          start=$(date +%s)
+          while :; do
+            # Latest review run (not an adoption, not this run) on this head; its latest attempt.
+            prior=$(gh api "repos/$REPO/actions/runs?head_sha=$HEAD&event=pull_request&per_page=100" --jq \
+              "[.workflow_runs[] | select(.name == \"Claude Review\" and .id != $RUN_ID and (.display_title | endswith(\" [review]\")))]
+               | max_by(.created_at) // {} | [.id // \"\", .status // \"\", .conclusion // \"\", .html_url // \"\"] | @tsv")
+            IFS=$'\t' read -r id status conclusion url <<<"$prior"
+            if [ -z "$id" ]; then echo "no review run on $HEAD yet: reviewing"; exit 0; fi
+            if [ "$status" = completed ]; then
+              case "$conclusion" in
+                success) echo "adopting the passing review of $HEAD: $url"; skip ;;
+                failure)
+                  echo "::error::The Claude review of $HEAD blocked ($url); this run repeats its verdict. Next: read its issues there, fix and push; or, if it failed without a verdict, re-run that run (codex-nudge then re-runs this one). False positive: add the ai-review-override label. Full status: merge-ready $REPO $PR"
+                  exit 1 ;;
+                *) echo "the review of $HEAD ended $conclusion without a verdict: reviewing"; exit 0 ;;
+              esac
+            fi
+            if [ $(($(date +%s) - start)) -ge $((WAIT_MIN * 60)) ]; then
+              echo "::error::The Claude review of $HEAD ($url) is still $status after ${WAIT_MIN} min. Next: check that run; re-run this one once it finishes."
+              exit 1
+            fi
+            sleep 20
+          done
 
       # SUPPLY CHAIN: every `uses:` is pinned to a full commit SHA.
       - if: steps.override.outputs.skip != 'true'
@@ -52,6 +99,9 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Dependency updates get the same review. Dependabot runs read the token from
+          # Dependabot secrets (gh-guard sets both).
+          allowed_bots: "dependabot[bot]"
           prompt: |
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
@@ -100,6 +150,6 @@ jobs:
           jq -r .summary <<<"$OUT"
           if [ "$verdict" != approve ]; then
             jq -r '.blocking_issues[] | "::error::" + .' <<<"$OUT"
-            echo "::error::Fix and push, or add the ai-review-override label if this is a false positive."
+            echo "::error::Next: fix each issue above (inline comments on the PR) and push; a new head gets a new review. False positive: add the ai-review-override label. Full status: merge-ready ${{ github.repository }} ${{ github.event.pull_request.number }}"
             exit 1
           fi
