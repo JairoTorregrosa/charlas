@@ -6,6 +6,9 @@
 # check run, only a summary comment with a hidden `codex-review-state:v1` JSON
 # marker. This job waits until that marker says Codex finished reviewing the
 # PR's head commit, and passes only if it has no unresolved findings.
+# Codex ignores "@codex review" from bots and doesn't review later pushes by itself, so
+# `codex-nudge` (gh-guard, every 5 min, as the repo owner) requests reviews for unreviewed
+# heads and re-runs this job once Codex has reviewed the head.
 # Codex review rules for a repo go in AGENTS.md under `## Code Review Rules`.
 # False positive? Add the `ai-review-override` label to the PR.
 name: Codex Review
@@ -21,11 +24,13 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  issues: write
+  issues: read
 
-concurrency:
-  group: codex-review-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+# No `concurrency`: cancelling is what broke the gate. A push and a Codex review arrive
+# together, one run cancels the other, and the cancelled check run (same name, same head)
+# blocks the merge although another run passed. Every run therefore finishes with a
+# verdict instead. Runs for the same head read the same marker, so they agree, and a run
+# whose head is no longer the PR's head stops at once (see "superseded" below).
 
 jobs:
   codex-review:
@@ -43,7 +48,6 @@ jobs:
           OVERRIDE: ${{ contains(github.event.pull_request.labels.*.name, 'ai-review-override') }}
           CODEX_BOT: chatgpt-codex-connector[bot]
           WAIT_MIN: "20"
-          ASK_AFTER_SEC: "180"
         run: |
           set -euo pipefail
           if [ "$OVERRIDE" = true ]; then
@@ -54,8 +58,12 @@ jobs:
               --jq ".[] | select(.user.login==\"$CODEX_BOT\") | select(.body|contains(\"codex-review-state:v1\")) | .body | @base64" \
               | tail -n1 | base64 -d | sed -n 's/.*<!-- codex-review-state:v1 \(.*\) -->.*/\1/p'
           }
-          start=$(date +%s); asked=0
+          start=$(date +%s)
           while :; do
+            cur=$(gh api "repos/$REPO/pulls/$PR" --jq .head.sha)
+            if [ "$cur" != "$HEAD" ]; then
+              echo "::notice::superseded: the PR head is now $cur, not $HEAD; that head's run decides"; exit 0
+            fi
             s=$(state || true)
             if [ -n "$s" ]; then
               sha=$(jq -r '.code_review.commit_sha // ""' <<<"$s")
@@ -64,28 +72,13 @@ jobs:
               echo "codex state: commit=$sha status=$status unresolved=$unresolved (head=$HEAD)"
               if [ "$sha" = "$HEAD" ] && [ "$status" = completed ]; then
                 if [ "$unresolved" = false ]; then echo "Codex reviewed $HEAD: no unresolved findings"; exit 0; fi
-                echo "::error::Codex has unresolved findings on $HEAD. Fix and push, resolve the threads and re-run this job, or add the ai-review-override label."
+                echo "::error::Codex has unresolved findings on $HEAD. Next: read them (gh api repos/$REPO/pulls/$PR/comments), fix and push, or reply and resolve each thread; codex-nudge re-runs this job once Codex reports no unresolved findings. False positive: add the ai-review-override label. Full status: merge-ready $REPO $PR"
                 exit 1
               fi
             fi
             now=$(date +%s)
-            # Codex auto-reviews on open/ready; ask explicitly for later pushes. Any run may ask
-            # (a cancelled run can't), but only once per head commit: the request carries a
-            # hidden marker with the SHA it was made for.
-            if [ "$asked" = 0 ] && [ $((now - start)) -ge "$ASK_AFTER_SEC" ]; then
-              marker="<!-- gh-guard-codex-request:$HEAD -->"
-              prior=$(gh api --paginate "repos/$REPO/issues/$PR/comments?per_page=100" \
-                --jq "[.[] | select(.body | contains(\"$marker\"))] | length" | jq -s add)
-              if [ "${prior:-0}" = 0 ]; then
-                echo "No Codex review of $HEAD yet, requesting one"
-                # REST issue comment: needs only issues:write (gh pr comment needs pull-requests:write)
-                gh api "repos/$REPO/issues/$PR/comments" -f body="@codex review
-          $marker" >/dev/null
-              fi
-              asked=1
-            fi
             if [ $((now - start)) -ge $((WAIT_MIN * 60)) ]; then
-              echo "::error::Codex did not review $HEAD within ${WAIT_MIN} min. Comment '@codex review' and re-run this job (is Codex code review enabled for this repo at chatgpt.com/codex/cloud/settings?)."
+              echo "::error::Codex did not review $HEAD within ${WAIT_MIN} min. codex-nudge requests a review and re-runs this job; or comment '@codex review' yourself and re-run (is Codex code review enabled for this repo at chatgpt.com/codex/cloud/settings?)."
               exit 1
             fi
             sleep 20
