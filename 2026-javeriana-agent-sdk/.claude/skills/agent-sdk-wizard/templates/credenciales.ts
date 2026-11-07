@@ -72,7 +72,15 @@ export function prepararCredenciales(): Modo {
   if (modo === "ant") {
     // Un perfil que no existe se ignora EN SILENCIO y paga tu login de claude.ai.
     for (const carpeta of carpetasDeAnt(env)) {
-      if (existsSync(join(carpeta, "credentials", `${valor}.json`))) {
+      const archivo = join(carpeta, "credentials", `${valor}.json`);
+      if (existsSync(archivo)) {
+        const datos = JSON.parse(readFileSync(archivo, "utf8")) as { expires_at?: number; refresh_token?: string };
+        // Vencido y sin refresh_token = no se puede renovar: cada llamada fallaría.
+        const vencido = typeof datos.expires_at === "number" && datos.expires_at * 1000 < Date.now();
+        if (vencido && !datos.refresh_token) {
+          parar(`El perfil «${valor}» de ant tiene la sesión vencida y no se puede renovar. ` +
+                `Corre \`ant auth login --profile ${valor}\` (o usa otro perfil de \`ant profile list\`).`);
+        }
         process.env.ANTHROPIC_CONFIG_DIR = carpeta;
         console.log(`[auth] ant · perfil «${valor}» (paga la organización de ese login)`);
         return modo;

@@ -10,6 +10,7 @@
 
 import { appendFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { join, isAbsolute, relative, resolve, basename } from "node:path";
 import type {
   HookCallback,
   PreToolUseHookInput,
@@ -86,7 +87,8 @@ export const registrarUso: HookCallback = async (input, toolUseID) => {
 //   hooks: { Stop: [{ hooks: [HOOK] }] }
 // Esto es un `if`, no un modelo: verificación determinista, gratis y honesta.
 
-const ENTREGABLE = "./out/reporte.md";
+// Relativo al cwd del AGENTE (p. ej. ./workspace), no a la carpeta desde donde lo corres.
+const ENTREGABLE = "out/reporte.md";
 
 export const exigirEntregable: HookCallback = async (input) => {
   const stop = input as StopHookInput;
@@ -95,7 +97,8 @@ export const exigirEntregable: HookCallback = async (input) => {
   // Sin la guarda, un agente que no puede cumplir queda en bucle infinito.
   if (stop.stop_hook_active) return {};
 
-  if (existsSync(ENTREGABLE)) return {}; // verificación pasada: que termine
+  // El input de todo hook trae el cwd de la sesión: ahí escribe el agente.
+  if (existsSync(join(stop.cwd ?? ".", ENTREGABLE))) return {}; // verificación pasada: que termine
 
   return {
     // El turno NO termina: el modelo lee `reason` y sigue trabajando.
@@ -103,6 +106,31 @@ export const exigirEntregable: HookCallback = async (input) => {
     reason:
       `Falta el entregable: escribe tus conclusiones en ${ENTREGABLE} ` +
       "antes de terminar.",
+  };
+};
+
+// ─── 9E · Escribir solo en entregas/ (el guardián de casi todas las ideas) ─
+// Evento PreToolUse, matcher "Write|Edit". Se registra así:
+//   hooks: { PreToolUse: [{ matcher: "Write|Edit", hooks: [HOOK] }] }
+
+const CARPETA_PERMITIDA = "entregas"; // relativa al cwd del agente
+
+export const soloEnEntregas: HookCallback = async (input) => {
+  const pre = input as PreToolUseHookInput;
+  const cwd = resolve(pre.cwd ?? ".");
+  const ruta = String((pre.tool_input as Record<string, unknown>).file_path ?? "");
+  const destino = isAbsolute(ruta) ? resolve(ruta) : resolve(cwd, ruta);
+  const rel = relative(join(cwd, CARPETA_PERMITIDA), destino);
+  if (rel && !rel.startsWith("..") && !isAbsolute(rel)) return {}; // dentro de entregas/
+  return {
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: "deny",
+      // Lo lee el MODELO: dile dónde sí puede escribir.
+      permissionDecisionReason:
+        `Solo puedes escribir dentro de ${CARPETA_PERMITIDA}/. ` +
+        `Guarda el archivo como ${CARPETA_PERMITIDA}/${basename(destino)}.`,
+    },
   };
 };
 

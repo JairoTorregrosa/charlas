@@ -51,7 +51,10 @@ nunca lo subas a git.
 ```
 
 - `🔧` es el agente **pidiendo** una herramienta. No la ejecuta él: la ejecuta este programa.
-- La última línea es el recibo: cuántas vueltas dio el ciclo y qué costó esa corrida.
+- La última línea es el recibo: cuántas vueltas dio el ciclo y qué costó esa corrida (en una
+  conversación de varias vueltas, el costo es **acumulado** desde la primera pregunta). Ese
+  conteo de turnos puede salir mayor que `{{K_TURNS}}` sin que el freno haya fallado: cuenta
+  más cosas que las vueltas que limita. El freno confiable es `{{K_BUDGET}}`.
 - Si aparece `⚠️ terminó por: error_max_turns` o `error_max_budget_usd`, chocó con uno de los
   dos frenos. Están en `agente.{{EXT}}` y se suben ahí.
 

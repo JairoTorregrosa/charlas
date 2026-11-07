@@ -45,13 +45,18 @@ Goal given by the user (may be empty): $ARGUMENTS
    (4-bis), tools (5), skill (6), guardrail (8–9: `disallowed_tools` + a `PreToolUse` hook
    written for that guardrail), `max_turns`/`max_budget_usd`, `cwd` (`./workspace`) and sample
    data. The archetype only decides `query()` vs a live session and the shape of the test
-   prompt. Combine options when the family needs it (e.g. `Read`, `Glob`, `Grep`, `Write` **and**
+   prompt. Model: Sonnet 5.5 first for any idea that reads and writes or researches; Haiku 5.5
+   only for pure lookups. Step 9's first option becomes **"El guardián de mi idea"**: the
+   family's guardrail, from `templates/hooks.*` (`solo_en_entregas` / `soloEnEntregas` covers
+   "escribe solo en entregas/"; adapt it for other paths or for SQL), previewed as a small
+   diagram like the other step 9 options. Reorder step 2 so the family's archetype goes first.
+   Combine options when the family needs it (e.g. `Read`, `Glob`, `Grep`, `Write` **and**
    a custom tool). `ideas.md` has the family → archetype table.
-4. **Sample data**: when the family needs files the templates do not ship (an agenda, a bank
+   **Sample data**: when the family needs files the templates do not ship (an agenda, a bank
    statement, a diff, a lesson), write small realistic ones yourself in `workspace/datos/`
    (10–20 rows or a page; include the edge cases the agent must catch) and make the test prompt
    exercise them.
-5. **Empty** → after step 0, start at step 1 with no preamble.
+3. **Empty** → after step 0, start at step 1 with no preamble.
 
 ## Decision table — is this the right skill?
 
@@ -86,7 +91,7 @@ These are not suggestions. Breaking one breaks the wizard.
    smart person who has not seen this before: one concrete analogy, one drawing.
 10. **Never invent an API name.** Every option maps to exact code in
     `references/opciones-sdk.md`, verified against TS SDK 0.3.251 / Python SDK 0.2.148 /
-    Claude Code 2.1.251 and re-run on Python SDK 0.2.176 / TS SDK 0.3.319 (2026-11-07). If it is
+    Claude Code 2.1.251 and re-run on Python SDK 0.2.176 / TS SDK 0.3.315–0.3.316 (2026-11-07). If it is
     not in that file, do not write it.
 11. **Secrets.** A pasted key or token goes only into `.env`, after `.gitignore` lists `.env`.
     Never echo it, never put it in a command line, a log, the README or `decisiones.md`.
@@ -179,7 +184,7 @@ and substitute.
 | `.gitignore` | `templates/gitignore` | always, **before** `.env` |
 | `hooks.py` / `hooks.ts` | `templates/hooks.py` / `templates/hooks.ts` | step 9 ≠ "No por ahora" |
 | `<cwd>/.claude/skills/<n>/SKILL.md` (+ `references/…`) | `templates/skill.md.tmpl` + `references/skill-creator.md` | step 6 = "una skill nueva" |
-| `workspace/ventas.csv` | `templates/ventas.csv` | goal needs sample data (see `arquetipos.md`) |
+| `workspace/datos/ventas.csv` | `templates/ventas.csv` (it is clean: seed errors if the agent audits quality) | goal needs sample data (see `arquetipos.md`) |
 | `README.md` | `templates/README.md.tmpl` | always |
 | `decisiones.md` | `templates/decisiones.md.tmpl` | always |
 | `agente.ipynb` | derive from `agente.py` | only if the user asked for a notebook |
@@ -204,9 +209,11 @@ Non-negotiables in the generated code:
 
 ### Notebook variant
 
-If the user wants `agente.ipynb`, the cell body is the same code with three changes: drop
-`import asyncio`, drop `async def main()` and `asyncio.run(main())`, and put the `async for`
-at the top level of the cell. `await`, never `asyncio.run` — a kernel already has a running
+If the user wants `agente.ipynb`, the cell body is the same code with four changes: drop
+`import asyncio`, drop `async def main()` and `asyncio.run(main())`, put the `async for`
+at the top level of the cell, and replace `AQUI = Path(__file__).resolve().parent` with
+`AQUI = Path.cwd()` (a cell has no `__file__`; the notebook lives in the agent folder and
+Jupyter starts there). Call `preparar_credenciales()` in the first cell. `await`, never `asyncio.run` — a kernel already has a running
 event loop. Do not add `nest_asyncio`; it is not needed.
 
 ## Test run — the wizard is not done until the agent runs
