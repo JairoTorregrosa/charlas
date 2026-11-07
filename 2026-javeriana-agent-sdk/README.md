@@ -20,7 +20,7 @@ por archivo, y esas piezas son los primitivos de la SDK.
 |---|---|---|
 | git | `xcode-select --install` | `winget install Git.Git` |
 | uv (Python) | `curl -LsSf https://astral.sh/uv/install.sh \| sh` | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` |
-| Node 18+ (solo TypeScript) | `brew install node` | `winget install OpenJS.NodeJS.LTS` |
+| Node 20.11+ (solo TypeScript) | `brew install node` | `winget install OpenJS.NodeJS.LTS` |
 | **ant** (CLI de Claude Platform) | `brew install anthropics/tap/ant` | `winget install Anthropic.Ant` |
 | Claude Code (para el wizard) | `curl -fsSL https://claude.ai/install.sh \| bash` | `irm https://claude.ai/install.ps1 \| iex` |
 
