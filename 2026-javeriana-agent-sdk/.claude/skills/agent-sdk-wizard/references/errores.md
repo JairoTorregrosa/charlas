@@ -42,6 +42,8 @@ Ordered by how often a first-time run hits them.
 | `result.subtype == "error_max_turns"` | Hit `max_turns` | Raise it, or accept the cut and read the `result` |
 | `result.subtype == "error_max_budget_usd"` | Hit `max_budget_usd`. Subagent spend counts | Raise it, or narrow the task |
 | `Budget limit reached` when launching a subagent | Same. Requires Claude Code v2.1.217+ for the cut to apply | Same |
+| `num_turns` in the result is higher than `max_turns` and still `success` | Observed 2026-11-07 (19 and 26 turns with `max_turns=15`): `num_turns` counts more than the loop iterations the cap limits. Not investigated further | Treat `max_budget_usd` as the reliable brake; read the transcript, not the counter |
+| `🔧 ToolSearch(…)` appears without being in `allowed_tools` | Claude Code defers some tool definitions (often custom tools) and loads them on demand | Harmless; it costs one turn. Mention it to the user so it does not look like a leak |
 | `subtype == "success"` but the last API request failed | Real behaviour, documented: **read `terminal_reason` before `subtype`** | Check `terminal_reason` and `is_error` too |
 
 ## Crashes
