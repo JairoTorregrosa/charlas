@@ -1,0 +1,51 @@
+«TEMPLATE for step 6 — goes at .claude/skills/{{NOMBRE_SKILL}}/SKILL.md inside the
+  generated agent's directory. Delete this marker block.
+
+  Only `name` and `description` are required. The description is what the model reads to
+  decide whether to load the body — front-load the trigger words.
+
+  The three levels, and why a skill is cheap:
+    1  name + description   always in context (a few dozen tokens)
+    2  this body            loaded only when the model decides it applies
+    3  referencia.md, scripts/   read or executed only if the body says so
+
+  In the SDK, the `allowed-tools` frontmatter PRE-APPROVES tools for that turn. It does NOT
+  restrict anything: tools it does not list stay available.
+»
+---
+name: {{NOMBRE_SKILL}}
+description: {{CUANDO_USAR_LA_SKILL}} Úsala cuando {{DISPARADORES}}.
+---
+
+# {{TITULO_SKILL}}
+
+{{UNA_FRASE_DE_QUE_HACE}}
+
+## Procedimiento
+
+1. {{PASO_1}}
+2. {{PASO_2}}
+3. {{PASO_3}}
+
+## Reglas
+
+- No inventes datos. Si algo no está en los archivos, dilo.
+- {{REGLA_DEL_DOMINIO}}
+- Cierra con UNA frase de conclusión.
+
+## Recursos adicionales
+
+«Keep a bullet here only if you actually create the file it points at. A skill that names a
+  file that does not exist sends the agent looking for it and wasting a turn. Delete the
+  bullets you do not use, and delete this marker.»
+
+- Si te piden el reporte en formato formal, lee primero
+  [referencia.md](referencia.md) — trae el orden de las secciones.
+- Para calcular, corre `python3 ${CLAUDE_SKILL_DIR}/scripts/calcular.py <archivo>`
+  y usa su salida. No leas el archivo entero.
+
+«${CLAUDE_SKILL_DIR} expands to this skill's own folder, wherever it ends up installed.
+  A relative path breaks the moment the agent changes directory; this does not.
+  It also expands inside the `allowed-tools` Bash(...) rules, so you can pre-approve exactly
+  the script the body tells it to run.
+»

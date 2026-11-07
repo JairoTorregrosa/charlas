@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+python/salidas/
+
+# Node
+node_modules/
+dist/
+
+# Secretos
+.env
+claude-lock.json
+managed-agents/salidas/
+typescript/salidas/

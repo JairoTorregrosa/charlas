@@ -1,0 +1,257 @@
+«TEMPLATE — this file is not valid Python until you substitute. Delete this line.
+
+  Placeholders          {{NOMBRE}} {{OBJETIVO}} {{MODELO}} {{EFFORT}} {{SYSTEM_PROMPT}}
+                        {{TOOLS}} {{MAX_TURNS}} {{MAX_BUDGET}} {{CWD}}
+                        {{PROMPT_PRUEBA}} {{PERMISSION_MODE}} {{ESQUEMA_JSON}}
+  {{SYSTEM_PROMPT}}     built with references/system-prompt.md — never a one-liner.
+                        Step 4 = "preset de Claude Code": the option line becomes
+                        system_prompt={"type": "preset", "preset": "claude_code", "append": SYSTEM_PROMPT},
+  Next to this file     credenciales.py (copy as is), .env, .env.example, .gitignore.
+  Optional blocks       lines between «SI …» and «FIN SI». Keep the block or delete it
+                        whole, and delete the marker lines either way.
+  Every option line     must end with its "# paso N: …" comment. That block is the map
+                        from the nine answers to the SDK — do not collapse it.
+»
+
+# {{NOMBRE}} — {{OBJETIVO}}
+#
+# Generado por la skill agent-sdk-wizard. Corre con:  uv run agente.py
+# La credencial sale de .env (ver credenciales.py): ant, API key o suscripción.
+
+import asyncio
+from pathlib import Path
+from typing import Any
+
+from credenciales import preparar_credenciales
+
+from claude_agent_sdk import (
+    query,
+    ClaudeSDKError,
+    SystemMessage,
+    ClaudeAgentOptions,
+    AssistantMessage,
+    ResultMessage,
+    TextBlock,
+    ToolUseBlock,
+    ToolResultBlock,
+)
+
+«SI el paso 5 fue "mis propias funciones"
+from claude_agent_sdk import tool, create_sdk_mcp_server
+«FIN SI
+
+«SI el paso 7 pidió subagentes
+from claude_agent_sdk import AgentDefinition
+«FIN SI
+
+«SI el paso 9 pidió un hook
+from claude_agent_sdk import HookMatcher
+
+from hooks import HOOK  # la función vigilante vive en hooks.py, al lado
+«FIN SI
+
+
+«SI el paso 5 fue "mis propias funciones"
+# ─── Paso 5 · tu función ──────────────────────────────────────────────────
+# Claude NO ejecuta esto. Pide la herramienta por su nombre y este programa
+# la corre. El nombre completo que ve el modelo es:
+#     mcp__{{NOMBRE_SERVIDOR}}__{{NOMBRE_TOOL}}
+# (el prefijo sale de la CLAVE del dict mcp_servers, no del name= de abajo)
+
+@tool(
+    "{{NOMBRE_TOOL}}",
+    "{{DESCRIPCION_TOOL}}",   # esto es lo que Claude lee para decidir si la usa
+    {"{{PARAM}}": str},       # ojo: en un schema de dict TODA clave es obligatoria
+)
+async def {{NOMBRE_TOOL}}(args: dict[str, Any]) -> dict[str, Any]:
+    print(f"  >>> corriendo TU función con {args}")   # prueba de que es tu proceso
+    # TODO: reemplaza esto por la consulta real (tu API, tu base de datos, tu Excel).
+    resultado = f"resultado de ejemplo para {args['{{PARAM}}']}"
+    # "content" es lo que Claude va a leer. Devuelve señal, no volcados.
+    return {"content": [{"type": "text", "text": resultado}]}
+
+
+{{NOMBRE_SERVIDOR}} = create_sdk_mcp_server(
+    name="{{NOMBRE_SERVIDOR}}", version="1.0.0", tools=[{{NOMBRE_TOOL}}]
+)
+«FIN SI
+
+
+AQUI = Path(__file__).resolve().parent         # funciona desde cualquier carpeta
+
+
+# ─── Paso 4 · el system prompt ────────────────────────────────────────────
+# Lo más importante del agente. Armado con references/system-prompt.md:
+# rol, contexto, objetivo, cómo usar las herramientas, límites, formato
+# de salida y cuándo parar. Cada regla dice POR QUÉ: el modelo generaliza.
+
+SYSTEM_PROMPT = """{{SYSTEM_PROMPT}}"""
+
+«SI la salida tiene que ser datos (JSON) que otro programa lee
+# ─── Salida estructurada ──────────────────────────────────────────────────
+# El SDK valida la respuesta final contra este JSON Schema y la entrega en
+# ResultMessage.structured_output. Si no logra cumplirlo: error_max_structured_output_retries.
+ESQUEMA = {{ESQUEMA_JSON}}
+«FIN SI
+
+
+# ─── Las nueve decisiones, en un solo bloque ──────────────────────────────
+# Cambiar el agente = cambiar una línea de aquí. La tabla paso → línea está
+# en README.md, y el porqué de cada una en decisiones.md.
+
+opciones = ClaudeAgentOptions(
+    model="{{MODELO}}",                       # paso 3: qué tan listo y a qué precio
+    «SI eligieron Opus 5.5 o Fable 5.1
+    effort="{{EFFORT}}",                      # paso 3: cuánto piensa antes de responder
+    «FIN SI
+    system_prompt=SYSTEM_PROMPT,              # paso 4: quién es, qué logra, reglas y cuándo parar
+    allowed_tools={{TOOLS}},                  # paso 5: qué puede hacer en el mundo
+    # ↑ Si el paso 8 fue "que me pregunte a mí", esta lista va VACÍA ([]): una
+    #   herramienta con nombre pelado aquí se auto-aprueba antes de llegar a tu
+    #   función, y tu función no se entera. El portero es can_use_tool.
+    «SI el paso 5 fue "mis propias funciones"
+    mcp_servers={"{{NOMBRE_SERVIDOR}}": {{NOMBRE_SERVIDOR}}},   # paso 5: tus funciones
+    «FIN SI
+    «SI el paso 6 usó skills
+    setting_sources=["project"],              # paso 6: descubre .claude/skills/
+    skills=["{{NOMBRE_SKILL}}"],              # paso 6: el procedimiento que le enseñaste
+    «FIN SI
+    «SI el paso 6 NO usó skills
+    setting_sources=[],                       # paso 6: sin skills, y aislado de tu ~/.claude
+    «FIN SI
+    «SI el paso 7 pidió subagentes
+    agents={                                  # paso 7: los ayudantes
+        "{{NOMBRE_AYUDANTE}}": AgentDefinition(
+            # description = CUÁNDO usarlo. Es lo que el modelo lee para decidir.
+            description="{{CUANDO_USARLO}}",
+            # prompt = el system prompt del ayudante: su rol y sus límites.
+            prompt="{{PROMPT_AYUDANTE}}",
+            # tools = lista blanca. Lo que no está aquí, no existe para él.
+            tools=["Read", "Grep", "Glob"],
+            model="haiku",                    # trabajo de lectura: modelo barato
+            # OJO: AgentDefinition va en camelCase, también en Python.
+            # maxTurns=5  ← así. max_turns=5 lanza TypeError.
+        ),
+    },
+    forward_subagent_text=True,               # paso 7: ver también el TEXTO del ayudante
+    «FIN SI
+    permission_mode="{{PERMISSION_MODE}}",    # paso 8: quién autoriza cada acción
+    «SI hay herramientas que el agente NUNCA debe usar (casi siempre: Bash, Edit, WebFetch…)
+    disallowed_tools={{TOOLS_PROHIBIDAS}},    # paso 8: allowed_tools aprueba; esto prohíbe
+    «FIN SI
+    «SI el paso 9 pidió un hook
+    hooks={"{{EVENTO_HOOK}}": [HookMatcher({{MATCHER}}hooks=[HOOK])]},   # paso 9: tu vigilante
+    «FIN SI
+    «SI la salida tiene que ser datos (JSON) que otro programa lee
+    output_format={"type": "json_schema", "schema": ESQUEMA},   # salida validada
+    «FIN SI
+    cwd=AQUI / "{{CWD}}",                     # la carpeta que el agente ve (junto a este archivo)
+    max_turns={{MAX_TURNS}},                  # freno: máximo de vueltas del ciclo
+    max_budget_usd={{MAX_BUDGET}},            # freno: tope de gasto estimado, en dólares
+    stderr=lambda linea: None,                # cambia a print(linea, end="") para depurar
+)
+
+
+# ─── El lector del stream ─────────────────────────────────────────────────
+# Los mensajes llegan de a poco mientras el agente trabaja. Esto los pinta.
+
+def imprimir(mensaje: Any) -> None:
+    # Un mensaje con parent_tool_use_id salió de adentro de un ayudante (paso 7).
+    sangria = "   ↳ " if getattr(mensaje, "parent_tool_use_id", None) else ""
+
+    if isinstance(mensaje, SystemMessage) and mensaje.subtype == "init":
+        # El arranque: qué skills y servidores ve el agente. Si tu skill no está, no la va a usar.
+        «SI el paso 6 usó skills
+        print(f"[init] skill «{{NOMBRE_SKILL}}» cargada: {'{{NOMBRE_SKILL}}' in mensaje.data.get('skills', [])}")
+        «FIN SI
+        «SI el paso 5 usó un MCP o tus funciones
+        print(f"[init] servidores: {[(s.get('name'), s.get('status')) for s in mensaje.data.get('mcp_servers', [])]}")
+        «FIN SI
+        return
+
+    if isinstance(mensaje, AssistantMessage):
+        for bloque in mensaje.content:
+            if isinstance(bloque, ToolUseBlock):
+                # El argumento más informativo de cada herramienta nativa.
+                ruta = bloque.input.get("file_path") or bloque.input.get("path")
+                if ruta:
+                    ruta = str(ruta).removeprefix(str(opciones.cwd)).lstrip("/\\")   # relativa (Mac y Windows)
+                arg = (
+                    bloque.input.get("skill")
+                    or bloque.input.get("command")
+                    or ruta
+                    or bloque.input.get("pattern")
+                    or bloque.input.get("prompt")
+                    # tus funciones (paso 5) tienen argumentos propios: van completos
+                    or ", ".join(f"{k}={v}" for k, v in bloque.input.items())
+                )
+                print(f"{sangria}🔧 {bloque.name}({str(arg)[:80]})")
+            elif isinstance(bloque, TextBlock) and bloque.text.strip():
+                print(f"{sangria}{bloque.text.strip()}")
+
+    elif isinstance(mensaje, ResultMessage):
+        if mensaje.subtype == "success":
+            print(f"\n{'─' * 60}")
+        else:
+            # error_max_turns · error_max_budget_usd · error_during_execution
+            print(f"\n⚠️  terminó por: {mensaje.subtype}")
+        if getattr(mensaje, "structured_output", None) is not None:
+            import json
+            print(json.dumps(mensaje.structured_output, ensure_ascii=False, indent=2))
+        costo = mensaje.total_cost_usd or 0.0
+        segundos = (mensaje.duration_ms or 0) / 1000
+        print(f"{mensaje.num_turns} turnos · ${costo:.4f} · {segundos:.0f}s")
+
+
+def imprimir_error_de_tool(mensaje: Any) -> None:
+    # Una herramienta que falla no rompe el agente: el error vuelve como contexto.
+    for bloque in getattr(mensaje, "content", []) or []:
+        if isinstance(bloque, ToolResultBlock) and bloque.is_error:
+            print(f"   ❌ la herramienta falló: {str(bloque.content)[:200]}")
+
+
+PROMPT = "{{PROMPT_PRUEBA}}"
+
+
+async def main() -> None:
+    print(f"▶ {{NOMBRE}}\n")
+    try:
+        async for mensaje in query(prompt=PROMPT, options=opciones):
+            imprimir(mensaje)
+            imprimir_error_de_tool(mensaje)
+    except ClaudeSDKError as error:
+        # Tope de vueltas o de gasto, o credencial rechazada: el resultado ya se
+        # imprimió arriba; aquí va el motivo, sin traceback.
+        print(f"\n⚠️  el agente paró: {error}")
+
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        PROMPT = " ".join(sys.argv[1:])       # uv run agente.py "tu pregunta"
+    preparar_credenciales()                   # ANTES de crear la sesión
+    asyncio.run(main())
+
+
+«SI el paso 2 fue "conversar con memoria", reemplaza main() por esto y añade
+   ClaudeSDKClient al import de arriba. query() abre una sesión NUEVA cada vez
+   y no recuerda nada; ClaudeSDKClient sí.
+
+from claude_agent_sdk import ClaudeSDKClient
+
+TURNOS = [
+    "{{PROMPT_PRUEBA}}",
+    "{{PROMPT_PRUEBA_2}}",     # este demuestra que se acuerda del anterior
+]
+
+async def main() -> None:
+    print(f"▶ {{NOMBRE}}\n")
+    # Ojo: en una sesión, total_cost_usd del resultado es ACUMULADO (sube de turno en turno).
+    async with ClaudeSDKClient(options=opciones) as cliente:
+        for turno in TURNOS:
+            print(f"\n💬 {turno}")
+            await cliente.query(turno)
+            async for mensaje in cliente.receive_response():
+                imprimir(mensaje)
+                imprimir_error_de_tool(mensaje)
+«FIN SI
