@@ -1,0 +1,59 @@
+«TEMPLATE — substitute and delete this block. Write it in the user's language.
+
+  One row per step, always all nine, even the skipped ones (say "saltado" and why). This is
+  the file the user opens in three months when they have forgotten why the agent is the way
+  it is, and the one that lets them go deeper on their own.
+
+  The "Dónde leer más" column points at public documentation pages — never at a path on
+  anyone's machine.
+»
+
+# Decisiones de {{NOMBRE}}
+
+La credencial y las nueve respuestas del wizard, la opción exacta del SDK que produjo cada una, y dónde leer
+más. Generado el {{FECHA}}.
+
+Versiones contra las que se probó: **TypeScript SDK 0.3.315** · **Python SDK 0.2.176**
+(empaca Claude Code 2.1.316).
+
+| # | Pregunta | Tu respuesta | Código exacto | Dónde leer más |
+|---|---|---|---|---|
+| 0 | ¿Con qué pagas? | {{R0}} | `AGENTE_AUTH={{C0}}` en `.env` (lo aplica `credenciales.{{EXT}}`) | [ant CLI](https://platform.claude.com/docs/en/api/sdks/cli) · [authentication](https://code.claude.com/docs/en/authentication) |
+| 1 | ¿En qué lenguaje? | {{R1}} | `{{C1}}` | [quickstart](https://code.claude.com/docs/en/agent-sdk/quickstart.md) |
+| 2 | ¿Qué tiene que lograr? | {{R2}} | `{{C2}}` | [agent-loop](https://code.claude.com/docs/en/agent-sdk/agent-loop.md) |
+| 3 | ¿Qué modelo? | {{R3}} | `{{C3}}` | [modelos](https://platform.claude.com/docs/en/about-claude/models/overview.md) |
+| 4 | ¿Qué reglas fijas? | {{R4}} | `{{C4}}` | [{{LANG_DOC}}](https://code.claude.com/docs/en/agent-sdk/{{LANG_DOC}}.md) |
+| 5 | ¿Qué puede hacer? | {{R5}} | `{{C5}}` | [custom-tools](https://code.claude.com/docs/en/agent-sdk/custom-tools.md) · [tools-reference](https://code.claude.com/docs/en/tools-reference.md) |
+| 6 | ¿Un procedimiento tuyo? | {{R6}} | `{{C6}}` | [skills](https://code.claude.com/docs/en/skills.md) |
+| 7 | ¿Repartir la tarea? | {{R7}} | `{{C7}}` | [subagents](https://code.claude.com/docs/en/agent-sdk/subagents.md) |
+| 8 | ¿Quién autoriza? | {{R8}} | `{{C8}}` | [permissions](https://code.claude.com/docs/en/agent-sdk/permissions.md) |
+| 9 | ¿Un vigilante? | {{R9}} | `{{C9}}` | [hooks](https://code.claude.com/docs/en/agent-sdk/hooks.md) |
+
+## Frenos que se pusieron sin preguntar
+
+| Opción | Valor | Por qué |
+|---|---|---|
+| `{{K_TURNS}}` | `{{MAX_TURNS}}` | Corta el ciclo tras esas vueltas. Sin él, un agente confundido puede dar vueltas indefinidamente. Al cortar, `result.subtype = "error_max_turns"`. |
+| `{{K_BUDGET}}` | `{{MAX_BUDGET}}` | Corta cuando el costo estimado llega a ese valor en dólares. Cuenta también lo que gastan los ayudantes. Al cortar, `result.subtype = "error_max_budget_usd"`. |
+| `{{K_SETTINGS}}` | `{{V_SETTINGS}}` | {{POR_QUE_SETTINGS}} |
+
+Los dos primeros van en **todos** los agentes que genera este wizard. Son la diferencia entre
+un experimento y una cuenta sorpresa.
+
+## Las tres cosas que más confunden de este SDK
+
+1. **`{{K_TOOLS}}` aprueba, no restringe.** Las herramientas que no están en la lista siguen
+   disponibles y caen al modo de permisos. Para quitar una de verdad, va con nombre pelado en
+   `{{K_DISALLOWED}}` (la saca del contexto) o se fija la lista completa con `tools`.
+2. **Cada llamada abre una sesión nueva.** El agente no recuerda nada de la corrida anterior,
+   salvo que le pases `resume` o `{{K_CONTINUE}}`.
+3. **Un hook corre antes que todo lo demás** — antes de las reglas de denegación y antes del
+   modo. Es lo único que aguanta incluso con `bypassPermissions`.
+
+## Qué probar después
+
+- Bajar el modelo a `claude-haiku-5-5` y comparar el recibo de la última línea.
+- Cambiar el párrafo de reglas del paso 4 y ver si la respuesta mejora. Ese párrafo es la
+  palanca más barata que tienes.
+- Poner `{{K_STDERR}}` en modo depuración: el error real del CLI no sale por ningún otro lado.
+{{SIGUIENTES_PASOS_EXTRA}}

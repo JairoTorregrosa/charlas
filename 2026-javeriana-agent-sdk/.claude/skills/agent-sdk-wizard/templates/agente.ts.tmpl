@@ -1,0 +1,249 @@
+«TEMPLATE — this file is not valid TypeScript until you substitute. Delete this line.
+
+  Placeholders          {{NOMBRE}} {{OBJETIVO}} {{MODELO}} {{EFFORT}} {{SYSTEM_PROMPT}}
+                        {{TOOLS}} {{MAX_TURNS}} {{MAX_BUDGET}} {{CWD}}
+                        {{PROMPT_PRUEBA}} {{PERMISSION_MODE}} {{ESQUEMA_JSON}}
+  {{SYSTEM_PROMPT}}     built with references/system-prompt.md — never a one-liner.
+                        Step 4 = "preset de Claude Code": the option line becomes
+                        systemPrompt: { type: "preset", preset: "claude_code", append: SYSTEM_PROMPT },
+  Next to this file     credenciales.ts (copy as is), .env, .env.example, .gitignore.
+  Optional blocks       lines between «SI …» and «FIN SI». Keep the block or delete it
+                        whole, and delete the marker lines either way.
+  Every option line     must end with its "// paso N: …" comment. That block is the map
+                        from the nine answers to the SDK — do not collapse it.
+»
+
+// {{NOMBRE}} — {{OBJETIVO}}
+//
+// Generado por la skill agent-sdk-wizard. Corre con:  npx tsx agente.ts
+// La credencial sale de .env (ver credenciales.ts): ant, API key o suscripción.
+
+import { query, type Options, type SDKMessage } from "@anthropic-ai/claude-agent-sdk";
+import { prepararCredenciales } from "./credenciales.js";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const AQUI = dirname(fileURLToPath(import.meta.url)); // funciona desde cualquier carpeta
+
+prepararCredenciales(); // ANTES de crear la sesión
+«SI el paso 5 fue "mis propias funciones"
+import { tool, createSdkMcpServer } from "@anthropic-ai/claude-agent-sdk";
+import { z } from "zod";
+«FIN SI
+«SI el paso 9 pidió un hook
+import { HOOK } from "./hooks.js";   // la función vigilante vive en hooks.ts, al lado
+«FIN SI
+
+«SI el paso 5 fue "mis propias funciones"
+// ─── Paso 5 · tu función ──────────────────────────────────────────────────
+// Claude NO ejecuta esto. Pide la herramienta por su nombre y este programa
+// la corre. El nombre completo que ve el modelo es:
+//     mcp__{{NOMBRE_SERVIDOR}}__{{NOMBRE_TOOL}}
+// (el prefijo sale de la CLAVE del objeto mcpServers, no del name: de abajo)
+
+const {{NOMBRE_TOOL_CAMEL}} = tool(
+  "{{NOMBRE_TOOL}}",
+  "{{DESCRIPCION_TOOL}}", // esto es lo que Claude lee para decidir si la usa
+  { {{PARAM}}: z.string().describe("{{DESCRIPCION_PARAM}}") }, // .describe() también lo lee
+  async (args) => {
+    console.log(`  >>> corriendo TU función con ${JSON.stringify(args)}`);
+    // TODO: reemplaza esto por la consulta real (tu API, tu base de datos, tu Excel).
+    const resultado = `resultado de ejemplo para ${args.{{PARAM}}}`;
+    // "content" es lo que Claude va a leer. Devuelve señal, no volcados.
+    return { content: [{ type: "text", text: resultado }] };
+  },
+);
+
+const {{NOMBRE_SERVIDOR_CAMEL}} = createSdkMcpServer({
+  name: "{{NOMBRE_SERVIDOR}}",
+  version: "1.0.0",
+  tools: [{{NOMBRE_TOOL_CAMEL}}],
+});
+«FIN SI
+
+// ─── Paso 4 · el system prompt ────────────────────────────────────────────
+// Lo más importante del agente. Armado con references/system-prompt.md:
+// rol, contexto, objetivo, cómo usar las herramientas, límites, formato
+// de salida y cuándo parar. Cada regla dice POR QUÉ: el modelo generaliza.
+
+const SYSTEM_PROMPT = `{{SYSTEM_PROMPT}}`;
+
+«SI la salida tiene que ser datos (JSON) que otro programa lee
+// ─── Salida estructurada ──────────────────────────────────────────────────
+// El SDK valida la respuesta final contra este JSON Schema y la entrega en
+// result.structured_output. Si no logra cumplirlo: error_max_structured_output_retries.
+const ESQUEMA = {{ESQUEMA_JSON}};
+«FIN SI
+
+// ─── Las nueve decisiones, en un solo bloque ──────────────────────────────
+// Cambiar el agente = cambiar una línea de aquí. La tabla paso → línea está
+// en README.md, y el porqué de cada una en decisiones.md.
+
+const opciones: Options = {
+  model: "{{MODELO}}",                       // paso 3: qué tan listo y a qué precio
+  «SI eligieron Opus 5.5 o Fable 5.1
+  effort: "{{EFFORT}}",                      // paso 3: cuánto piensa antes de responder
+  «FIN SI
+  systemPrompt: SYSTEM_PROMPT,               // paso 4: quién es, qué logra, reglas y cuándo parar
+  allowedTools: {{TOOLS}},                   // paso 5: qué puede hacer en el mundo
+  // ↑ Si el paso 8 fue "que me pregunte a mí", esta lista va VACÍA ([]): una
+  //   herramienta con nombre pelado aquí se auto-aprueba antes de llegar a tu
+  //   función, y tu función no se entera. El portero es canUseTool.
+  «SI el paso 5 fue "mis propias funciones"
+  mcpServers: { {{NOMBRE_SERVIDOR}}: {{NOMBRE_SERVIDOR_CAMEL}} }, // paso 5: tus funciones
+  «FIN SI
+  «SI el paso 6 usó skills
+  settingSources: ["project"],               // paso 6: descubre .claude/skills/
+  skills: ["{{NOMBRE_SKILL}}"],              // paso 6: el procedimiento que le enseñaste
+  «FIN SI
+  «SI el paso 6 NO usó skills
+  settingSources: [],                        // paso 6: sin skills, y aislado de tu ~/.claude
+  «FIN SI
+  «SI el paso 7 pidió subagentes
+  agents: {                                  // paso 7: los ayudantes
+    {{NOMBRE_AYUDANTE}}: {
+      // description = CUÁNDO usarlo. Es lo que el modelo lee para decidir.
+      description: "{{CUANDO_USARLO}}",
+      // prompt = el system prompt del ayudante: su rol y sus límites.
+      prompt: "{{PROMPT_AYUDANTE}}",
+      // tools = lista blanca. Lo que no está aquí, no existe para él.
+      tools: ["Read", "Grep", "Glob"],
+      model: "haiku",                        // trabajo de lectura: modelo barato
+    },
+  },
+  forwardSubagentText: true,                 // paso 7: ver también el TEXTO del ayudante
+  «FIN SI
+  permissionMode: "{{PERMISSION_MODE}}",     // paso 8: quién autoriza cada acción
+  «SI hay herramientas que el agente NUNCA debe usar (casi siempre: Bash, Edit, WebFetch…)
+  disallowedTools: {{TOOLS_PROHIBIDAS}},     // paso 8: allowedTools aprueba; esto prohíbe
+  «FIN SI
+  «SI el paso 8 fue "que me pregunte a mí"
+  canUseTool: aprobar,                       // paso 8: tu función decide, más abajo
+  «FIN SI
+  «SI el paso 8 fue "sin frenos"
+  allowDangerouslySkipPermissions: true,     // paso 8: TS exige confirmarlo aparte
+  «FIN SI
+  «SI el paso 9 pidió un hook
+  hooks: { {{EVENTO_HOOK}}: [{ {{MATCHER}}hooks: [HOOK] }] },   // paso 9: tu vigilante
+  «FIN SI
+  «SI la salida tiene que ser datos (JSON) que otro programa lee
+  outputFormat: { type: "json_schema", schema: ESQUEMA },   // salida validada
+  «FIN SI
+  cwd: join(AQUI, "{{CWD}}"),                // la carpeta que el agente ve (junto a este archivo)
+  maxTurns: {{MAX_TURNS}},                   // freno: máximo de vueltas del ciclo
+  maxBudgetUsd: {{MAX_BUDGET}},              // freno: tope de gasto estimado, en dólares
+  stderr: () => {},                          // cambia a (l) => process.stderr.write(l) para depurar
+};
+
+// ─── El lector del stream ─────────────────────────────────────────────────
+// Los mensajes llegan de a poco mientras el agente trabaja. Esto los pinta.
+
+function imprimir(mensaje: SDKMessage): void {
+  // Un mensaje con parent_tool_use_id salió de adentro de un ayudante (paso 7).
+  const sangria =
+    "parent_tool_use_id" in mensaje && mensaje.parent_tool_use_id ? "   ↳ " : "";
+
+  if (mensaje.type === "system" && mensaje.subtype === "init") {
+    // El arranque: qué skills y servidores ve el agente. Si tu skill no está, no la va a usar.
+    «SI el paso 6 usó skills
+    console.log(`[init] skill «{{NOMBRE_SKILL}}» cargada: ${mensaje.skills.includes("{{NOMBRE_SKILL}}")}`);
+    «FIN SI
+    «SI el paso 5 usó un MCP o tus funciones
+    console.log(`[init] servidores: ${mensaje.mcp_servers.map((s) => `${s.name}:${s.status}`).join(", ")}`);
+    «FIN SI
+    return;
+  }
+
+  if (mensaje.type === "assistant") {
+    for (const bloque of mensaje.message.content) {
+      if (bloque.type === "tool_use") {
+        const input = (bloque.input ?? {}) as Record<string, unknown>;
+        // El argumento más informativo de cada herramienta nativa (rutas relativas: se leen mejor).
+        const ruta = (input.file_path ?? input.path) as string | undefined;
+        const arg =
+          input.skill ?? input.command ?? ruta?.replace(String(opciones.cwd), "").replace(/^[\\/]/, "") ??
+          input.pattern ?? input.prompt ??
+          // tus funciones (paso 5) tienen argumentos propios: van completos
+          Object.entries(input).map(([k, v]) => `${k}=${v}`).join(", ");
+        console.log(`${sangria}🔧 ${bloque.name}(${String(arg).slice(0, 80)})`);
+      } else if (bloque.type === "text" && bloque.text.trim()) {
+        console.log(`${sangria}${bloque.text.trim()}`);
+      }
+    }
+  } else if (mensaje.type === "user") {
+    // Una herramienta que falla no rompe el agente: el error vuelve como contexto.
+    const contenido = mensaje.message.content;
+    if (Array.isArray(contenido)) {
+      for (const bloque of contenido) {
+        if (bloque.type === "tool_result" && bloque.is_error) {
+          console.log(`   ❌ la herramienta falló: ${String(bloque.content).slice(0, 200)}`);
+        }
+      }
+    }
+  } else if (mensaje.type === "result") {
+    if (mensaje.subtype === "success") {
+      console.log(`\n${"─".repeat(60)}`);
+    } else {
+      // error_max_turns · error_max_budget_usd · error_during_execution
+      console.log(`\n⚠️  terminó por: ${mensaje.subtype}`);
+    }
+    if ("structured_output" in mensaje && mensaje.structured_output !== undefined) {
+      console.log(JSON.stringify(mensaje.structured_output, null, 2));
+    }
+    const costo = mensaje.total_cost_usd ?? 0;
+    const segundos = (mensaje.duration_ms ?? 0) / 1000;
+    console.log(`${mensaje.num_turns} turnos · $${costo.toFixed(4)} · ${segundos.toFixed(0)}s`);
+  }
+}
+
+// npx tsx agente.ts "tu pregunta"  — sin argumento usa la prueba del wizard
+const PROMPT = process.argv.slice(2).join(" ") || "{{PROMPT_PRUEBA}}";
+
+console.log(`▶ {{NOMBRE}}\n`);
+try {
+  for await (const mensaje of query({ prompt: PROMPT, options: opciones })) {
+    imprimir(mensaje);
+  }
+} catch (error) {
+  // Tope de vueltas o de gasto, o credencial rechazada: el resultado ya se
+  // imprimió arriba; aquí va el motivo, sin stack trace.
+  console.log(`\n⚠️  el agente paró: ${(error as Error).message}`);
+}
+
+«SI el paso 8 fue "que me pregunte a mí", añade esto ANTES del bloque de opciones.
+   En TypeScript no hace falta ningún truco: canUseTool funciona con un prompt normal.
+
+import * as readline from "node:readline/promises";
+
+const SEGURAS = new Set(["Read", "Glob", "Grep"]);
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+
+const aprobar: NonNullable<Options["canUseTool"]> = async (nombre, input) => {
+  if (SEGURAS.has(nombre)) return { behavior: "allow", updatedInput: input };
+  console.log(`\n[${nombre}]`, JSON.stringify(input, null, 2));
+  const r = await rl.question("  ¿Permitir? (s/n): ");
+  if (r.trim().toLowerCase() === "s") return { behavior: "allow", updatedInput: input };
+  // El mensaje lo LEE el modelo: dile qué hacer distinto, no solo que no.
+  return { behavior: "deny", message: "No autorizado. Propón una alternativa sin escribir en disco." };
+};
+
+// …y cierra la terminal al final del archivo:
+rl.close();
+«FIN SI
+
+«SI el paso 2 fue "conversar con memoria", reemplaza el for await final por esto.
+   query() abre una sesión NUEVA cada vez y no recuerda nada. El objeto Query en
+   modo streaming input sí mantiene el historial.
+
+// Ojo: en una sesión, total_cost_usd del resultado es ACUMULADO (sube de turno en turno).
+async function* turnos() {
+  yield { type: "user" as const, session_id: "", parent_tool_use_id: null,
+          message: { role: "user" as const, content: "{{PROMPT_PRUEBA}}" } };
+  yield { type: "user" as const, session_id: "", parent_tool_use_id: null,
+          message: { role: "user" as const, content: "{{PROMPT_PRUEBA_2}}" } };
+}
+
+for await (const mensaje of query({ prompt: turnos(), options: opciones })) {
+  imprimir(mensaje);
+}
+«FIN SI

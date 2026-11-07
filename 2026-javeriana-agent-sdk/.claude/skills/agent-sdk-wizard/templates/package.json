@@ -1,0 +1,24 @@
+{
+  "_comment": "TEMPLATE — substitute {{NOMBRE}} and {{OBJETIVO}}, then delete these two keys.",
+  "_type": "type:module habilita top-level await, que el agente usa",
+  "name": "{{NOMBRE}}",
+  "version": "0.1.0",
+  "description": "{{OBJETIVO}}",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "tsx agente.ts"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.300",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,109 @@
+«TEMPLATE — substitute and delete this block. Write it in the user's language.
+
+  The test of this file: an agent that has never seen the project, reading ONLY this README,
+  can run the agent without opening any documentation. If a step needs a doc, the step is
+  wrong, not the doc.
+
+  The loop drawing in §"Cómo funciona" is NOT generic: draw it with THIS agent's nine
+  decisions in it — its real tools, its real model, its real limits.
+»
+
+# {{NOMBRE}}
+
+{{UNA_FRASE_DE_QUE_HACE}}
+
+Hecho con el [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk).
+
+## Cómo correrlo
+
+Dos comandos (iguales en Mac y en Windows). El primero solo la primera vez.
+
+```bash
+{{COMANDO_INSTALAR}}                          # instala el SDK
+{{COMANDO_CORRER}}                            # corre el agente con la pregunta de prueba
+{{COMANDO_CORRER}} "tu pregunta"              # o con la tuya
+```
+
+### La credencial
+
+`credenciales.{{EXT}}` lee `.env` y usa **una sola** forma de pagar (la primera línea que
+imprime el agente dice cuál):
+
+| `AGENTE_AUTH` en `.env` | Qué hace | Quién paga |
+|---|---|---|
+| `ant` (configurado: {{AUTH_ELEGIDA}}) | usa tu login de `ant auth login` (perfil en `ANTHROPIC_PROFILE`) | la organización de ese login (los créditos) |
+| `api_key` | usa `ANTHROPIC_API_KEY` | la organización dueña de la key |
+| `suscripcion` | usa `CLAUDE_CODE_OAUTH_TOKEN` de `claude setup-token` | tu plan Pro/Max |
+
+Para cambiar, edita `.env` (hay un ejemplo en `.env.example`). `.env` está en `.gitignore`:
+nunca lo subas a git.
+
+## Qué vas a ver en pantalla
+
+```
+▶ {{NOMBRE}}
+
+🔧 {{TOOL_EJEMPLO}}({{ARG_EJEMPLO}})
+{{TEXTO_EJEMPLO}}
+
+────────────────────────────────────────────────────────────
+{{TURNOS_EJEMPLO}} turnos · ${{COSTO_EJEMPLO}} · {{SEGUNDOS_EJEMPLO}}s
+```
+
+- `🔧` es el agente **pidiendo** una herramienta. No la ejecuta él: la ejecuta este programa.
+- La última línea es el recibo: cuántas vueltas dio el ciclo y qué costó esa corrida.
+- Si aparece `⚠️ terminó por: error_max_turns` o `error_max_budget_usd`, chocó con uno de los
+  dos frenos. Están en `agente.{{EXT}}` y se suben ahí.
+
+## Cuánto cuesta
+
+Una corrida como la de arriba: **~${{COSTO_EJEMPLO}}**. El agente tiene un tope duro de
+`{{MAX_BUDGET}}` dólares por corrida: si lo toca, se detiene solo. No hay forma de que una
+corrida se te dispare.
+
+## Cómo funciona
+
+```
+{{DIBUJO_DEL_LOOP}}
+```
+
+## Cómo cambiar una decisión
+
+Todo vive en un solo bloque al principio de `agente.{{EXT}}`. Cambiar el agente es cambiar
+una línea de ahí.
+
+| Quieres… | Cambia esta línea | Por |
+|---|---|---|
+| que sea más barato / más rápido | `{{K_MODELO}}` | `"claude-haiku-5-5"` |
+| que razone más (más caro) | `{{K_MODELO}}` | `"claude-opus-5-5"` |
+| otras reglas o personalidad | `{{K_SYSTEM}}` | tu propio párrafo |
+| que además escriba archivos | `{{K_TOOLS}}` | agrega `"Edit"` y `"Write"` |
+| que además corra comandos | `{{K_TOOLS}}` | agrega `"Bash"` ⚠️ |
+| que trabaje en otra carpeta | `{{K_CWD}}` | la ruta que quieras |
+| que pueda dar más vueltas | `{{K_TURNS}}` | un número mayor |
+| subir el tope de gasto | `{{K_BUDGET}}` | un número mayor |
+| que no pida permiso para editar | `{{K_MODE}}` | `"acceptEdits"` |
+| ver el error real cuando algo falla | `{{K_STDERR}}` | {{VALOR_STDERR_DEBUG}} |
+
+El porqué de cada decisión, y a qué parte de la documentación ir para profundizar, está en
+[decisiones.md](decisiones.md).
+
+## Archivos
+
+| Archivo | Qué es |
+|---|---|
+| `agente.{{EXT}}` | el agente: las nueve decisiones arriba, el lector del stream abajo |
+| `{{MANIFIESTO}}` | las dependencias |
+| `decisiones.md` | las nueve respuestas, su código exacto y dónde leer más |
+{{FILAS_ARCHIVOS_EXTRA}}
+
+## Si algo falla
+
+| Lo que ves | Qué pasa |
+|---|---|
+| `[auth] Falta …` / `[auth] No encuentro el perfil …` | `.env` incompleto: el mensaje dice qué falta; con `ant`, corre `ant auth status` |
+| `Not logged in` / `Invalid API key` / `401` | la credencial de `.env` no sirve: vuelve a `ant auth login`, o pega de nuevo la key |
+| `Credit balance is too low` | la organización que paga no tiene créditos: ¿iniciaste sesión con el correo de los créditos? |
+| el agente responde que no pudo, sin error | pidió una herramienta que no está en `{{K_TOOLS}}` |
+| `error_max_turns` | dio todas las vueltas permitidas; sube `{{K_TURNS}}` |
+| `error_max_budget_usd` | tocó el tope de gasto; sube `{{K_BUDGET}}` |
