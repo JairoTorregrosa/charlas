@@ -39,7 +39,7 @@ class Bitacora:
     def __init__(self, salidas: Path, pedido: str, system_prompt: str = ""):
         self.carpeta = Path(salidas) / datetime.now().strftime("%Y%m%d-%H%M%S")
         self.carpeta.mkdir(parents=True, exist_ok=True)
-        self._eventos = (self.carpeta / "eventos.jsonl").open("w")
+        self._eventos = (self.carpeta / "eventos.jsonl").open("w", encoding="utf-8")
         self._md = [f"# Transcript · {self.carpeta.name}\n",
                     "## Antes de empezar\n", "**System prompt**\n", _bloque(system_prompt or "(el del SDK)")]
         self._pendiente = [("user message", pedido, None)]   # papeles nuevos desde la última llamada
@@ -109,5 +109,5 @@ class Bitacora:
 
     def cerrar(self):
         self._eventos.close()
-        (self.carpeta / "transcript.md").write_text("\n".join(self._md))
+        (self.carpeta / "transcript.md").write_text("\n".join(self._md), encoding="utf-8")
         print(f"\nBITÁCORA  {self.carpeta}/transcript.md  ·  eventos.jsonl ({self._n} eventos)")
