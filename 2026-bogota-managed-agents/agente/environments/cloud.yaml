@@ -1,0 +1,9 @@
+# Contenedor de cada sesión. Solo sale a los índices de paquetes, al MCP de GitHub y a GitHub.
+name: taller-vuln-patcher
+config:
+  type: cloud
+  networking:
+    type: limited
+    allow_package_managers: true
+    allow_mcp_servers: true
+    allowed_hosts: [github.com, api.github.com, codeload.github.com]

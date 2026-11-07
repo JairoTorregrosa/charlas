@@ -32,7 +32,7 @@ terminal.
 
 Las ocho categorías salen de 392 propuestas de asistentes al workshop. Cada sección describe una versión pequeña y local que se termina en una tarde, con datos de ejemplo en `workspace/datos/`. El sistema real se conecta cuando esa versión ya corre bien.
 
-Convenciones: el agente escribe sus entregas en `workspace/entregas/`; la bitácora va aparte, en `salidas/<fecha-hora>/`. Además: los MCP se declaran inline en `mcp_servers`; la tool propia vive en un servidor en proceso y se llama `mcp__<servidor>__<tool>`; la skill va en `workspace/.claude/skills/<nombre>/SKILL.md` y exige `"Skill"` en `tools`. Topes de partida: `max_turns=12`, `max_budget_usd=0.25`. Cada corrida deja `salidas/<fecha>/eventos.jsonl` y `salidas/<fecha>/transcript.md`.
+Convenciones: el agente escribe sus entregas en `workspace/entregas/`; la bitácora va aparte, en `salidas/<fecha-hora>/`. Además: los MCP se declaran inline en `mcp_servers`; la tool propia vive en un servidor en proceso y se llama `mcp__<servidor>__<tool>`; la skill va en `workspace/.claude/skills/<nombre>/SKILL.md` (con `skills=[…]` el SDK añade la tool `Skill` solo). Topes de partida: `max_turns=12`, `max_budget_usd=0.25`. Cada corrida deja `salidas/<fecha>/eventos.jsonl` y `salidas/<fecha>/transcript.md`.
 
 ## Contenido
 

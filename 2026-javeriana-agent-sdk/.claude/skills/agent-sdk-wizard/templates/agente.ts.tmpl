@@ -162,7 +162,7 @@ function imprimir(mensaje: SDKMessage): void {
         const ruta = (input.file_path ?? input.path) as string | undefined;
         const arg =
           input.skill ?? input.command ?? ruta?.replace(String(opciones.cwd), "").replace(/^[\\/]/, "") ??
-          input.pattern ?? input.prompt ??
+          input.url ?? input.query ?? input.pattern ?? input.prompt ??
           // tus funciones (paso 5) tienen argumentos propios: van completos
           Object.entries(input).map(([k, v]) => `${k}=${v}`).join(", ");
         console.log(`${sangria}🔧 ${bloque.name}(${String(arg).slice(0, 80)})`);
@@ -181,9 +181,10 @@ function imprimir(mensaje: SDKMessage): void {
       }
     }
   } else if (mensaje.type === "result") {
-    if (mensaje.subtype === "success") {
+    if (mensaje.subtype === "success" && !mensaje.is_error) {
       console.log(`\n${"─".repeat(60)}`);
     } else {
+      process.exitCode = 1; // un fallo no se ve como éxito
       // error_max_turns · error_max_budget_usd · error_during_execution
       console.log(`\n⚠️  terminó por: ${mensaje.subtype}`);
     }
@@ -208,6 +209,7 @@ try {
   // Tope de vueltas o de gasto, o credencial rechazada: el resultado ya se
   // imprimió arriba; aquí va el motivo, sin stack trace.
   console.log(`\n⚠️  el agente paró: ${(error as Error).message}`);
+  process.exitCode = 1;
 }
 
 «SI el paso 8 fue "que me pregunte a mí", añade esto ANTES del bloque de opciones.
@@ -236,14 +238,37 @@ rl.close();
    modo streaming input sí mantiene el historial.
 
 // Ojo: en una sesión, total_cost_usd del resultado es ACUMULADO (sube de turno en turno).
-async function* turnos() {
-  yield { type: "user" as const, session_id: "", parent_tool_use_id: null,
-          message: { role: "user" as const, content: "{{PROMPT_PRUEBA}}" } };
-  yield { type: "user" as const, session_id: "", parent_tool_use_id: null,
-          message: { role: "user" as const, content: "{{PROMPT_PRUEBA_2}}" } };
+// Añade `type SDKUserMessage` al import del SDK.
+const PREGUNTAS = process.argv.length > 2
+  ? process.argv.slice(2)
+  : ["{{PROMPT_PRUEBA}}", "{{PROMPT_PRUEBA_2}}"];
+
+// Cada pregunta sale cuando llegó el resultado de la anterior (como en un chat).
+// El contador evita la carrera si el resultado llega antes de que el generador espere.
+let resultados = 0;
+let despertar = () => {};
+const avisarResultado = () => { resultados++; despertar(); };
+const esperarResultado = (n: number) => new Promise<void>((listo) => {
+  despertar = () => { if (resultados >= n) listo(); };
+  despertar();
+});
+
+async function* turnos(): AsyncGenerator<SDKUserMessage> {
+  for (const [i, pregunta] of PREGUNTAS.entries()) {
+    if (i > 0) await esperarResultado(i);
+    console.log(`\n💬 ${pregunta}\n`);
+    yield { type: "user", session_id: "", parent_tool_use_id: null,
+            message: { role: "user", content: pregunta } };
+  }
 }
 
-for await (const mensaje of query({ prompt: turnos(), options: opciones })) {
-  imprimir(mensaje);
+try {
+  for await (const mensaje of query({ prompt: turnos(), options: opciones })) {
+    imprimir(mensaje);
+    if (mensaje.type === "result") avisarResultado();
+  }
+} catch (error) {
+  console.log(`\n⚠️  el agente paró: ${(error as Error).message}`);
+  process.exitCode = 1;
 }
 «FIN SI

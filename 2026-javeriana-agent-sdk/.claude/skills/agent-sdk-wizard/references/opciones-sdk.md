@@ -1,7 +1,9 @@
 # opciones-sdk.md — answer → exact SDK code
 
-Every line here is verified against **TypeScript SDK 0.3.251**, **Python SDK 0.2.148**
-(which bundles **Claude Code 2.1.251**). Do not write an API name that is not on this page.
+Every line here was verified against **TypeScript SDK 0.3.251**, **Python SDK 0.2.148** (which
+bundles **Claude Code 2.1.251**); agents generated from it re-ran on TS 0.3.315–0.3.316 and
+Python 0.2.176 on 2026-11-07. Web tools are native: `WebSearch` and `WebFetch` go in
+`allowed_tools` by name, like `Read`. Do not write an API name that is not on this page.
 
 Two naming traps that bite constantly:
 
@@ -33,7 +35,7 @@ async for mensaje in query(prompt="…", options=opciones):
 ### TypeScript
 
 ```bash
-npm init -y && npm pkg set type=module      # requires Node >= 18
+npm init -y && npm pkg set type=module      # requires Node >= 20.11
 npm install @anthropic-ai/claude-agent-sdk
 npm install zod@^4                          # peer dep of the SDK — v4, NOT v3
 npm install --save-dev tsx @types/node

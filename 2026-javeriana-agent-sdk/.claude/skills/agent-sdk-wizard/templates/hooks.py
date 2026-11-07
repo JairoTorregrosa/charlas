@@ -5,8 +5,8 @@
 # permiso y antes del modo. Por eso es lo único que aguanta incluso con
 # permission_mode="bypassPermissions".
 #
-# Este archivo trae los tres de la skill. Deja el que elegiste, borra los
-# otros dos, y al final apunta HOOK a la función que quedó.
+# Este archivo trae los cuatro de la skill. Deja el que elegiste, borra los
+# otros, y al final apunta HOOK a la función que quedó.
 #
 # TRAMPA: las claves que devuelve un hook van en camelCase, TAMBIÉN en Python
 # (hookSpecificOutput, permissionDecision, permissionDecisionReason). Son
@@ -99,7 +99,8 @@ async def registrar_uso(
 #   hooks={"Stop": [HookMatcher(hooks=[HOOK])]}
 # Esto es un `if`, no un modelo: verificación determinista, gratis y honesta.
 
-ENTREGABLE = pathlib.Path("./out/reporte.md")
+# Relativo al cwd del AGENTE (p. ej. ./workspace), no a la carpeta desde donde lo corres.
+ENTREGABLE = pathlib.Path("out/reporte.md")
 
 
 async def exigir_entregable(
@@ -110,7 +111,9 @@ async def exigir_entregable(
     if input_data.get("stop_hook_active"):
         return {}
 
-    if ENTREGABLE.exists():
+    # El input de todo hook trae el cwd de la sesión: ahí escribe el agente.
+    ruta = pathlib.Path(input_data.get("cwd") or ".") / ENTREGABLE
+    if ruta.exists():
         return {}  # verificación pasada: que termine
 
     return {
@@ -120,6 +123,34 @@ async def exigir_entregable(
             f"Falta el entregable: escribe tus conclusiones en {ENTREGABLE} "
             "antes de terminar."
         ),
+    }
+
+
+# ─── 9E · Escribir solo en entregas/ (el guardián de casi todas las ideas) ─
+# Evento PreToolUse, matcher "Write|Edit". Se registra así:
+#   hooks={"PreToolUse": [HookMatcher(matcher="Write|Edit", hooks=[HOOK])]}
+
+CARPETA_PERMITIDA = "entregas"   # relativa al cwd del agente
+
+
+async def solo_en_entregas(
+    input_data: dict[str, Any], tool_use_id: str | None, context: Any
+) -> dict[str, Any]:
+    cwd = pathlib.Path(input_data.get("cwd") or ".").resolve()
+    destino = pathlib.Path(input_data.get("tool_input", {}).get("file_path", ""))
+    destino = (destino if destino.is_absolute() else cwd / destino).resolve()
+    if destino.is_relative_to(cwd / CARPETA_PERMITIDA):
+        return {}  # dentro de entregas/: que siga
+    return {
+        "hookSpecificOutput": {
+            "hookEventName": input_data["hook_event_name"],
+            "permissionDecision": "deny",
+            # Lo lee el MODELO: dile dónde sí puede escribir.
+            "permissionDecisionReason": (
+                f"Solo puedes escribir dentro de {CARPETA_PERMITIDA}/. "
+                f"Guarda el archivo como {CARPETA_PERMITIDA}/{destino.name}."
+            ),
+        },
     }
 
 

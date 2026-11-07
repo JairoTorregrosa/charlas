@@ -9,8 +9,10 @@
 # créditos. Aquí .env dice cuál se usa (AGENTE_AUTH) y las otras se borran
 # del proceso del agente. Si falta algo, el agente NO arranca.
 
+import json
 import os
 import sys
+import time
 from pathlib import Path
 
 MODOS = {
@@ -75,7 +77,15 @@ def preparar_credenciales() -> str:
         # Un perfil que no existe se ignora EN SILENCIO y paga tu login de claude.ai.
         # Por eso aquí se exige que el archivo del perfil exista.
         for carpeta in _carpetas_de_ant(env):
-            if (carpeta / "credentials" / f"{valor}.json").exists():
+            archivo = carpeta / "credentials" / f"{valor}.json"
+            if archivo.exists():
+                datos = json.loads(archivo.read_text(encoding="utf-8"))
+                # Vencido y sin refresh_token = no se puede renovar: cada llamada fallaría.
+                vencido = isinstance(datos.get("expires_at"), (int, float)) and datos["expires_at"] < time.time()
+                if vencido and not datos.get("refresh_token"):
+                    _parar(f"El perfil «{valor}» de ant tiene la sesión vencida y no se puede "
+                           f"renovar. Corre `ant auth login --profile {valor}` (o usa otro perfil "
+                           "de `ant profile list`).")
                 os.environ["ANTHROPIC_CONFIG_DIR"] = str(carpeta)
                 print(f"[auth] ant · perfil «{valor}» (paga la organización de ese login)")
                 return modo

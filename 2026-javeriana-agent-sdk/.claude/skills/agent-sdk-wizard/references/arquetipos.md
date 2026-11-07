@@ -33,7 +33,7 @@ without asking. Example: *"Como solo vas a leer, no necesitas un vigilante: me s
 
 ## Test prompt per archetype
 
-Step 6's "done" criterion is a real run. This is the prompt it runs with.
+The wizard's "done" criterion is a real run. This is the prompt it runs with.
 
 | Archetype | Test prompt |
 |---|---|

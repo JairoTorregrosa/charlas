@@ -45,7 +45,7 @@ now if the user already said it; otherwise check both and only block on what ste
 |---|---|---|---|
 | Python | `python3 --version` | `py --version` or `python --version` | 3.10+ (workshop asks 3.11+) |
 | uv | `uv --version` | `uv --version` | any |
-| Node (TS path only) | `node --version` | `node --version` | 18+ |
+| Node (TS path only) | `node --version` | `node --version` | 20.11+ (18 is end-of-life) |
 | git | `git --version` | `git --version` | any |
 | ant | `ant --version` | `ant --version` | 2.7+ (path A) |
 | network | `curl -sI https://api.anthropic.com \| head -1` | `(Invoke-WebRequest https://api.anthropic.com -Method Head -SkipHttpErrorCheck).StatusCode` | any HTTP status = reachable |
@@ -81,18 +81,21 @@ key ever exists, and the token refreshes itself (access token lasts ~8 h).
 1. `ant auth login` — tell the user: *sign in with the SAME email you used to claim the workshop
    credits, and if it asks for an organization, choose the one that received the credits.*
    Headless/remote machine: `ant auth login --no-browser` prints the URL instead.
-2. `ant auth status` — read back to the user the line `Logged in to <org> as <email>` and the
+2. `ant auth status | grep -E 'Logged in|Active profile|Config dir'` (Windows:
+   `ant auth status | Select-String 'Logged in|Active profile|Config dir'`) — the filter keeps
+   the start of the token out of the chat; read back to the user the line `Logged in to <org> as <email>` and the
    active profile name (`Active profile: <name>`, usually `default`). Ask in one line: *"¿Esta es
    la organización donde reclamaste los créditos?"* If not: `ant auth logout`, then log in again.
-3. `ant models list --format json` must print a model list. That is a free, real call with the
-   token: it proves the login works. (Use `--transform` or just check the exit code; do not dump
+3. `ant --profile <name> models list --format json` (the profile you will write to `.env`, not
+   just the active one) must exit 0. That is a free, real call with the token: it proves the
+   login works for that profile. (Use `--transform` or just check the exit code; do not dump
    the list.)
 4. Note the config dir `ant auth status` prints (`Config dir: …`). Mac/Linux:
    `~/.config/anthropic`. Windows: whatever it prints *(inferred: under `%APPDATA%` or
    `%USERPROFILE%\.config`)*. The generated `credenciales.py/.ts` searches the usual places and
    pins the one it finds; if `ant` printed something else, write it to `.env` as
    `ANTHROPIC_CONFIG_DIR=<that path>`.
-5. `.env`:
+5. `.env` (the profile name from step 2, not necessarily `default`):
    ```
    AGENTE_AUTH=ant
    ANTHROPIC_PROFILE=<profile name from ant auth status>
@@ -162,7 +165,9 @@ calls for the rows marked ✓call (bundled Claude Code 2.1.316):
 | 4 | claude.ai login of Claude Code (`/login`, Pro/Max) | 5 | `authMethod: claude.ai` |
 | 5 | the active `ant` profile, implicit (no variable) | — | works only with no claude.ai login ✓call; with `ANTHROPIC_CONFIG_DIR` pointed at an empty dir → `Not logged in · Please run /login` ✓call |
 
-Trap: `ANTHROPIC_PROFILE=<name that does not exist>` is ignored silently → row 4 or 5 pays.
+Traps: `ANTHROPIC_PROFILE=<name that does not exist>` is ignored silently → row 4 or 5 pays.
+A profile whose token expired and has no `refresh_token` (old logins) fails every call:
+`credenciales` refuses both cases before the first call.
 
 `credenciales.py` / `credenciales.ts` (generated next to the agent) turn this into a single
 state: they read `AGENTE_AUTH` from `.env`, set only that credential, **remove the other two
