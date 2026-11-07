@@ -1,9 +1,0 @@
-[project]
-name = "facturador"
-version = "0.3.0"
-description = "Calcula los totales de una factura de venta en pesos colombianos"
-requires-python = ">=3.10"
-
-[tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["tests"]
