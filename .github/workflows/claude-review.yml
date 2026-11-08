@@ -64,9 +64,10 @@ jobs:
           [ "$ADOPT" = true ] || exit 0
           start=$(date +%s)
           while :; do
-            # Latest review run (not an adoption, not this run) on this head; its latest attempt.
+            # Latest review run of this PR (not an adoption, not this run) on this head; its latest
+            # attempt. Two PRs can share a head commit, so the title (which carries the PR number) decides.
             prior=$(gh api "repos/$REPO/actions/runs?head_sha=$HEAD&event=pull_request&per_page=100" --jq \
-              "[.workflow_runs[] | select(.name == \"Claude Review\" and .id != $RUN_ID and (.display_title | endswith(\" [review]\")))]
+              "[.workflow_runs[] | select(.name == \"Claude Review\" and .id != $RUN_ID and .display_title == \"Claude Review #$PR [review]\")]
                | max_by(.created_at) // {} | [.id // \"\", .status // \"\", .conclusion // \"\", .html_url // \"\"] | @tsv")
             IFS=$'\t' read -r id status conclusion url <<<"$prior"
             if [ -z "$id" ]; then echo "no review run on $HEAD yet: reviewing"; exit 0; fi
