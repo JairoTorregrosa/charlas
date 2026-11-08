@@ -12,6 +12,8 @@
 # Codex review rules for a repo go in AGENTS.md under `## Code Review Rules`.
 # False positive? Add the `ai-review-override` label to the PR.
 name: Codex Review
+# The PR number is in the title so codex-nudge only touches this PR's runs (two PRs can share a head).
+run-name: "Codex Review #${{ github.event.pull_request.number }}"
 
 on:
   pull_request:
