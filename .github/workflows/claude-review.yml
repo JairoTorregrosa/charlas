@@ -12,12 +12,12 @@
 # without a verdict: there is no `concurrency` (a cancelled run on the head blocks the merge
 # although another run passed). Instead:
 #   - a run whose head is no longer the PR head passes at once (only the current head counts;
-#     codex-nudge cancels old-head reviews still running, to save spend);
+#     review-nudge cancels old-head reviews still running, to save spend);
 #   - a label event other than the override changes no code, so it adopts the verdict of this
 #     head's latest review run (waiting for it) instead of paying for another review.
-#     codex-nudge re-runs adopted failures once that review is re-run and passes.
+#     review-nudge re-runs adopted failures once that review is re-run and passes.
 name: Claude Review
-# The mode is in the title so other runs and codex-nudge can tell reviews from adoptions.
+# The mode is in the title so other runs and review-nudge can tell reviews from adoptions.
 run-name: "Claude Review #${{ github.event.pull_request.number }} [${{ ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'ai-review-override') && 'adopt' || 'review' }}]"
 
 on:
@@ -75,7 +75,7 @@ jobs:
               case "$conclusion" in
                 success) echo "adopting the passing review of $HEAD: $url"; skip ;;
                 failure)
-                  echo "::error::The Claude review of $HEAD blocked ($url); this run repeats its verdict. Next: read its issues there, fix and push; or, if it failed without a verdict, re-run that run (codex-nudge then re-runs this one). False positive: add the ai-review-override label. Full status: merge-ready $REPO $PR"
+                  echo "::error::The Claude review of $HEAD blocked ($url); this run repeats its verdict. Next: read its issues there, fix and push; or, if it failed without a verdict, re-run that run (review-nudge then re-runs this one). False positive: add the ai-review-override label. Full status: merge-ready $REPO $PR"
                   exit 1 ;;
                 *) echo "the review of $HEAD ended $conclusion without a verdict: reviewing"; exit 0 ;;
               esac
