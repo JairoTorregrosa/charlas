@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Kit TypeScript del workshop Crea tu primer agente con la Claude Agent SDK (Claude Community Bogotá · Javeriana)",
   "scripts": {
+    "10": "tsx 10_salida_estructurada.ts",
     "01": "tsx 01_query.ts",
     "02": "tsx 02_stream.ts",
     "03": "tsx 03_tool.ts",
@@ -14,16 +15,15 @@
     "07": "tsx 07_subagente.ts",
     "08": "tsx 08_agente_vuelo.ts",
     "09": "tsx 09_conversar.ts",
-    "10": "tsx 10_salida_estructurada.ts",
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@anthropic-ai/claude-agent-sdk": "^0.3.269",
-    "zod": "^4.6.2"
+    "@anthropic-ai/claude-agent-sdk": "^0.3.316",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/node": "^26.5.1",
-    "tsx": "^4.23.13",
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2"
   }
 }
