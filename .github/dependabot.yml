@@ -1,0 +1,19 @@
+# Un PR semanal por kit con todas sus dependencias juntas.
+# Las versiones nuevas esperan 7 días; las alertas de seguridad llegan aparte y sin espera.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories: ["/2026-javeriana-agent-sdk/typescript", "/2026-bogota-agent-sdk/typescript"]
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+    groups: { deps: { patterns: ["*"] } }
+  - package-ecosystem: uv
+    directories:
+      - "/2026-javeriana-agent-sdk/python"
+      - "/2026-bogota-agent-sdk/python"
+      - "/2026-bogota-agent-sdk/managed-agents"
+      - "/2026-platzi-agent-sdk"
+      - "/2026-agents-bogota/notebooks"
+    schedule: { interval: weekly }
+    cooldown: { default-days: 7 }
+    groups: { deps: { patterns: ["*"] } }
