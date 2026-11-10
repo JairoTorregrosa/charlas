@@ -1,4 +1,27 @@
+<!-- ficha:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
 # Crea tu primer agente con Claude Agent SDK
+
+<a href="Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf"><img src="portada.jpg" alt="Portada del deck «Crea tu primer agente con Claude Agent SDK»" width="100%"></a>
+
+<table>
+<tr><td>📅 <b>Cuándo</b></td><td>29 de agosto de 2026</td></tr>
+<tr><td>📍 <b>Dónde</b></td><td>Ágora Bogotá</td></tr>
+<tr><td>🎤 <b>Formato</b></td><td>Taller · 45 min</td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://platzi.com/conf/">Platzi Conf Bogotá 2026</a></td></tr>
+<tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf">35 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-platzi-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf">descargar</a></td></tr>
+<tr><td>🧪 <b>Demo</b></td><td><a href="demo.ipynb">demo.ipynb</a></td></tr>
+<tr><td>🛠️ <b>Skill</b></td><td><a href=".claude/skills/setup-taller"><code>setup-taller</code></a> · <a href=".claude/skills/crear-agente"><code>crear-agente</code></a></td></tr>
+</table>
+
+<details>
+<summary>👀 Las 35 slides de un vistazo</summary>
+
+<a href="Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf"><img src="vistazo.jpg" alt="Las 35 slides del deck en miniatura" width="100%"></a>
+
+</details>
+
+<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-casanare-marley/">Mi agente personal: la IA que crece contigo</a> · siguiente: <a href="../2026-bogota-agent-sdk/">Crea tu primer agente con la Claude Agent SDK</a></sub>
+<!-- ficha:fin -->
 
 Taller de 45 minutos (Platzi Conf Bogotá, 29 de agosto de 2026). Un notebook con tres agentes; cada celda suma un primitivo del SDK: system prompt, tools, stream de mensajes, skills, hooks, sub-agentes, streaming, MCP, tope de gasto, `resume` y dos agentes en paralelo.
 
@@ -7,8 +30,6 @@ Taller de 45 minutos (Platzi Conf Bogotá, 29 de agosto de 2026). Un notebook co
 | El Parcero Crítico | `agent_parcero.py` | `workspace_parcero/` | Clona un repo público de GitHub y lo roastea en `roast.md`. |
 | Buscador de vivienda | `agent_vivienda.py` | `workspace_vivienda/` | Busca avisos reales de arriendo en Bogotá (Exa y Firecrawl por MCP) y deja una tabla en `candidatos.md`. |
 | El Monitor | `agent_monitor.py` | `workspace_monitor/` | Te explica un paper en cinco preguntas (alphaXiv por MCP), en `explicacion.md`. |
-
-El deck: [`Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf`](Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf) — 35 páginas, 16:9.
 
 Los agentes usan lo que trae el SDK (Read, Bash, WebFetch…), un skill, un ayudante y servidores MCP externos. Ninguno tiene tools propias. Cada uno escribe un solo archivo en su casa; un hook lo garantiza.
 

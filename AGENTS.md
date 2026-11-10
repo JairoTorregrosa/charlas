@@ -37,3 +37,20 @@ to trigger.
 
 One finding that costs a user beats five that cost a reviewer their
 attention. When nothing meets that bar, say so and approve.
+
+## Añadir o cambiar una charla
+
+`charlas.toml` es la única fuente del catálogo. El bloque `indice` del README raíz, el
+bloque `ficha` de cada kit, `portada.jpg` y `vistazo.jpg` los escribe
+`scripts/catalogo.py`. No se editan a mano.
+
+1. Carpeta `AAAA-<lugar>-<tema>/` con el deck en PDF.
+2. Su `[[charla]]` en `charlas.toml`. La fecha, el lugar y `evento_url` salen de una
+   fuente que abriste (el deck, Luma, el sitio del evento), no de memoria.
+3. `uv run scripts/catalogo.py`, y sube todo lo que escriba.
+
+`uv run scripts/catalogo.py --check` corre en cada PR y falla si falta un paso.
+`uv run scripts/catalogo.py --enlaces` pide cada URL externa del catálogo.
+
+No renombres carpetas de kits ni PDF. Los decks ya proyectados y sus QR imprimen esas
+rutas, y no se pueden volver a exportar.

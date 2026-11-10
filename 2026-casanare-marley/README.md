@@ -1,6 +1,26 @@
+<!-- ficha:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
 # Mi agente personal: la IA que crece contigo
 
-Colombia 5.0 Casanare · Unitrópico, Yopal · 27 de agosto de 2026 · 45 minutos · público general.
+<a href="Mi-agente-personal-Casanare-2026.pdf"><img src="portada.jpg" alt="Portada del deck «Mi agente personal: la IA que crece contigo»" width="100%"></a>
+
+<table>
+<tr><td>📅 <b>Cuándo</b></td><td>27 de agosto de 2026</td></tr>
+<tr><td>📍 <b>Dónde</b></td><td>Unitrópico · Yopal</td></tr>
+<tr><td>🎤 <b>Formato</b></td><td>Charla · 45 min</td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://mintic.gov.co/portal/inicio/Sala-de-prensa/Noticias/440337:Casanare-se-conecta-con-el-futuro-Colombia-5-0-llega-por-primera-vez-a-Yopal">Colombia 5.0 Casanare</a></td></tr>
+<tr><td>📑 <b>Deck</b></td><td><a href="Mi-agente-personal-Casanare-2026.pdf">23 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-casanare-marley/Mi-agente-personal-Casanare-2026.pdf">descargar</a></td></tr>
+<tr><td>🧪 <b>Demo</b></td><td><a href="https://hermes-agent.nousresearch.com/">Hermes Agent</a></td></tr>
+</table>
+
+<details>
+<summary>👀 Las 23 slides de un vistazo</summary>
+
+<a href="Mi-agente-personal-Casanare-2026.pdf"><img src="vistazo.jpg" alt="Las 23 slides del deck en miniatura" width="100%"></a>
+
+</details>
+
+<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-agents-bogota/">Construye tu primer agente de AI con Claude</a> · siguiente: <a href="../2026-platzi-agent-sdk/">Crea tu primer agente con Claude Agent SDK</a></sub>
+<!-- ficha:fin -->
 
 Marley es mi asistente personal. Corre 24/7 en un computador del tamaño de un libro en mi casa, en Bogotá, y me escribe solo a las 7 de la mañana. Esta es la guía de la charla: qué es un agente, cómo armé el cuerpo de Marley pieza por pieza y por qué funciona como mi asistente.
 

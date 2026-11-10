@@ -1,10 +1,31 @@
+<!-- ficha:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
 # Crea tu primer agente con la Claude Agent SDK
+
+<a href="Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf"><img src="portada.jpg" alt="Portada del deck «Crea tu primer agente con la Claude Agent SDK»" width="100%"></a>
+
+<table>
+<tr><td>📅 <b>Cuándo</b></td><td>7 de noviembre de 2026</td></tr>
+<tr><td>📍 <b>Dónde</b></td><td>Pontificia Universidad Javeriana · Bogotá</td></tr>
+<tr><td>🎤 <b>Formato</b></td><td>Workshop · 3,5 h</td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-x1bt">Claude Community Bogotá</a></td></tr>
+<tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf">49 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-javeriana-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf">descargar</a></td></tr>
+<tr><td>🧪 <b>Demo</b></td><td><a href="python">python/</a> · <a href="typescript">typescript/</a></td></tr>
+<tr><td>🛠️ <b>Skill</b></td><td><a href=".claude/skills/agent-sdk-wizard"><code>agent-sdk-wizard</code></a></td></tr>
+</table>
+
+<details>
+<summary>👀 Las 49 slides de un vistazo</summary>
+
+<a href="Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf"><img src="vistazo.jpg" alt="Las 49 slides del deck en miniatura" width="100%"></a>
+
+</details>
+
+<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-lasalle-managed-agents/">Agentes en la nube con Claude Managed Agents</a></sub>
+<!-- ficha:fin -->
 
 Kit del workshop de Claude Community Bogotá en la **Pontificia Universidad
 Javeriana**, sábado 7 de noviembre de 2026. Ponente: Jairo Torregrosa.
 Segunda edición del workshop del 19 de septiembre en la Universidad Santo Tomás.
-
-**Slides (PDF, 49 páginas):** [descargar](https://github.com/JairoTorregrosa/charlas/raw/main/2026-javeriana-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf)
 
 Un solo hilo de principio a fin: **un asistente de viaje**. Siempre la misma
 pregunta:

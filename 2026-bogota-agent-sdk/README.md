@@ -1,7 +1,27 @@
-# Crea tu primer Agente con la Claude Agent SDK
+<!-- ficha:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
+# Crea tu primer agente con la Claude Agent SDK
 
-Kit del taller de Claude Community Bogotá, sábado 19 de septiembre de 2026.
-Ponente: Jairo Torregrosa.
+<a href="Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf"><img src="portada.jpg" alt="Portada del deck «Crea tu primer agente con la Claude Agent SDK»" width="100%"></a>
+
+<table>
+<tr><td>📅 <b>Cuándo</b></td><td>19 de septiembre de 2026</td></tr>
+<tr><td>📍 <b>Dónde</b></td><td>Universidad Santo Tomás · Bogotá</td></tr>
+<tr><td>🎤 <b>Formato</b></td><td>Workshop · 3,5 h</td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-be23">Claude Community Bogotá · Claude Fest Colombia</a></td></tr>
+<tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf">51 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-bogota-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf">descargar</a></td></tr>
+<tr><td>🧪 <b>Demo</b></td><td><a href="python">python/</a> · <a href="typescript">typescript/</a> · <a href="managed-agents">managed-agents/</a></td></tr>
+<tr><td>🛠️ <b>Skill</b></td><td><a href=".claude/skills/crear-agente-sdk"><code>crear-agente-sdk</code></a></td></tr>
+</table>
+
+<details>
+<summary>👀 Las 51 slides de un vistazo</summary>
+
+<a href="Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf"><img src="vistazo.jpg" alt="Las 51 slides del deck en miniatura" width="100%"></a>
+
+</details>
+
+<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-platzi-agent-sdk/">Crea tu primer agente con Claude Agent SDK</a> · siguiente: <a href="../2026-lasalle-managed-agents/">Agentes en la nube con Claude Managed Agents</a></sub>
+<!-- ficha:fin -->
 
 Un solo hilo de principio a fin: **un asistente de viaje**. Siempre la misma
 pregunta.
@@ -12,8 +32,6 @@ En el primer archivo el modelo contesta que no puede. En el octavo contesta:
 jueves 24 de septiembre de 2026, 06:15, BOG → MDE, LATAM, reserva ABC123. Entre
 medias le vas dando una pieza por archivo, y esas piezas son los primitivos de
 la SDK.
-
-**Slides (PDF, 51 páginas):** [descargar](https://github.com/JairoTorregrosa/charlas/raw/main/2026-bogota-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf). El visor de GitHub no muestra PDFs de este tamaño: descárgalo.
 
 ```
 git clone https://github.com/JairoTorregrosa/charlas
