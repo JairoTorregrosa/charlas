@@ -4,6 +4,8 @@ Kit del workshop de Claude Community Bogotá en la **Pontificia Universidad
 Javeriana**, sábado 7 de noviembre de 2026. Ponente: Jairo Torregrosa.
 Segunda edición del workshop del 19 de septiembre en la Universidad Santo Tomás.
 
+**Slides (PDF, 49 páginas):** [descargar](https://github.com/JairoTorregrosa/charlas/raw/main/2026-javeriana-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf)
+
 Un solo hilo de principio a fin: **un asistente de viaje**. Siempre la misma
 pregunta:
 
