@@ -76,7 +76,7 @@ class Fecha:
         if m := re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", texto):
             anio, mes, dia = int(m[1]), int(m[2]), int(m[3]) if m[3] else None
             try:
-                datetime.date(anio, mes, dia or 1)  # el calendario dice si ese día existe
+                datetime.date(anio, mes, 1 if dia is None else dia)  # el calendario dice si ese día existe
                 return cls(anio, mes, dia)
             except ValueError:
                 pass
