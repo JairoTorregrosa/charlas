@@ -22,7 +22,7 @@
 <sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-agents-bogota/">Construye tu primer agente de AI con Claude</a> · siguiente: <a href="../2026-platzi-agent-sdk/">Crea tu primer agente con Claude Agent SDK</a></sub>
 <!-- ficha:fin -->
 
-Marley es mi asistente personal. Corre 24/7 en un computador del tamaño de un libro en mi casa, en Bogotá, y me escribe solo a las 7 de la mañana. Esta es la guía de la charla: qué es un agente, cómo armé el cuerpo de Marley pieza por pieza y por qué funciona como mi asistente.
+Marley es mi asistente personal. Corre 24/7 en un computador del tamaño de un libro en mi casa, en Bogotá, y me escribe solo a las 7 de la mañana. Charla para público general.
 
 ## Un agente es un cerebro con cuerpo
 
@@ -38,13 +38,15 @@ El **cuerpo** lo armas tú, pieza por pieza. Marley tiene cinco:
 | 4 | **El cuaderno** | Quién soy y qué me importa; lo consulta al arrancar. Solo hechos estables. | memoria (`USER.md`, `MEMORY.md`) |
 | 5 | **El despertador** | A una hora fija repite una tarea que escribí yo, sin que nadie le escriba ese día. | cron |
 
-Juntos son un agente: el cerebro pide un botón, el cuerpo lo aprieta y le cuenta qué pasó, el cerebro vuelve a pensar. Ese círculo, repetido, es un agente.
+El cerebro pide un botón, el cuerpo lo aprieta y le cuenta qué pasó, el cerebro vuelve a pensar. Ese círculo, repetido, es un agente.
 
 ## Por qué funciona como mi asistente
 
-- **Me conoce** (cuaderno).
-- **Puede actuar, con permiso** (manos).
-- **Me escribe antes de que yo abra el chat** (despertador). Yo definí la tarea y la hora; la alarma solo repite.
+| Lo que hace | La pieza que lo permite |
+|---|---|
+| Me conoce | el cuaderno |
+| Puede actuar, con permiso | las manos |
+| Me escribe antes de que yo abra el chat | el despertador. Yo definí la tarea y la hora; la alarma solo repite. |
 
 Y crece: a las 3 de la mañana revisa su propio trabajo, corrige sus habilidades y sus alarmas por su cuenta. Lo delicado (código, identidad, claves) queda bloqueado o espera permiso.
 
@@ -54,12 +56,12 @@ Para casi todo, ChatGPT basta. Un agente vale la pena cuando la tarea se repite 
 
 ## Arma tu propio Marley
 
-Marley corre sobre **Hermes Agent** (Nous Research, licencia MIT, abierto y gratuito): https://github.com/NousResearch/hermes-agent
+Marley corre sobre [Hermes Agent](https://github.com/NousResearch/hermes-agent) (Nous Research, licencia MIT, abierto y gratuito).
 
-Orden sugerido: primero decide qué tarea vale la pena. Después, las piezas: chat → manual → botones → habilidad → cuaderno → despertador.
+Primero decide qué tarea vale la pena. Después, las piezas en este orden:
 
-## Contenido del kit
+**chat → manual → botones → habilidad → cuaderno → despertador**
 
-- `Mi-agente-personal-Casanare-2026.pdf` — el deck tal como se proyectó: 23 páginas, 16:9. Es el mismo que se entregó a los organizadores.
+La [charla de Magdalena](../2026-col5-agents/) cuenta las mismas piezas como cinco niveles, con una pregunta a la sala en cada uno.
 
-Contacto: [@jai_torregrosa](https://x.com/jai_torregrosa)
+El deck es el mismo que se entregó a los organizadores. Contacto: [@jai_torregrosa](https://x.com/jai_torregrosa)
