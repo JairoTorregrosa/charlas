@@ -34,6 +34,8 @@ MANIFIESTO = RAIZ / "charlas.toml"
 INDICE = RAIZ / "README.md"
 ES_KIT = re.compile(r"^\d{4}-")
 COMANDO = "uv run scripts/catalogo.py"
+# Varios sitios responden 403 a todo lo que no parezca un navegador.
+NAVEGADOR = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
@@ -484,9 +486,10 @@ def urls_del_catalogo(cat: Catalogo) -> dict[str, set[str]]:
 
 
 def probar_enlaces(cat: Catalogo) -> int:
+    """200 responde; 401 y 403 existen pero piden login o rechazan scripts; lo demás está caído."""
     caidas = 0
     for url, sitios in sorted(urls_del_catalogo(cat).items()):
-        peticion = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (catalogo de charlas)"})
+        peticion = urllib.request.Request(url, headers={"User-Agent": NAVEGADOR})
         try:
             with urllib.request.urlopen(peticion, timeout=25) as r:
                 estado = str(r.status)
@@ -494,10 +497,10 @@ def probar_enlaces(cat: Catalogo) -> int:
             estado = str(err.code)
         except (urllib.error.URLError, TimeoutError, OSError) as err:
             estado = f"sin respuesta ({err})"
-        if estado != "200":
-            caidas += 1
-        print(f'  {"✓" if estado == "200" else "✗"} {estado:>4}  {url}   [{", ".join(sorted(sitios))}]')
-    print(f"\n{caidas} URL(s) sin 200." if caidas else "\nTodas las URL responden 200.")
+        marca = {"200": "✓", "401": "🔒", "403": "🔒"}.get(estado, "✗")
+        caidas += marca == "✗"
+        print(f'  {marca} {estado:>4}  {url}   [{", ".join(sorted(sitios))}]')
+    print(f"\n{caidas} URL caída(s)." if caidas else "\nNinguna URL caída. 🔒 = pide login o rechaza scripts; ábrela a mano si dudas.")
     return 1 if caidas else 0
 
 
