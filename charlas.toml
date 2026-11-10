@@ -55,7 +55,7 @@ usar = "/plugin marketplace add JairoTorregrosa/crea-tu-web"
 [[charla]]
 kit = "2026-agents-bogota"
 titulo = "Construye tu primer agente de AI con Claude"
-gancho = "Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, tools y contexto."
+gancho = "Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, tools y skills."
 fecha = "2026-08-22"
 formato = "Charla · 1 h"
 evento = "Claude Community Bogotá · hackathon de analítica con Quick"

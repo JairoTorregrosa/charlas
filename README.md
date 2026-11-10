@@ -67,7 +67,7 @@ Marley, mi asistente 24/7: un cerebro alquilado y un cuerpo de cinco piezas.<br>
 <a href="2026-agents-bogota/"><img src="2026-agents-bogota/portada.jpg" alt="Portada de «Construye tu primer agente de AI con Claude»" width="100%"></a><br>
 <b><a href="2026-agents-bogota/">Construye tu primer agente de AI con Claude</a></b><br>
 <sub>22 ago 2026 · Oficinas de Quick · Bogotá · Charla · 1 h</sub><br>
-Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, tools y contexto.<br>
+Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, tools y skills.<br>
 <a href="2026-agents-bogota/Construye-tu-primer-agente-Bogota-2026.pdf">📑 Deck</a> · <a href="2026-agents-bogota/demo">🧪 Demo</a> · <a href="https://luma.com/claude-imxl">🎟️ Luma</a>
 </td>
 </tr>
