@@ -6,16 +6,16 @@
 <table>
 <tr><td>📅 <b>Cuándo</b></td><td>6 de agosto de 2026</td></tr>
 <tr><td>📍 <b>Dónde</b></td><td>Espacio Comunitario de HAP · Montrose, Colorado</td></tr>
-<tr><td>🎤 <b>Formato</b></td><td>Taller</td></tr>
+<tr><td>🎤 <b>Formato</b></td><td>Taller · 90 min</td></tr>
 <tr><td>🎟️ <b>Evento</b></td><td><a href="https://hapgj.org/">Hispanic Affairs Project</a></td></tr>
-<tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf">17 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-hapgj/Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf">descargar</a></td></tr>
+<tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf">16 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-hapgj/Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf">descargar</a></td></tr>
 <tr><td>🛠️ <b>Skill</b></td><td><a href="https://github.com/JairoTorregrosa/crea-tu-web"><code>crea-tu-web</code></a></td></tr>
 </table>
 
 <details>
-<summary>👀 Las 17 slides de un vistazo</summary>
+<summary>👀 Las 16 slides de un vistazo</summary>
 
-<a href="Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf"><img src="vistazo.jpg" alt="Las 17 slides del deck en miniatura" width="100%"></a>
+<a href="Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf"><img src="vistazo.jpg" alt="Las 16 slides del deck en miniatura" width="100%"></a>
 
 </details>
 
