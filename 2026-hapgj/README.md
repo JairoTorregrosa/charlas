@@ -30,7 +30,7 @@ Tu primera página web con IA, sin escribir código. Taller presencial con el [H
 |---|---|---|
 | 1 | **Pide tu página** | Pegas el primer prompt en ChatGPT o en Claude. La IA te entrevista, una pregunta a la vez, y te muestra tu página. |
 | 2 | **Conecta tu cuenta** | En los ajustes de tu IA conectas GitHub. En [github.com/new](https://github.com/new) creas el repositorio `mi-pagina-web`, con «Add README» activado. |
-| 3 | **La IA construye** | Pegas el segundo prompt con los datos de tu negocio. La IA arma la página en español e inglés y deja una propuesta de cambios (un *pull request*). La apruebas en tu repositorio: pestaña «Pull requests», botón verde «Merge pull request». |
+| 3 | **La IA construye** | Pegas el segundo prompt con los datos de tu negocio. La IA arma la página en español e inglés y deja una propuesta de cambios (un *pull request*). La apruebas en tu repositorio: pestaña «Pull requests», botón verde «Merge pull request», y confirmas. |
 | 4 | **Publica** | En [dash.cloudflare.com](https://dash.cloudflare.com/) abres «Workers & Pages», creas un proyecto de «Pages», eliges «Import an existing Git repository», tu `mi-pagina-web` y «Save and Deploy». En 2 o 3 minutos está en internet. |
 | 5 | **Directorio en vivo** | Compartes tu enlace. En el taller, cada página entró al directorio de negocios. |
 
