@@ -24,9 +24,71 @@
 
 Tu primera página web con IA, sin escribir código. Taller presencial con el [Hispanic Affairs Project](https://hapgj.org/) en Montrose, Colorado.
 
-## El recorrido: cinco skills, en orden
+## El recorrido de la noche
 
-Cada skill guía a la IA paso a paso. Tú solo respondes preguntas sobre tu negocio.
+| # | Paso | Qué haces |
+|---|---|---|
+| 1 | **Pide tu página** | Pegas el primer prompt en ChatGPT o en Claude. La IA te entrevista, una pregunta a la vez, y te muestra tu página. |
+| 2 | **Conecta tu cuenta** | En los ajustes de tu IA conectas GitHub. En [github.com/new](https://github.com/new) creas el repositorio `mi-pagina-web`, con «Add README» activado. |
+| 3 | **La IA construye** | Pegas el segundo prompt con los datos de tu negocio. La IA arma la página en español e inglés y deja una propuesta de cambios (un *pull request*). La apruebas en tu repositorio: pestaña «Pull requests», botón verde «Merge pull request». |
+| 4 | **Publica** | En [dash.cloudflare.com](https://dash.cloudflare.com/) abres «Workers & Pages», creas un proyecto de «Pages», eliges «Import an existing Git repository», tu `mi-pagina-web` y «Save and Deploy». En 2 o 3 minutos está en internet. |
+| 5 | **Directorio en vivo** | Compartes tu enlace. En el taller, cada página entró al directorio de negocios. |
+
+## Los prompts
+
+Cópialos tal cual. Contesta como si le platicaras a un vecino. Si tienes fotos de tu negocio, súbelas al chat.
+
+<details>
+<summary><b>Paso 1 en ChatGPT</b></summary>
+
+```text
+@Sites Crea la página web de mi negocio. Primero hazme una entrevista corta: pregúntame de a UNA pregunta a la vez el nombre de mi negocio, a qué me dedico, mi teléfono, mi horario, dónde estoy y qué sensación quiero transmitir. Con eso crea una página sencilla y bonita en español, con mi teléfono visible y un botón para contactarme. Muéstramela y, cuando yo te diga, publícala.
+```
+
+</details>
+
+<details>
+<summary><b>Paso 1 en Claude</b></summary>
+
+```text
+Crea la página web de mi negocio en un solo archivo HTML. Primero hazme una entrevista corta: pregúntame de a UNA pregunta a la vez el nombre de mi negocio, a qué me dedico, mi teléfono, mi horario, dónde estoy y qué sensación quiero transmitir. Con eso crea una página sencilla y bonita en español, que se vea bien en el celular, con mi teléfono visible y un botón para contactarme. Muéstramela cuando esté lista.
+```
+
+</details>
+
+<details>
+<summary><b>Paso 3: tu página profesional</b></summary>
+
+Cambia lo que está entre corchetes por lo tuyo, lo mismo que contestaste en la entrevista.
+
+```text
+Crea en mi cuenta de GitHub un repositorio llamado mi-pagina-web (si no existe ya) y construye ahí la página web completa de mi negocio con esta información: [nombre, a qué me dedico, teléfono, horario, ubicación, qué me pregunta la gente, qué sensación quiero transmitir]. La página debe ser bilingüe español e inglés con un botón para cambiar de idioma, español primero, verse perfecta en el celular, y usar estos colores: [tus colores]. No uses fotos de internet: usa ilustraciones sencillas o espacios marcados para mis propias fotos. El sitio debe poderse publicar como sitio estático en Cloudflare Pages: deja las instrucciones de configuración en el README. Cuando termines, crea un pull request (la propuesta de cambios).
+```
+
+</details>
+
+<details>
+<summary><b>Si la IA te pregunta algo técnico</b></summary>
+
+```text
+Elige tú la opción más simple. Es una página estática sencilla.
+```
+
+¿Se queda trabajando mucho rato? Escríbele «continúa», una sola vez.
+
+</details>
+
+## Lo que sigue
+
+| Cuándo | Qué |
+|---|---|
+| Hoy | Manda tu link a 3 personas. |
+| Esta semana | Pídele cambios a tu IA. Cada cambio aprobado se publica solo. |
+| Este mes | Tu propio dominio. La IA te guía paso a paso. |
+
+## Para seguir en casa: cinco skills
+
+El kit que deja el taller. Cada skill guía a la IA paso a paso. Tú solo respondes preguntas sobre tu negocio.
 
 | # | Skill | Le dices | Qué hace |
 |---|---|---|---|
@@ -38,9 +100,7 @@ Cada skill guía a la IA paso a paso. Tú solo respondes preguntas sobre tu nego
 
 Hay una sexta, `taste-skill`, que la IA consulta sola para que la página no se vea como plantilla.
 
-## Instálalas
-
-En Claude Code:
+En Claude Code se instalan con dos comandos:
 
 ```
 /plugin marketplace add JairoTorregrosa/crea-tu-web
