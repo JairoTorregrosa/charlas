@@ -23,14 +23,33 @@
 <sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-bogota-agent-sdk/">Crea tu primer agente con la Claude Agent SDK</a> · siguiente: <a href="../2026-javeriana-agent-sdk/">Crea tu primer agente con la Claude Agent SDK</a></sub>
 <!-- ficha:fin -->
 
-Workshop de Claude Community Bogotá en la Universidad de La Salle (Maestría en Analítica e Inteligencia de Negocios), sábado 24 de octubre de 2026.
-Ponente: Jairo Torregrosa.
+Un caso de uso que ya corre en Claude Code, en el portátil, pasa a un agente remoto que no depende de nadie ni de un PC prendido. Workshop con la Maestría en Analítica e Inteligencia de Negocios de La Salle.
 
-Cómo pasar un caso de uso que ya corre en Claude Code, en el portátil, a un agente remoto que no depende de nadie ni de un PC prendido: Agent, Environment, Session, eventos y Deployment.
+## Del portátil a la nube
 
-## Construye tu propio agente
+| Hoy, en Claude Code | Remoto, en Managed Agents |
+|---|---|
+| portátil prendido | **Environment** · contenedor en la nube |
+| `CLAUDE.md` y skills | **Agent** · system prompt y skills |
+| prompt escrito a mano | **Deployment** · cron o backend propio |
+| tokens en un `.env` | **vault** · el sandbox no los ve |
+| aprobación manual | **permisos** · `always_ask` + código propio |
+| conversación en la terminal | **Session** · log en el servidor |
 
-Lo único que hace falta es la skill `managed-agents-wizard` en Claude Code:
+## Cuatro piezas: el agente se define una vez y corre mil veces
+
+```mermaid
+flowchart LR
+  A["<b>Agent</b><br>qué hace"] --> S["<b>Session</b><br>una corrida"]
+  E["<b>Environment</b><br>dónde corre"] --> S
+  D["<b>Deployment</b><br>cuándo corre"] -- crea --> S
+```
+
+Los **events** son lo que entra y sale de la Session: tú mandas `user.*` y la Session cuenta el resto.
+
+## Arma el tuyo: `managed-agents-wizard`
+
+Lo único que hace falta es la skill, en Claude Code:
 
 ```
 npx skills add JairoTorregrosa/jaiskills --skill managed-agents-wizard -g
@@ -38,7 +57,14 @@ claude
 > /managed-agents-wizard
 ```
 
-La skill parte de una idea, propone Agent, Environment, credenciales y forma de arranque, aplica con el CLI `ant` y corre una Session de prueba con budget. Las trazas se ven en [platform.claude.com](https://platform.claude.com) › Sessions.
+| Paso | Qué haces | Con qué |
+|---|---|---|
+| 1 · Diseña | De una idea a Agent, Environment, credenciales y forma de arranque | Claude Code + wizard |
+| 2 · Prueba | Una Session de prueba, con budget | CLI `ant` |
+| 3 · Itera | Lees las trazas y ajustas | [platform.claude.com](https://platform.claude.com) › Sessions |
+| 4 · Programa | El agente corre con horario | Deployment |
+
+¿Prefieres leerlo en código? El asistente de viaje del workshop de septiembre tiene su versión en Managed Agents: [`managed-agents/`](../2026-bogota-agent-sdk/managed-agents/).
 
 ## Comunidad
 

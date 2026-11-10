@@ -2,6 +2,8 @@
 
 Reto del *Claude Workshop | AI Agents for business analytics competition* (Quick Logística, Bogotá, 22 ago 2026): responder **7 preguntas financieras** sobre los datos reales (pseudonimizados) del CASO FINANCIERO de Quick con un agente. Da igual el stack (Claude Agent SDK, Claude Code, Managed Agents, LangGraph o un loop propio): entregas **respuesta + traza** y un juez automático las puntúa contra un golden dataset.
 
+> El hackathon fue el 22 de agosto de 2026. El leaderboard ya no está en línea (comprobado el 10 de noviembre de 2026), así que los comandos de entrega de abajo ya no responden. Quedan como registro del reto.
+
 **Leaderboard y entrega:** <https://quick-golden-bench.vercel.app>
 
 ## Pasos
