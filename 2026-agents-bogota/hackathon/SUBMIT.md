@@ -1,5 +1,7 @@
 # Cómo competir — una pantalla
 
+> El hackathon fue el 22 de agosto de 2026. El leaderboard ya no está en línea (comprobado el 10 de noviembre de 2026), así que los comandos de entrega de abajo ya no responden. Quedan como registro del reto.
+
 Da igual tu stack: **Claude Agent SDK, Claude Code, Managed Agents, LangGraph o un loop
 propio**. El bench no ejecuta tu agente: tú lo corres donde quieras y entregas **la
 respuesta y la traza**.

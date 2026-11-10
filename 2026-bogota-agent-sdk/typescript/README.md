@@ -8,7 +8,7 @@ vuelo». Cada archivo se corre solo y se lee en una pantalla.
 
 ## Requisitos
 
-- Node.js 18 o superior (`node -v`). El SDK trae su propio binario de Claude Code.
+- Node.js 20.11 o superior (`node -v`; el kit usa `import.meta.dirname`). El SDK trae su propio binario de Claude Code.
 - Una sesión de Claude Code iniciada en la máquina (`claude` en la terminal, y login).
   No hace falta `ANTHROPIC_API_KEY`.
 - Opcional: `bun`, que corre los mismos archivos sin `tsx`.
