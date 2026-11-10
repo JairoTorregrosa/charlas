@@ -308,6 +308,7 @@ def lista_skills(c: Charla, base: str) -> str:
 
 
 def tarjeta(c: Charla) -> str:
+    """Una fila por charla, portada a la izquierda: se lee igual en un teléfono que en un monitor."""
     kit = f"{c.kit}/"
     accesos = [f'<a href="{kit}{urllib.parse.quote(c.deck)}">📑 Deck</a>']
     if c.demo:
@@ -316,13 +317,15 @@ def tarjeta(c: Charla) -> str:
         accesos.append(f'<a href="{esc(c.skills[0].enlace.desde(kit))}">🛠️ Skill</a>')
     accesos.append(f'<a href="{esc(c.evento_url)}">🎟️ {c.fuente_evento}</a>')
     return "\n".join([
-        '<td width="50%" valign="top">',
-        f'<a href="{kit}"><img src="{kit}portada.jpg" alt="Portada de «{esc(c.titulo)}»" width="100%"></a><br>',
+        "<tr>",
+        f'<td width="38%"><a href="{kit}"><img src="{kit}portada.jpg" alt="Portada de «{esc(c.titulo)}»" width="100%"></a></td>',
+        '<td valign="top">',
         f'<b><a href="{kit}">{esc(c.titulo)}</a></b><br>',
         f"<sub>{c.fecha.corta} · {esc(c.donde)} · {esc(c.formato)}</sub><br>",
         f"{esc(c.gancho)}<br>",
         " · ".join(accesos),
         "</td>",
+        "</tr>",
     ])
 
 
@@ -346,12 +349,6 @@ def mapa(cat: Catalogo) -> str:
 
 def indice(cat: Catalogo, paginas: dict[str, int]) -> str:
     recientes = list(reversed(cat.charlas))
-    filas_tarjetas = []
-    for i in range(0, len(recientes), 2):
-        par = [tarjeta(c) for c in recientes[i:i + 2]]
-        if len(par) == 1:
-            par.append('<td width="50%"></td>')
-        filas_tarjetas.append("<tr>\n" + "\n".join(par) + "\n</tr>")
 
     bitacora = ["| # | Cuándo | Charla | Evento | Dónde | Formato |", "|--:|---|---|---|---|---|"]
     for n, c in enumerate(cat.charlas, 1):
@@ -376,7 +373,7 @@ def indice(cat: Catalogo, paginas: dict[str, int]) -> str:
         "## Constelaciones",
         "",
         "<table>",
-        *filas_tarjetas,
+        *(tarjeta(c) for c in recientes),
         "</table>",
         "",
         "## Bitácora",
