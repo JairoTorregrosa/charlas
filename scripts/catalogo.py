@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 import hashlib
 import html
 import json
@@ -49,6 +50,8 @@ RECETA = "v1"
 
 CAMPOS = {"kit", "titulo", "gancho", "fecha", "formato", "evento", "evento_url",
           "lugar", "ciudad", "deck", "portada", "demo", "skills"}
+# El tipo de cada campo; el que no aparece aquí es texto. La fecha se lee aparte.
+TIPOS = {"portada": int, "demo": list, "skills": list}
 
 
 class Problemas(list):
@@ -70,10 +73,14 @@ class Fecha:
 
     @classmethod
     def leer(cls, texto: str) -> Fecha:
-        m = re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", texto)
-        if not m or not 1 <= int(m[2]) <= 12 or (m[3] and not 1 <= int(m[3]) <= 31):
-            raise ValueError(f'fecha "{texto}": se espera "AAAA-MM-DD" o "AAAA-MM"')
-        return cls(int(m[1]), int(m[2]), int(m[3]) if m[3] else None)
+        if m := re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", texto):
+            anio, mes, dia = int(m[1]), int(m[2]), int(m[3]) if m[3] else None
+            try:
+                datetime.date(anio, mes, dia or 1)  # el calendario dice si ese día existe
+                return cls(anio, mes, dia)
+            except ValueError:
+                pass
+        raise ValueError(f'fecha "{texto}": se espera "AAAA-MM-DD" o "AAAA-MM", con un día que exista')
 
     @property
     def orden(self) -> tuple[int, int, int]:
@@ -118,7 +125,15 @@ class Enlace:
 class Skill:
     enlace: Enlace
     que: str
-    usar: str
+    usar: tuple[str, ...]  # los comandos que la dejan lista, en el orden en que se escriben
+
+    @classmethod
+    def leer(cls, dato: dict, donde: str) -> Skill:
+        usar = dato.get("usar") if isinstance(dato, dict) else None
+        pasos = (usar,) if isinstance(usar, str) else tuple(usar) if isinstance(usar, list) else ()
+        if not pasos or not all(isinstance(p, str) and p for p in pasos) or not isinstance(dato.get("que"), str):
+            raise ValueError(f"{donde}: cada skill lleva que (texto) y usar (un comando, o una lista si son varios)")
+        return cls(Enlace.leer(dato, donde, frozenset({"que", "usar"})), dato["que"], pasos)
 
 
 @dataclass(frozen=True)
@@ -167,7 +182,11 @@ class Catalogo:
 
 
 def leer_catalogo(problemas: Problemas) -> Catalogo:
-    datos = tomllib.loads(MANIFIESTO.read_text(encoding="utf-8"))
+    try:
+        datos = tomllib.loads(MANIFIESTO.read_text(encoding="utf-8"))
+    except tomllib.TOMLDecodeError as e:
+        problemas.append(f"charlas.toml no se puede leer ({e}). Lo más común: un texto o una fecha sin comillas.")
+        problemas.salir_si_hay()
     ciudades = datos.get("ciudades", {})
     charlas = []
     for i, d in enumerate(datos.get("charla", []), 1):
@@ -178,16 +197,17 @@ def leer_catalogo(problemas: Problemas) -> Catalogo:
         if sobran := set(d) - CAMPOS:
             problemas.append(f"{donde}: campos que nadie lee {sorted(sobran)}.")
             continue
+        if mal := sorted(k for k in CAMPOS - {"fecha"} if not isinstance(d[k], TIPOS.get(k, str))):
+            problemas.append(f"{donde}: {mal} no tienen el tipo esperado. portada es un número sin comillas, "
+                             "demo y skills son listas y lo demás va entre comillas.")
+            continue
         try:
             charlas.append(Charla(
                 kit=d["kit"], titulo=d["titulo"], gancho=d["gancho"], fecha=Fecha.leer(str(d["fecha"])),
                 formato=d["formato"], evento=d["evento"], evento_url=d["evento_url"],
                 lugar=d["lugar"], ciudad=d["ciudad"], deck=d["deck"], portada=d["portada"],
                 demo=tuple(Enlace.leer(e, f"{donde}, demo") for e in d["demo"]),
-                skills=tuple(
-                    Skill(Enlace.leer(s, f"{donde}, skills", frozenset({"que", "usar"})), s["que"], s["usar"])
-                    for s in d["skills"]
-                ),
+                skills=tuple(Skill.leer(s, f"{donde}, skills") for s in d["skills"]),
             ))
         except (ValueError, KeyError) as e:
             problemas.append(f"{donde}: {e}")
@@ -200,6 +220,10 @@ def revisar_datos(cat: Catalogo, problemas: Problemas) -> None:
     """Lo que se puede saber sin abrir un PDF ni generar nada."""
     if not cat.repo or not cat.rama:
         problemas.append("charlas.toml: faltan repo y rama, con los que se arma el enlace de descarga.")
+    for ciudad, dato in cat.ciudades.items():
+        if not (isinstance(dato, dict) and isinstance(dato.get("pais"), str)
+                and all(isinstance(dato.get(k), (int, float)) for k in ("lat", "lon"))):
+            problemas.append(f'charlas.toml, [ciudades]: "{ciudad}" lleva pais (texto) y lat y lon (números sin comillas).')
     en_disco = {p.name for p in RAIZ.iterdir() if p.is_dir() and ES_KIT.match(p.name)}
     en_toml = [c.kit for c in cat.charlas]
     for kit in sorted(en_disco - cat.declarados):
@@ -368,7 +392,7 @@ def indice(cat: Catalogo, paginas: dict[str, int]) -> str:
     skills = ["| Skill | Qué hace | De la charla | Cómo se usa |", "|---|---|---|---|"]
     for c in recientes:
         for s in c.skills:
-            usar = f"`{celda(s.usar)}`" + ("" if s.enlace.externo else f" con Claude Code abierto en [`{c.kit}/`]({c.kit}/)")
+            usar = " y luego ".join(f"`{celda(u)}`" for u in s.usar) + ("" if s.enlace.externo else f" con Claude Code abierto en [`{c.kit}/`]({c.kit}/)")
             skills.append(f"| [`{s.enlace.nombre}`]({s.enlace.desde(c.kit + '/')}) | {celda(s.que)} | [{c.fecha.corta}]({c.kit}/) | {usar} |")
 
     n_skills = sum(len(c.skills) for c in cat.charlas)

@@ -7,6 +7,7 @@
 # portada      la página del deck que sirve de carátula (no siempre es la primera).
 # demo, skills listas de { nombre, ruta } para lo que vive en el kit o { nombre, url } para lo
 #              que vive fuera. Pueden ir vacías, pero no las dos a la vez.
+# usar         lo que se escribe para tener la skill; una lista cuando son varios comandos.
 
 repo = "JairoTorregrosa/charlas"
 rama = "main"
@@ -50,7 +51,7 @@ demo = []
 nombre = "crea-tu-web"
 url = "https://github.com/JairoTorregrosa/crea-tu-web"
 que = "Seis skills para planear, diseñar y publicar la web de tu negocio sin programar."
-usar = "/plugin marketplace add JairoTorregrosa/crea-tu-web"
+usar = ["/plugin marketplace add JairoTorregrosa/crea-tu-web", "/plugin install crea-tu-web@crea-tu-web"]
 
 [[charla]]
 kit = "2026-agents-bogota"

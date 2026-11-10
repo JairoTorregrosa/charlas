@@ -193,7 +193,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
 | [`crear-agente-sdk`](2026-bogota-agent-sdk/.claude/skills/crear-agente-sdk) | Wizard: de una idea a un agente con la Agent SDK, en Python o TypeScript. | [19 sep 2026](2026-bogota-agent-sdk/) | `/crear-agente-sdk` con Claude Code abierto en [`2026-bogota-agent-sdk/`](2026-bogota-agent-sdk/) |
 | [`setup-taller`](2026-platzi-agent-sdk/.claude/skills/setup-taller) | Deja el notebook corriendo en tu máquina: revisa herramientas, login, llaves y MCP. | [29 ago 2026](2026-platzi-agent-sdk/) | `/setup-taller` con Claude Code abierto en [`2026-platzi-agent-sdk/`](2026-platzi-agent-sdk/) |
 | [`crear-agente`](2026-platzi-agent-sdk/.claude/skills/crear-agente) | Arma un agente nuevo en la forma del taller, un primitivo a la vez. | [29 ago 2026](2026-platzi-agent-sdk/) | `/crear-agente` con Claude Code abierto en [`2026-platzi-agent-sdk/`](2026-platzi-agent-sdk/) |
-| [`crea-tu-web`](https://github.com/JairoTorregrosa/crea-tu-web) | Seis skills para planear, diseñar y publicar la web de tu negocio sin programar. | [6 ago 2026](2026-hapgj/) | `/plugin marketplace add JairoTorregrosa/crea-tu-web` |
+| [`crea-tu-web`](https://github.com/JairoTorregrosa/crea-tu-web) | Seis skills para planear, diseñar y publicar la web de tu negocio sin programar. | [6 ago 2026](2026-hapgj/) | `/plugin marketplace add JairoTorregrosa/crea-tu-web` y luego `/plugin install crea-tu-web@crea-tu-web` |
 <!-- indice:fin -->
 
 ## Sobre mí
