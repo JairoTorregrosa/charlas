@@ -90,10 +90,10 @@ Ojo: si ya tienes Claude Code logueado con Pro o Max, esa sesión le gana a la d
 `[auth] sesión de ant, perfil «…»`); en tus propios agentes haz lo mismo.
 
 **B · API key.** Créala en [platform.claude.com/settings/keys](https://platform.claude.com/settings/keys)
-en la organización que tiene los créditos, y pégala en `.env`:
+en la organización que tiene los créditos, y pégala en `.env`, en la raíz del kit (un nivel arriba de `python/` y `typescript/`):
 
 ```
-cp .env.example .env          # Windows: copy .env.example .env
+cp .env.example .env          # en la raíz del kit. Windows: copy .env.example .env
 # edita .env →  ANTHROPIC_API_KEY=sk-ant-api03-...
 ```
 

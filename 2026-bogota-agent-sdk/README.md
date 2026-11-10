@@ -73,7 +73,7 @@ Sigue con [`python/README.md`](python/README.md) o [`typescript/README.md`](type
 |---|---|
 | `python/` y `typescript/` | Claude Code instalado y con sesión iniciada (`claude` → `/login`) |
 | `python/` | [uv](https://docs.astral.sh/uv/) |
-| `typescript/` | Node 18 o más |
+| `typescript/` | Node 20.11 o más |
 | `managed-agents/` | cuenta de Console y API key (la suscripción de claude.ai no sirve) |
 | todo | git |
 
