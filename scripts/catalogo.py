@@ -305,6 +305,11 @@ def imagenes(c: Charla, doc: pypdfium2.PdfDocument, forzar: bool, escribir: bool
         print(f"  imagen  {c.kit}/{nombre}")
 
 
+def paginas_distintas(doc: pypdfium2.PdfDocument) -> int:
+    """Un export roto repite la misma página: el conteo de páginas no lo delata, su contenido sí."""
+    return len({hashlib.sha256(pagina(doc, n, 64).tobytes()).digest() for n in range(1, len(doc) + 1)})
+
+
 def vistazo(doc: pypdfium2.PdfDocument) -> Image.Image:
     """Todas las slides en una sola hoja de contactos."""
     minis = [pagina(doc, n, ANCHO_MINIATURA) for n in range(1, len(doc) + 1)]
@@ -555,6 +560,8 @@ def main() -> None:
     for c in cat.charlas:
         doc = pypdfium2.PdfDocument(c.pdf)
         paginas[c.kit] = len(doc)
+        if len(doc) > 1 and paginas_distintas(doc) == 1:
+            problemas.append(f"{c.kit}: las {len(doc)} páginas de {c.deck} son la misma. El export salió mal: vuelve a exportar el deck.")
         imagenes(c, doc, args.imagenes, escribir, problemas)
         doc.close()
     problemas.salir_si_hay()
