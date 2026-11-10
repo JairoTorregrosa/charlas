@@ -22,12 +22,31 @@
 <sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-col5-agents/">¿Ya usas ChatGPT? ¿Y si tuvieras un agente?</a> · siguiente: <a href="../2026-agents-bogota/">Construye tu primer agente de AI con Claude</a></sub>
 <!-- ficha:fin -->
 
-Taller en el Espacio Comunitario de HAP (Montrose, 6 de agosto de 2026). Levantar tu primera página web usando IA, sin escribir código.
+Tu primera página web con IA, sin escribir código. Taller presencial con el [Hispanic Affairs Project](https://hapgj.org/) en Montrose, Colorado.
 
-## Qué hay aquí
+## El recorrido: cinco skills, en orden
 
-| Archivo | Qué es |
-|---|---|
-| [`Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf`](Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf) | El deck tal como se proyectó: 17 páginas, 16:9 |
+Cada skill guía a la IA paso a paso. Tú solo respondes preguntas sobre tu negocio.
+
+| # | Skill | Le dices | Qué hace |
+|---|---|---|---|
+| 1 | `revisa-tu-equipo` | «revisa mi equipo» | Revisa que tu laptop tenga lo necesario y te ayuda a arreglar lo que falte. |
+| 2 | `crea-tu-web` | «crea mi página» | Te entrevista sobre tu negocio y crea la página desde cero, bilingüe español e inglés. |
+| 3 | `disena-tu-marca` | «diseña mi marca» | Elige colores, tipografía y estilo visual propios, sin plantillas genéricas. |
+| 4 | `planea-tu-web` | «planeemos mi página» | Organiza las secciones y el contenido según lo que tu negocio necesita. |
+| 5 | `publica-tu-web` | «publica mi página» | La sube a internet con Cloudflare Pages, gratis y sin tarjeta, y genera un QR para compartirla. |
+
+Hay una sexta, `taste-skill`, que la IA consulta sola para que la página no se vea como plantilla.
+
+## Instálalas
+
+En Claude Code:
+
+```
+/plugin marketplace add JairoTorregrosa/crea-tu-web
+/plugin install crea-tu-web@crea-tu-web
+```
+
+Las skills, la instalación para Codex y el flujo completo viven en su propio repo: [JairoTorregrosa/crea-tu-web](https://github.com/JairoTorregrosa/crea-tu-web).
 
 Contacto: [@jai_torregrosa](https://x.com/jai_torregrosa)

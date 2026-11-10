@@ -22,12 +22,22 @@
 <sub><a href="../README.md">← Todas las charlas</a> · siguiente: <a href="../2026-hapgj/">Crea tu Web con IA</a></sub>
 <!-- ficha:fin -->
 
-Charla de Colombia 5.0 (Magdalena, 2026). La diferencia entre usar un chat y tener un agente: cerebro, manos, hábitos, memoria y despertador — las cinco piezas, con ejemplos de todos los días.
+La diferencia entre usar un chat y tener un agente, un nivel a la vez. Cada nivel abre con una pregunta a la sala y cierra con una demo de Marley, mi asistente.
 
-## Qué hay aquí
+## Cinco niveles, una pieza por nivel
 
-| Archivo | Qué es |
-|---|---|
-| [`Ya-usas-ChatGPT-y-si-tuvieras-un-agente-Colombia50-Magdalena-2026.pdf`](Ya-usas-ChatGPT-y-si-tuvieras-un-agente-Colombia50-Magdalena-2026.pdf) | El deck tal como se proyectó: 38 páginas, 16:9 |
+| Nivel | Pieza | La pregunta a la sala | Qué cambia |
+|---|---|---|---|
+| 1 | **El cerebro** | ¿Quién ha pegado un correo en ChatGPT para que le ayude a responder? | Brillante, pero sin agencia: no interactúa, no ejecuta. |
+| 2 | **Manos y ojos** | ¿Quién ya conectó ChatGPT o Claude con su correo o calendario? | Manos y ojos tienen un nombre: tools. Ahora actúa en el mundo. |
+| 3 | **Hábitos** | ¿Quién tiene un prompt que copia y pega porque siempre explica lo mismo? | Una guía escrita una vez. Ya no improvisa. |
+| 4 | **Continuidad** | ¿Quién siente que cada vez le tiene que recordar a ChatGPT quién es? | Deja de empezar de cero cada vez. |
+| 5 | **Despertador** | ¿Quién quisiera despertarse con el día ya resuelto? | Actúa en el momento correcto, sin que estés. |
+
+Las mismas cinco piezas, con el nombre técnico de cada una, están en [Mi agente personal](../2026-casanare-marley/).
+
+## Monta tu propio Marley
+
+El deck cierra con un QR a [Hermes Agent](https://hermes-agent.nousresearch.com/), el proyecto abierto sobre el que corre Marley.
 
 Contacto: [@jai_torregrosa](https://x.com/jai_torregrosa)
