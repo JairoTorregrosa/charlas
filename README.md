@@ -18,7 +18,7 @@
 </p>
 
 <!-- indice:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
-<p align="center"><b>8</b> charlas · <b>266</b> slides · <b>4</b> ciudades · <b>6</b> skills</p>
+<p align="center"><b>8</b> charlas · <b>265</b> slides · <b>4</b> ciudades · <b>6</b> skills</p>
 
 ## Constelaciones
 
@@ -81,7 +81,7 @@ Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, t
 <td width="38%"><a href="2026-hapgj/"><img src="2026-hapgj/portada.jpg" alt="Portada de «Crea tu Web con IA»" width="100%"></a></td>
 <td valign="top">
 <b><a href="2026-hapgj/">Crea tu Web con IA</a></b><br>
-<sub>6 ago 2026 · Espacio Comunitario de HAP · Montrose, Colorado · Taller</sub><br>
+<sub>6 ago 2026 · Espacio Comunitario de HAP · Montrose, Colorado · Taller · 90 min</sub><br>
 Tu primera página web con IA, sin escribir código.<br>
 <a href="2026-hapgj/Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf">📑 Deck</a> · <a href="https://github.com/JairoTorregrosa/crea-tu-web">🛠️ Skill</a> · <a href="https://hapgj.org/">🎟️ Evento</a>
 </td>
@@ -102,7 +102,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
 | # | Cuándo | Charla | Evento | Dónde | Formato |
 |--:|---|---|---|---|---|
 | 1 | may 2026 | [¿Ya usas ChatGPT? ¿Y si tuvieras un agente?](2026-col5-agents/) | [Colombia 5.0 Magdalena](https://canaltrece.com.co/noticias/colombia-5-0-magdalena-reunio-a-mas-de-1-150-asistentes-en-santa-marta/) | Universidad Antonio Nariño · Santa Marta | Charla |
-| 2 | 6 ago 2026 | [Crea tu Web con IA](2026-hapgj/) | [Hispanic Affairs Project](https://hapgj.org/) | Espacio Comunitario de HAP · Montrose, Colorado | Taller |
+| 2 | 6 ago 2026 | [Crea tu Web con IA](2026-hapgj/) | [Hispanic Affairs Project](https://hapgj.org/) | Espacio Comunitario de HAP · Montrose, Colorado | Taller · 90 min |
 | 3 | 22 ago 2026 | [Construye tu primer agente de AI con Claude](2026-agents-bogota/) | [Claude Community Bogotá · hackathon de analítica con Quick](https://luma.com/claude-imxl) | Oficinas de Quick · Bogotá | Charla · 1 h |
 | 4 | 27 ago 2026 | [Mi agente personal: la IA que crece contigo](2026-casanare-marley/) | [Colombia 5.0 Casanare](https://mintic.gov.co/portal/inicio/Sala-de-prensa/Noticias/440337:Casanare-se-conecta-con-el-futuro-Colombia-5-0-llega-por-primera-vez-a-Yopal) | Unitrópico · Yopal | Charla · 45 min |
 | 5 | 29 ago 2026 | [Crea tu primer agente con Claude Agent SDK](2026-platzi-agent-sdk/) | [Platzi Conf Bogotá 2026](https://platzi.com/conf/) | Ágora Bogotá | Taller · 45 min |
