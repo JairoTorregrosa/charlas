@@ -1,6 +1,46 @@
+<!-- ficha:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
 # Crea tu primer agente con Claude Agent SDK
 
-Taller de 45 minutos (Platzi Conf Bogotá, 29 de agosto de 2026). Un notebook con tres agentes; cada celda suma un primitivo del SDK: system prompt, tools, stream de mensajes, skills, hooks, sub-agentes, streaming, MCP, tope de gasto, `resume` y dos agentes en paralelo.
+<a href="Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf"><img src="portada.jpg" alt="Portada del deck «Crea tu primer agente con Claude Agent SDK»" width="100%"></a>
+
+<table>
+<tr><td>📅 <b>Cuándo</b></td><td>29 de agosto de 2026</td></tr>
+<tr><td>📍 <b>Dónde</b></td><td>Ágora Bogotá</td></tr>
+<tr><td>🎤 <b>Formato</b></td><td>Taller · 45 min</td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://platzi.com/conf/">Platzi Conf Bogotá 2026</a></td></tr>
+<tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf">35 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-platzi-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf">descargar</a></td></tr>
+<tr><td>🧪 <b>Demo</b></td><td><a href="demo.ipynb">demo.ipynb</a></td></tr>
+<tr><td>🛠️ <b>Skill</b></td><td><a href=".claude/skills/setup-taller"><code>setup-taller</code></a> · <a href=".claude/skills/crear-agente"><code>crear-agente</code></a></td></tr>
+</table>
+
+<details>
+<summary>👀 Las 35 slides de un vistazo</summary>
+
+<a href="Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf"><img src="vistazo.jpg" alt="Las 35 slides del deck en miniatura" width="100%"></a>
+
+</details>
+
+<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-casanare-marley/">Mi agente personal: la IA que crece contigo</a> · siguiente: <a href="../2026-bogota-agent-sdk/">Crea tu primer agente con la Claude Agent SDK</a></sub>
+<!-- ficha:fin -->
+
+Un notebook, tres agentes y un primitivo de la SDK por celda. Los agentes usan lo que trae el SDK (Read, Bash, WebFetch…), un skill, un ayudante y servidores MCP externos. Ninguno tiene tools propias. Cada uno escribe un solo archivo en su casa; un hook lo garantiza.
+
+## El recorrido: un primitivo por celda
+
+| # | Primitivo | Qué le da al agente |
+|---|---|---|
+| 1 | `query()` + `system_prompt` | una personalidad y una vuelta |
+| 2 | `cwd` + tools nativas | manos: leer, correr comandos |
+| 3 | el stream de mensajes | ver cada paso del ciclo |
+| 4 | `setting_sources` + skill | un procedimiento que carga cuando hace falta |
+| 5 | hooks | un portero que dice no |
+| 6 | sub-agentes | ayudantes que trabajan en paralelo |
+| 7 | MCP + `max_budget_usd` | herramientas de otros, con tope de gasto |
+| 8 | `resume` · dos `query()` a la vez | seguir la conversación · orquestar desde código |
+
+Todo el hilo está en [`demo.ipynb`](demo.ipynb).
+
+## Tres agentes, ninguno con tools propias
 
 | Agente | Archivo | Su casa | Qué hace |
 |---|---|---|---|
@@ -8,11 +48,29 @@ Taller de 45 minutos (Platzi Conf Bogotá, 29 de agosto de 2026). Un notebook co
 | Buscador de vivienda | `agent_vivienda.py` | `workspace_vivienda/` | Busca avisos reales de arriendo en Bogotá (Exa y Firecrawl por MCP) y deja una tabla en `candidatos.md`. |
 | El Monitor | `agent_monitor.py` | `workspace_monitor/` | Te explica un paper en cinco preguntas (alphaXiv por MCP), en `explicacion.md`. |
 
-El deck: [`Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf`](Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf) — 35 páginas, 16:9.
+## Córrelo
 
-Los agentes usan lo que trae el SDK (Read, Bash, WebFetch…), un skill, un ayudante y servidores MCP externos. Ninguno tiene tools propias. Cada uno escribe un solo archivo en su casa; un hook lo garantiza.
+```bash
+git clone https://github.com/JairoTorregrosa/charlas.git
+cd charlas/2026-platzi-agent-sdk
+uv sync
+uv run jupyter lab demo.ipynb
+```
 
-## Correr el notebook con tu suscripción de Claude
+> El deck dice `cd charlas/2026-platzi-agent-sdk/taller` y `taller/docs/`. Esa carpeta no existe: el kit vive en la raíz de `2026-platzi-agent-sdk/`.
+
+Cada agente también corre solo, desde la terminal:
+
+```bash
+uv run agent_parcero.py https://github.com/JairoTorregrosa/crea-tu-web
+uv run agent_vivienda.py "Apartamento en Chapinero, máximo 2.500.000, 2 habitaciones"
+uv run agent_monitor.py "Attention is all you need"
+```
+
+Lo que gasta es la cuota de tu plan (límite de sesión y semanal), no dinero. El `total_cost_usd` del recibo es un estimado del SDK, útil para comparar corridas. Sin suscripción, ver [Otros cerebros](#otros-cerebros).
+
+<details>
+<summary>Paso a paso con tu suscripción de Claude</summary>
 
 El SDK no trae el modelo: arranca Claude Code como subproceso y usa la sesión que tengas iniciada ahí. Con una cuenta Pro o Max no necesitas API key.
 
@@ -29,19 +87,12 @@ El SDK no trae el modelo: arranca Claude Code como subproceso y usa la sesión q
    ```
 6. Ejecuta las celdas en orden. La sección 0 comprueba que `claude` responde y que no hay `ANTHROPIC_API_KEY`; la celda `PROVEEDOR = "claude"` elige el cerebro de todo el notebook.
 
-Lo que gasta es la cuota de tu plan (límite de sesión y semanal), no dinero. El `total_cost_usd` del recibo es un estimado del SDK, útil para comparar corridas. Sin suscripción, ver [Otros cerebros](#otros-cerebros).
-
 En VS Code: abre la carpeta, elige el intérprete `.venv/bin/python` (ya viene en `.vscode/settings.json`) y corre las celdas desde ahí.
 
-Cada agente también corre solo, desde la terminal:
+</details>
 
-```bash
-uv run agent_parcero.py https://github.com/JairoTorregrosa/crea-tu-web
-uv run agent_vivienda.py "Apartamento en Chapinero, máximo 2.500.000, 2 habitaciones"
-uv run agent_monitor.py "Attention is all you need"
-```
-
-### El Monitor necesita alphaXiv
+<details>
+<summary>El Monitor necesita alphaXiv</summary>
 
 Es un servidor MCP con OAuth. Se registra una vez en tu Claude Code y se autentica en el navegador:
 
@@ -51,6 +102,8 @@ claude     # → /mcp → alphaxiv → Authenticate
 ```
 
 Los otros dos MCP del taller (Exa y Firecrawl, en `workspace_vivienda/.mcp.json`) no piden llave.
+
+</details>
 
 ## Otros cerebros
 
@@ -69,19 +122,26 @@ PROVEEDOR = "openrouter"   # "claude" · "openrouter" · "opencode" · "codex"
 
 Dos límites: los conectores MCP de claude.ai (y con ellos El Monitor) van solo con `"claude"`, y la tool nativa `WebSearch` es la búsqueda del servidor de Anthropic; por eso el Buscador de vivienda busca por MCP. Con estos proveedores cada celda imprime dos avisos en `stderr` (`connectors are disabled`, `unrecognized_model`); son avisos, no errores. El detalle de cada uno, con un `curl` para probar antes de abrir el notebook, está en [`docs/proveedores.md`](docs/proveedores.md).
 
-### OpenRouter (gratis)
+<details>
+<summary>OpenRouter (gratis)</summary>
 
 1. Crea una llave en https://openrouter.ai/settings/keys. Ponle límite de crédito; los modelos `:free` cuestan 0.
 2. `cp .env.example .env` y pon `OPENROUTER_API_KEY=sk-or-v1-...`.
 3. En el notebook, `PROVEEDOR = "openrouter"`. Otro modelo gratis: `proveedor("openrouter", "z-ai/glm-5.2:free")`.
 
-### OpenCode Zen (gratis)
+</details>
+
+<details>
+<summary>OpenCode Zen (gratis)</summary>
 
 1. Entra a https://opencode.ai/auth con GitHub o Google y copia la API key.
 2. En `.env`, `OPENCODE_API_KEY=...`.
 3. `PROVEEDOR = "opencode"`. Si el `curl` de `docs/proveedores.md` devuelve 401, el header es `x-api-key`; el cambio en `proveedores.py` está indicado ahí.
 
-### Suscripción de ChatGPT (Codex) vía LiteLLM
+</details>
+
+<details>
+<summary>Suscripción de ChatGPT (Codex) vía LiteLLM</summary>
 
 El backend de Codex habla Responses API; LiteLLM lo traduce al formato de Anthropic y usa el login OAuth de Codex.
 
@@ -91,6 +151,8 @@ El backend de Codex habla Responses API; LiteLLM lo traduce al formato de Anthro
 4. `PROVEEDOR = "codex"`. Modelos: `gpt-5.6-luna` (default), `gpt-5.6-sol`, `gpt-5.6-terra`, los tres con razonamiento `high`.
 
 `litellm/fix_system.py` es un hook del proxy: el backend de ChatGPT rechaza los mensajes con `role: system`, y el hook los mueve al `system` antes de enviar.
+
+</details>
 
 ## Cómo está armado
 
@@ -117,7 +179,16 @@ El backend de Codex habla Responses API; LiteLLM lo traduce al formato de Anthro
 
 ## Cuánto cuesta una corrida
 
-Medido con `claude-sonnet-5`: Parcero ≈ USD 0.31 (108 s), Vivienda ≈ USD 0.70 (91 s), Monitor ≈ USD 0.36 (75 s). El notebook completo, unos USD 3.5. Todos los agentes tienen `max_budget_usd` como tope; con una suscripción el costo es el estimado del SDK, no un cobro.
+Medido con `claude-sonnet-5`:
+
+| Agente | Costo | Tiempo |
+|---|---|---|
+| El Parcero Crítico | ≈ USD 0.31 | 108 s |
+| Buscador de vivienda | ≈ USD 0.70 | 91 s |
+| El Monitor | ≈ USD 0.36 | 75 s |
+| El notebook completo | ≈ USD 3.5 | |
+
+Todos los agentes tienen `max_budget_usd` como tope; con una suscripción el costo es el estimado del SDK, no un cobro.
 
 ## Dos skills para tu agente de código
 
@@ -130,7 +201,15 @@ Viven en `.claude/skills/` (`.agents/skills` apunta ahí para Codex).
 
 ## Cheat sheets
 
-En [`docs/`](docs/): `event_model.md` (qué llega en el stream), `options.md`, `tools.md`, `workspace.md` (skills, ayudantes, MCP), `permisos_hooks.md`, `errores.md` (síntoma → causa → arreglo) y `proveedores.md`.
+| Hoja | Cuándo abrirla |
+|---|---|
+| [`event_model.md`](docs/event_model.md) | «¿Qué me está llegando en el `async for`?» |
+| [`options.md`](docs/options.md) | «¿Cómo se llama esa opción y qué default tiene?» |
+| [`tools.md`](docs/tools.md) | «¿Qué campo tiene el input de `Read`?» |
+| [`workspace.md`](docs/workspace.md) | «¿Dónde pongo el skill, el ayudante o el MCP?» |
+| [`permisos_hooks.md`](docs/permisos_hooks.md) | «¿Por qué corrió (o no) esa tool?» |
+| [`errores.md`](docs/errores.md) | «Se rompió.» Síntoma → causa → arreglo. |
+| [`proveedores.md`](docs/proveedores.md) | «¿Y si no tengo suscripción de Claude?» |
 
 ## Haz el tuyo
 

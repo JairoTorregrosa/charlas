@@ -1,0 +1,181 @@
+# La bitácora: una entrada por charla, en cualquier orden (el índice las ordena por fecha).
+# De aquí salen el índice del README, la ficha que abre cada kit y sus imágenes.
+# Después de tocar este archivo o un deck:  uv run scripts/catalogo.py
+#
+# fecha        "AAAA-MM-DD", o "AAAA-MM" cuando solo consta el mes.
+# evento_url   la página del evento: Luma, el sitio oficial o una nota de prensa.
+# portada      la página del deck que sirve de carátula (no siempre es la primera).
+# demo, skills listas de { nombre, ruta } para lo que vive en el kit o { nombre, url } para lo
+#              que vive fuera. Pueden ir vacías, pero no las dos a la vez.
+# usar         lo que se escribe para tener la skill; una lista cuando son varios comandos.
+
+repo = "JairoTorregrosa/charlas"
+rama = "main"
+
+[ciudades]
+"Bogotá" = { pais = "Colombia", lat = 4.7110, lon = -74.0721 }
+"Yopal" = { pais = "Colombia", lat = 5.3378, lon = -72.3959 }
+"Santa Marta" = { pais = "Colombia", lat = 11.2408, lon = -74.1990 }
+"Montrose, Colorado" = { pais = "Estados Unidos", lat = 38.4783, lon = -107.8762 }
+
+[[charla]]
+kit = "2026-col5-agents"
+titulo = "¿Ya usas ChatGPT? ¿Y si tuvieras un agente?"
+gancho = "La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábitos, memoria y despertador."
+fecha = "2026-05"
+formato = "Charla"
+evento = "Colombia 5.0 Magdalena"
+evento_url = "https://canaltrece.com.co/noticias/colombia-5-0-magdalena-reunio-a-mas-de-1-150-asistentes-en-santa-marta/"
+lugar = "Universidad Antonio Nariño"
+ciudad = "Santa Marta"
+deck = "Ya-usas-ChatGPT-y-si-tuvieras-un-agente-Colombia50-Magdalena-2026.pdf"
+portada = 2
+demo = [{ nombre = "Hermes Agent", url = "https://hermes-agent.nousresearch.com/" }]
+skills = []
+
+[[charla]]
+kit = "2026-hapgj"
+titulo = "Crea tu Web con IA"
+gancho = "Tu primera página web con IA, sin escribir código."
+fecha = "2026-08-06"
+formato = "Taller · 90 min"
+evento = "Hispanic Affairs Project"
+evento_url = "https://hapgj.org/"
+lugar = "Espacio Comunitario de HAP"
+ciudad = "Montrose, Colorado"
+deck = "Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf"
+portada = 1
+demo = []
+
+[[charla.skills]]
+nombre = "crea-tu-web"
+url = "https://github.com/JairoTorregrosa/crea-tu-web"
+que = "Seis skills para planear, diseñar y publicar la web de tu negocio sin programar."
+usar = ["/plugin marketplace add JairoTorregrosa/crea-tu-web", "/plugin install crea-tu-web@crea-tu-web"]
+
+[[charla]]
+kit = "2026-agents-bogota"
+titulo = "Construye tu primer agente de AI con Claude"
+gancho = "Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, tools y skills."
+fecha = "2026-08-22"
+formato = "Charla · 1 h"
+evento = "Claude Community Bogotá · hackathon de analítica con Quick"
+evento_url = "https://luma.com/claude-imxl"
+lugar = "Oficinas de Quick"
+ciudad = "Bogotá"
+deck = "Construye-tu-primer-agente-Bogota-2026.pdf"
+portada = 1
+demo = [
+  { nombre = "demo/", ruta = "demo" },
+  { nombre = "notebooks/", ruta = "notebooks" },
+  { nombre = "hackathon/", ruta = "hackathon" },
+]
+skills = []
+
+[[charla]]
+kit = "2026-casanare-marley"
+titulo = "Mi agente personal: la IA que crece contigo"
+gancho = "Marley, mi asistente 24/7: un cerebro alquilado y un cuerpo de cinco piezas."
+fecha = "2026-08-27"
+formato = "Charla · 45 min"
+evento = "Colombia 5.0 Casanare"
+evento_url = "https://mintic.gov.co/portal/inicio/Sala-de-prensa/Noticias/440337:Casanare-se-conecta-con-el-futuro-Colombia-5-0-llega-por-primera-vez-a-Yopal"
+lugar = "Unitrópico"
+ciudad = "Yopal"
+deck = "Mi-agente-personal-Casanare-2026.pdf"
+portada = 1
+demo = [{ nombre = "Hermes Agent", url = "https://hermes-agent.nousresearch.com/" }]
+skills = []
+
+[[charla]]
+kit = "2026-platzi-agent-sdk"
+titulo = "Crea tu primer agente con Claude Agent SDK"
+gancho = "Un notebook, tres agentes y un primitivo de la SDK por celda."
+fecha = "2026-08-29"
+formato = "Taller · 45 min"
+evento = "Platzi Conf Bogotá 2026"
+evento_url = "https://platzi.com/conf/"
+lugar = "Ágora Bogotá"
+ciudad = "Bogotá"
+deck = "Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf"
+portada = 2
+demo = [{ nombre = "demo.ipynb", ruta = "demo.ipynb" }]
+
+[[charla.skills]]
+nombre = "setup-taller"
+ruta = ".claude/skills/setup-taller"
+que = "Deja el notebook corriendo en tu máquina: revisa herramientas, login, llaves y MCP."
+usar = "/setup-taller"
+
+[[charla.skills]]
+nombre = "crear-agente"
+ruta = ".claude/skills/crear-agente"
+que = "Arma un agente nuevo en la forma del taller, un primitivo a la vez."
+usar = "/crear-agente"
+
+[[charla]]
+kit = "2026-bogota-agent-sdk"
+titulo = "Crea tu primer agente con la Claude Agent SDK"
+gancho = "Un asistente de viaje armado pieza por pieza: nueve primitivos, en Python y TypeScript."
+fecha = "2026-09-19"
+formato = "Workshop · 3,5 h"
+evento = "Claude Community Bogotá · Claude Fest Colombia"
+evento_url = "https://luma.com/claude-be23"
+lugar = "Universidad Santo Tomás"
+ciudad = "Bogotá"
+deck = "Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf"
+portada = 3
+demo = [
+  { nombre = "python/", ruta = "python" },
+  { nombre = "typescript/", ruta = "typescript" },
+  { nombre = "managed-agents/", ruta = "managed-agents" },
+]
+
+[[charla.skills]]
+nombre = "crear-agente-sdk"
+ruta = ".claude/skills/crear-agente-sdk"
+que = "Wizard: de una idea a un agente con la Agent SDK, en Python o TypeScript."
+usar = "/crear-agente-sdk"
+
+[[charla]]
+kit = "2026-lasalle-managed-agents"
+titulo = "Agentes en la nube con Claude Managed Agents"
+gancho = "De Claude Code en el portátil a un agente remoto: Agent, Environment, Session, eventos y Deployment."
+fecha = "2026-10-24"
+formato = "Workshop · 3 h"
+evento = "Claude Community Bogotá"
+evento_url = "https://luma.com/claude-wbvh"
+lugar = "Universidad de La Salle"
+ciudad = "Bogotá"
+deck = "Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf"
+portada = 1
+demo = [{ nombre = "el mismo agente en código (kit de septiembre)", ruta = "../2026-bogota-agent-sdk/managed-agents" }]
+
+[[charla.skills]]
+nombre = "managed-agents-wizard"
+url = "https://github.com/JairoTorregrosa/jaiskills/tree/main/skills/models/managed-agents-wizard"
+que = "De una idea a un agente corriendo en Claude Managed Agents, con una Session de prueba."
+usar = "npx skills add JairoTorregrosa/jaiskills --skill managed-agents-wizard -g"
+
+[[charla]]
+kit = "2026-javeriana-agent-sdk"
+titulo = "Crea tu primer agente con la Claude Agent SDK"
+gancho = "Segunda edición: el asistente de viaje en diez piezas, hasta la salida estructurada."
+fecha = "2026-11-07"
+formato = "Workshop · 3,5 h"
+evento = "Claude Community Bogotá"
+evento_url = "https://luma.com/claude-x1bt"
+lugar = "Pontificia Universidad Javeriana"
+ciudad = "Bogotá"
+deck = "Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf"
+portada = 6
+demo = [
+  { nombre = "python/", ruta = "python" },
+  { nombre = "typescript/", ruta = "typescript" },
+]
+
+[[charla.skills]]
+nombre = "agent-sdk-wizard"
+ruta = ".claude/skills/agent-sdk-wizard"
+que = "Wizard: revisa tu máquina, pregunta paso a paso y construye tu agente con la Agent SDK."
+usar = "/agent-sdk-wizard"
