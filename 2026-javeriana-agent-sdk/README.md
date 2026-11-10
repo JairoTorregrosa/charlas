@@ -7,7 +7,7 @@
 <tr><td>📅 <b>Cuándo</b></td><td>7 de noviembre de 2026</td></tr>
 <tr><td>📍 <b>Dónde</b></td><td>Pontificia Universidad Javeriana · Bogotá</td></tr>
 <tr><td>🎤 <b>Formato</b></td><td>Workshop · 3,5 h</td></tr>
-<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-x1bt">Claude Community Bogotá</a></td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-x1bt">Claude Community Bogotá</a> · Luma</td></tr>
 <tr><td>📑 <b>Deck</b></td><td><a href="Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf">49 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-javeriana-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf">descargar</a></td></tr>
 <tr><td>🧪 <b>Demo</b></td><td><a href="python">python/</a> · <a href="typescript">typescript/</a></td></tr>
 <tr><td>🛠️ <b>Skill</b></td><td><a href=".claude/skills/agent-sdk-wizard"><code>agent-sdk-wizard</code></a></td></tr>

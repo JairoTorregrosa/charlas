@@ -305,7 +305,7 @@ def lista_skills(c: Charla, base: str) -> str:
     return " · ".join(f'<a href="{esc(s.enlace.desde(base))}"><code>{esc(s.enlace.nombre)}</code></a>' for s in c.skills)
 
 
-def tarjeta(c: Charla, paginas: int) -> str:
+def tarjeta(c: Charla) -> str:
     kit = f"{c.kit}/"
     accesos = [f'<a href="{kit}{urllib.parse.quote(c.deck)}">📑 Deck</a>']
     if c.demo:
@@ -317,7 +317,7 @@ def tarjeta(c: Charla, paginas: int) -> str:
         '<td width="50%" valign="top">',
         f'<a href="{kit}"><img src="{kit}portada.jpg" alt="Portada de «{esc(c.titulo)}»" width="100%"></a><br>',
         f'<b><a href="{kit}">{esc(c.titulo)}</a></b><br>',
-        f"<sub>{c.fecha.corta} · {esc(c.donde)} · {esc(c.formato)} · {paginas} slides</sub><br>",
+        f"<sub>{c.fecha.corta} · {esc(c.donde)} · {esc(c.formato)}</sub><br>",
         f"{esc(c.gancho)}<br>",
         " · ".join(accesos),
         "</td>",
@@ -337,7 +337,6 @@ def mapa(cat: Catalogo) -> str:
                 "ciudad": f'{ciudad}, {dato["pais"]}',
                 "charlas": len(aqui),
                 **{c.fecha.corta: c.titulo for c in aqui},
-                "marker-color": "#D97757",
             },
         })
     return json.dumps({"type": "FeatureCollection", "features": puntos}, ensure_ascii=False, indent=1)
@@ -347,7 +346,7 @@ def indice(cat: Catalogo, paginas: dict[str, int]) -> str:
     recientes = list(reversed(cat.charlas))
     filas_tarjetas = []
     for i in range(0, len(recientes), 2):
-        par = [tarjeta(c, paginas[c.kit]) for c in recientes[i:i + 2]]
+        par = [tarjeta(c) for c in recientes[i:i + 2]]
         if len(par) == 1:
             par.append('<td width="50%"></td>')
         filas_tarjetas.append("<tr>\n" + "\n".join(par) + "\n</tr>")
@@ -401,7 +400,7 @@ def ficha(cat: Catalogo, c: Charla, paginas: int) -> str:
         ("📅", "Cuándo", esc(c.fecha.larga)),
         ("📍", "Dónde", esc(c.donde)),
         ("🎤", "Formato", esc(c.formato)),
-        ("🎟️", "Evento", f'<a href="{esc(c.evento_url)}">{esc(c.evento)}</a>'),
+        ("🎟️", "Evento", f'<a href="{esc(c.evento_url)}">{esc(c.evento)}</a>' + (" · Luma" if c.fuente_evento == "Luma" else "")),
         ("📑", "Deck", f'<a href="{deck}">{paginas} slides en PDF</a> · <a href="{cat.descarga(c)}">descargar</a>'),
     ]
     if c.demo:

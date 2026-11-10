@@ -27,14 +27,14 @@
 <td width="50%" valign="top">
 <a href="2026-javeriana-agent-sdk/"><img src="2026-javeriana-agent-sdk/portada.jpg" alt="Portada de «Crea tu primer agente con la Claude Agent SDK»" width="100%"></a><br>
 <b><a href="2026-javeriana-agent-sdk/">Crea tu primer agente con la Claude Agent SDK</a></b><br>
-<sub>7 nov 2026 · Pontificia Universidad Javeriana · Bogotá · Workshop · 3,5 h · 49 slides</sub><br>
+<sub>7 nov 2026 · Pontificia Universidad Javeriana · Bogotá · Workshop · 3,5 h</sub><br>
 Segunda edición: el asistente de viaje en diez piezas, hasta la salida estructurada.<br>
 <a href="2026-javeriana-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Javeriana-2026.pdf">📑 Deck</a> · <a href="2026-javeriana-agent-sdk/python">🧪 Demo</a> · <a href="2026-javeriana-agent-sdk/.claude/skills/agent-sdk-wizard">🛠️ Skill</a> · <a href="https://luma.com/claude-x1bt">🎟️ Luma</a>
 </td>
 <td width="50%" valign="top">
 <a href="2026-lasalle-managed-agents/"><img src="2026-lasalle-managed-agents/portada.jpg" alt="Portada de «Agentes en la nube con Claude Managed Agents»" width="100%"></a><br>
 <b><a href="2026-lasalle-managed-agents/">Agentes en la nube con Claude Managed Agents</a></b><br>
-<sub>24 oct 2026 · Universidad de La Salle · Bogotá · Workshop · 3 h · 30 slides</sub><br>
+<sub>24 oct 2026 · Universidad de La Salle · Bogotá · Workshop · 3 h</sub><br>
 De Claude Code en el portátil a un agente remoto: Agent, Environment, Session, eventos y Deployment.<br>
 <a href="2026-lasalle-managed-agents/Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">📑 Deck</a> · <a href="2026-bogota-agent-sdk/managed-agents">🧪 Demo</a> · <a href="https://github.com/JairoTorregrosa/jaiskills/tree/main/skills/models/managed-agents-wizard">🛠️ Skill</a> · <a href="https://luma.com/claude-wbvh">🎟️ Luma</a>
 </td>
@@ -43,14 +43,14 @@ De Claude Code en el portátil a un agente remoto: Agent, Environment, Session, 
 <td width="50%" valign="top">
 <a href="2026-bogota-agent-sdk/"><img src="2026-bogota-agent-sdk/portada.jpg" alt="Portada de «Crea tu primer agente con la Claude Agent SDK»" width="100%"></a><br>
 <b><a href="2026-bogota-agent-sdk/">Crea tu primer agente con la Claude Agent SDK</a></b><br>
-<sub>19 sep 2026 · Universidad Santo Tomás · Bogotá · Workshop · 3,5 h · 51 slides</sub><br>
+<sub>19 sep 2026 · Universidad Santo Tomás · Bogotá · Workshop · 3,5 h</sub><br>
 Un asistente de viaje armado pieza por pieza: nueve primitivos, en Python y TypeScript.<br>
 <a href="2026-bogota-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Bogota-2026.pdf">📑 Deck</a> · <a href="2026-bogota-agent-sdk/python">🧪 Demo</a> · <a href="2026-bogota-agent-sdk/.claude/skills/crear-agente-sdk">🛠️ Skill</a> · <a href="https://luma.com/claude-be23">🎟️ Luma</a>
 </td>
 <td width="50%" valign="top">
 <a href="2026-platzi-agent-sdk/"><img src="2026-platzi-agent-sdk/portada.jpg" alt="Portada de «Crea tu primer agente con Claude Agent SDK»" width="100%"></a><br>
 <b><a href="2026-platzi-agent-sdk/">Crea tu primer agente con Claude Agent SDK</a></b><br>
-<sub>29 ago 2026 · Ágora Bogotá · Taller · 45 min · 35 slides</sub><br>
+<sub>29 ago 2026 · Ágora Bogotá · Taller · 45 min</sub><br>
 Un notebook, tres agentes y un primitivo de la SDK por celda.<br>
 <a href="2026-platzi-agent-sdk/Crea-tu-primer-agente-Agent-SDK-Platzi-2026.pdf">📑 Deck</a> · <a href="2026-platzi-agent-sdk/demo.ipynb">🧪 Demo</a> · <a href="2026-platzi-agent-sdk/.claude/skills/setup-taller">🛠️ Skill</a> · <a href="https://platzi.com/conf/">🎟️ Evento</a>
 </td>
@@ -59,14 +59,14 @@ Un notebook, tres agentes y un primitivo de la SDK por celda.<br>
 <td width="50%" valign="top">
 <a href="2026-casanare-marley/"><img src="2026-casanare-marley/portada.jpg" alt="Portada de «Mi agente personal: la IA que crece contigo»" width="100%"></a><br>
 <b><a href="2026-casanare-marley/">Mi agente personal: la IA que crece contigo</a></b><br>
-<sub>27 ago 2026 · Unitrópico · Yopal · Charla · 45 min · 23 slides</sub><br>
+<sub>27 ago 2026 · Unitrópico · Yopal · Charla · 45 min</sub><br>
 Marley, mi asistente 24/7: un cerebro alquilado y un cuerpo de cinco piezas.<br>
 <a href="2026-casanare-marley/Mi-agente-personal-Casanare-2026.pdf">📑 Deck</a> · <a href="https://hermes-agent.nousresearch.com/">🧪 Demo</a> · <a href="https://mintic.gov.co/portal/inicio/Sala-de-prensa/Noticias/440337:Casanare-se-conecta-con-el-futuro-Colombia-5-0-llega-por-primera-vez-a-Yopal">🎟️ Evento</a>
 </td>
 <td width="50%" valign="top">
 <a href="2026-agents-bogota/"><img src="2026-agents-bogota/portada.jpg" alt="Portada de «Construye tu primer agente de AI con Claude»" width="100%"></a><br>
 <b><a href="2026-agents-bogota/">Construye tu primer agente de AI con Claude</a></b><br>
-<sub>22 ago 2026 · Oficinas de Quick · Bogotá · Charla · 1 h · 23 slides</sub><br>
+<sub>22 ago 2026 · Oficinas de Quick · Bogotá · Charla · 1 h</sub><br>
 Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, tools y contexto.<br>
 <a href="2026-agents-bogota/Construye-tu-primer-agente-Bogota-2026.pdf">📑 Deck</a> · <a href="2026-agents-bogota/demo">🧪 Demo</a> · <a href="https://luma.com/claude-imxl">🎟️ Luma</a>
 </td>
@@ -75,14 +75,14 @@ Qué es un agente, cómo piensa por dentro y sus tres palancas: system prompt, t
 <td width="50%" valign="top">
 <a href="2026-hapgj/"><img src="2026-hapgj/portada.jpg" alt="Portada de «Crea tu Web con IA»" width="100%"></a><br>
 <b><a href="2026-hapgj/">Crea tu Web con IA</a></b><br>
-<sub>6 ago 2026 · Espacio Comunitario de HAP · Montrose, Colorado · Taller · 17 slides</sub><br>
+<sub>6 ago 2026 · Espacio Comunitario de HAP · Montrose, Colorado · Taller</sub><br>
 Tu primera página web con IA, sin escribir código.<br>
 <a href="2026-hapgj/Crea-tu-Web-con-IA-HAP-Montrose-2026.pdf">📑 Deck</a> · <a href="https://github.com/JairoTorregrosa/crea-tu-web">🛠️ Skill</a> · <a href="https://hapgj.org/">🎟️ Evento</a>
 </td>
 <td width="50%" valign="top">
 <a href="2026-col5-agents/"><img src="2026-col5-agents/portada.jpg" alt="Portada de «¿Ya usas ChatGPT? ¿Y si tuvieras un agente?»" width="100%"></a><br>
 <b><a href="2026-col5-agents/">¿Ya usas ChatGPT? ¿Y si tuvieras un agente?</a></b><br>
-<sub>may 2026 · Universidad Antonio Nariño · Santa Marta · Charla · 38 slides</sub><br>
+<sub>may 2026 · Universidad Antonio Nariño · Santa Marta · Charla</sub><br>
 La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábitos, memoria y despertador.<br>
 <a href="2026-col5-agents/Ya-usas-ChatGPT-y-si-tuvieras-un-agente-Colombia50-Magdalena-2026.pdf">📑 Deck</a> · <a href="https://hermes-agent.nousresearch.com/">🧪 Demo</a> · <a href="https://canaltrece.com.co/noticias/colombia-5-0-magdalena-reunio-a-mas-de-1-150-asistentes-en-santa-marta/">🎟️ Evento</a>
 </td>
@@ -124,8 +124,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
     "29 ago 2026": "Crea tu primer agente con Claude Agent SDK",
     "19 sep 2026": "Crea tu primer agente con la Claude Agent SDK",
     "24 oct 2026": "Agentes en la nube con Claude Managed Agents",
-    "7 nov 2026": "Crea tu primer agente con la Claude Agent SDK",
-    "marker-color": "#D97757"
+    "7 nov 2026": "Crea tu primer agente con la Claude Agent SDK"
    }
   },
   {
@@ -140,8 +139,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Yopal, Colombia",
     "charlas": 1,
-    "27 ago 2026": "Mi agente personal: la IA que crece contigo",
-    "marker-color": "#D97757"
+    "27 ago 2026": "Mi agente personal: la IA que crece contigo"
    }
   },
   {
@@ -156,8 +154,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Santa Marta, Colombia",
     "charlas": 1,
-    "may 2026": "¿Ya usas ChatGPT? ¿Y si tuvieras un agente?",
-    "marker-color": "#D97757"
+    "may 2026": "¿Ya usas ChatGPT? ¿Y si tuvieras un agente?"
    }
   },
   {
@@ -172,8 +169,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Montrose, Colorado, Estados Unidos",
     "charlas": 1,
-    "6 ago 2026": "Crea tu Web con IA",
-    "marker-color": "#D97757"
+    "6 ago 2026": "Crea tu Web con IA"
    }
   }
  ]

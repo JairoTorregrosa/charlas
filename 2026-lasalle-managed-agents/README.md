@@ -7,7 +7,7 @@
 <tr><td>📅 <b>Cuándo</b></td><td>24 de octubre de 2026</td></tr>
 <tr><td>📍 <b>Dónde</b></td><td>Universidad de La Salle · Bogotá</td></tr>
 <tr><td>🎤 <b>Formato</b></td><td>Workshop · 3 h</td></tr>
-<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-wbvh">Claude Community Bogotá</a></td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-wbvh">Claude Community Bogotá</a> · Luma</td></tr>
 <tr><td>📑 <b>Deck</b></td><td><a href="Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">30 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-lasalle-managed-agents/Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">descargar</a></td></tr>
 <tr><td>🧪 <b>Demo</b></td><td><a href="../2026-bogota-agent-sdk/managed-agents">el mismo agente en código (kit de septiembre)</a></td></tr>
 <tr><td>🛠️ <b>Skill</b></td><td><a href="https://github.com/JairoTorregrosa/jaiskills/tree/main/skills/models/managed-agents-wizard"><code>managed-agents-wizard</code></a></td></tr>

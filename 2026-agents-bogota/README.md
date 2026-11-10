@@ -7,7 +7,7 @@
 <tr><td>📅 <b>Cuándo</b></td><td>22 de agosto de 2026</td></tr>
 <tr><td>📍 <b>Dónde</b></td><td>Oficinas de Quick · Bogotá</td></tr>
 <tr><td>🎤 <b>Formato</b></td><td>Charla · 1 h</td></tr>
-<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-imxl">Claude Community Bogotá · hackathon de analítica con Quick</a></td></tr>
+<tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-imxl">Claude Community Bogotá · hackathon de analítica con Quick</a> · Luma</td></tr>
 <tr><td>📑 <b>Deck</b></td><td><a href="Construye-tu-primer-agente-Bogota-2026.pdf">23 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-agents-bogota/Construye-tu-primer-agente-Bogota-2026.pdf">descargar</a></td></tr>
 <tr><td>🧪 <b>Demo</b></td><td><a href="demo">demo/</a> · <a href="notebooks">notebooks/</a> · <a href="hackathon">hackathon/</a></td></tr>
 </table>
