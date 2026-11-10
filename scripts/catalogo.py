@@ -16,6 +16,7 @@ import argparse
 import hashlib
 import html
 import json
+import pathlib
 import posixpath
 import re
 import sys
@@ -179,7 +180,7 @@ def leer_catalogo(problemas: Problemas) -> Catalogo:
             continue
         try:
             charlas.append(Charla(
-                kit=d["kit"], titulo=d["titulo"], gancho=d["gancho"], fecha=Fecha.leer(d["fecha"]),
+                kit=d["kit"], titulo=d["titulo"], gancho=d["gancho"], fecha=Fecha.leer(str(d["fecha"])),
                 formato=d["formato"], evento=d["evento"], evento_url=d["evento_url"],
                 lugar=d["lugar"], ciudad=d["ciudad"], deck=d["deck"], portada=d["portada"],
                 demo=tuple(Enlace.leer(e, f"{donde}, demo") for e in d["demo"]),
@@ -224,6 +225,9 @@ def revisar_datos(cat: Catalogo, problemas: Problemas) -> None:
                 problemas.append(f"{c.kit}: la ruta {e.destino} no existe.")
         for s in c.skills:
             if s.enlace.externo:
+                continue
+            if ".." in pathlib.PurePosixPath(s.enlace.destino).parts:
+                problemas.append(f"{c.kit}: la skill {s.enlace.nombre} apunta fuera del kit. Si vive en otro lado, enlázala con url.")
                 continue
             skill_md = c.carpeta / s.enlace.destino / "SKILL.md"
             nombre = re.search(r"^name:\s*(\S+)", skill_md.read_text(encoding="utf-8"), re.M) if skill_md.is_file() else None
@@ -299,6 +303,11 @@ def esc(texto: str) -> str:
     return html.escape(texto, quote=True)
 
 
+def celda(texto: str) -> str:
+    """Una barra vertical sin escapar parte la fila de una tabla Markdown, también dentro de `código`."""
+    return texto.replace("|", "\\|")
+
+
 def lista_demo(c: Charla, base: str) -> str:
     return " · ".join(f'<a href="{esc(d.desde(base))}">{esc(d.nombre)}</a>' for d in c.demo)
 
@@ -341,7 +350,7 @@ def mapa(cat: Catalogo) -> str:
             "properties": {
                 "ciudad": f'{ciudad}, {dato["pais"]}',
                 "charlas": len(aqui),
-                **{c.fecha.corta: c.titulo for c in aqui},
+                **{f"{n}. {c.fecha.corta}": c.titulo for n, c in enumerate(aqui, 1)},
             },
         })
     return json.dumps({"type": "FeatureCollection", "features": puntos}, ensure_ascii=False, indent=1)
@@ -353,14 +362,14 @@ def indice(cat: Catalogo, paginas: dict[str, int]) -> str:
     bitacora = ["| # | Cuándo | Charla | Evento | Dónde | Formato |", "|--:|---|---|---|---|---|"]
     for n, c in enumerate(cat.charlas, 1):
         bitacora.append(
-            f"| {n} | {c.fecha.corta} | [{c.titulo}]({c.kit}/) | [{c.evento}]({c.evento_url}) | {c.donde} | {c.formato} |"
+            f"| {n} | {c.fecha.corta} | [{celda(c.titulo)}]({c.kit}/) | [{celda(c.evento)}]({c.evento_url}) | {celda(c.donde)} | {celda(c.formato)} |"
         )
 
     skills = ["| Skill | Qué hace | De la charla | Cómo se usa |", "|---|---|---|---|"]
     for c in recientes:
         for s in c.skills:
-            usar = f"`{s.usar}`" + ("" if s.enlace.externo else f" con Claude Code abierto en [`{c.kit}/`]({c.kit}/)")
-            skills.append(f"| [`{s.enlace.nombre}`]({s.enlace.desde(c.kit + '/')}) | {s.que} | [{c.fecha.corta}]({c.kit}/) | {usar} |")
+            usar = f"`{celda(s.usar)}`" + ("" if s.enlace.externo else f" con Claude Code abierto en [`{c.kit}/`]({c.kit}/)")
+            skills.append(f"| [`{s.enlace.nombre}`]({s.enlace.desde(c.kit + '/')}) | {celda(s.que)} | [{c.fecha.corta}]({c.kit}/) | {usar} |")
 
     n_skills = sum(len(c.skills) for c in cat.charlas)
     resumen = (
@@ -459,12 +468,12 @@ def enlaces_rotos(archivo: Path, problemas: Problemas) -> None:
     """Los enlaces relativos de un README tienen que apuntar a algo que exista."""
     if not archivo.is_file():
         return
-    texto = re.sub(r"```.*?```", "", archivo.read_text(encoding="utf-8"), flags=re.S)
-    destinos = re.findall(r"\]\(([^)\s]+)\)", texto) + re.findall(r'(?:href|src)="([^"]+)"', texto)
+    texto = re.sub(r"```.*?```|`[^`\n]*`", "", archivo.read_text(encoding="utf-8"), flags=re.S)
+    destinos = re.findall(r'\]\(<?([^)\s>]+)>?(?:\s+"[^"]*")?\)', texto) + re.findall(r'(?:href|src)="([^"]+)"', texto)
     for destino in sorted(set(destinos)):
         if re.match(r"[a-z][a-z0-9+.-]*:|#", destino):
             continue
-        ruta = urllib.parse.unquote(destino.split("#")[0])
+        ruta = urllib.parse.unquote(re.split(r"[#?]", destino)[0])
         if not (archivo.parent / ruta).exists():
             problemas.append(f"{archivo.relative_to(RAIZ)}: el enlace {destino} no lleva a ningún lado.")
 
@@ -537,7 +546,11 @@ def main() -> None:
         readme = c.carpeta / "README.md"
         contenido = ficha(cat, c, paginas[c.kit])
         actual = readme.read_text(encoding="utf-8") if readme.is_file() else ""
-        poner(readme, con_bloque(actual, "ficha", contenido) or bloque_nuevo("ficha", contenido) + ("\n" + actual if actual else ""), escribir, problemas)
+        con_ficha = con_bloque(actual, "ficha", contenido)
+        if con_ficha is None and "<!-- ficha:" in actual:
+            problemas.append(f"{c.kit}/README.md tiene el bloque ficha a medias: le falta el comentario de inicio o el de fin.")
+            continue
+        poner(readme, con_ficha or bloque_nuevo("ficha", contenido) + ("\n" + actual if actual else ""), escribir, problemas)
 
     for archivo in (INDICE, *(c.carpeta / "README.md" for c in cat.charlas)):
         enlaces_rotos(archivo, problemas)

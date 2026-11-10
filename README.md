@@ -128,11 +128,11 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Bogotá, Colombia",
     "charlas": 5,
-    "22 ago 2026": "Construye tu primer agente de AI con Claude",
-    "29 ago 2026": "Crea tu primer agente con Claude Agent SDK",
-    "19 sep 2026": "Crea tu primer agente con la Claude Agent SDK",
-    "24 oct 2026": "Agentes en la nube con Claude Managed Agents",
-    "7 nov 2026": "Crea tu primer agente con la Claude Agent SDK"
+    "1. 22 ago 2026": "Construye tu primer agente de AI con Claude",
+    "2. 29 ago 2026": "Crea tu primer agente con Claude Agent SDK",
+    "3. 19 sep 2026": "Crea tu primer agente con la Claude Agent SDK",
+    "4. 24 oct 2026": "Agentes en la nube con Claude Managed Agents",
+    "5. 7 nov 2026": "Crea tu primer agente con la Claude Agent SDK"
    }
   },
   {
@@ -147,7 +147,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Yopal, Colombia",
     "charlas": 1,
-    "27 ago 2026": "Mi agente personal: la IA que crece contigo"
+    "1. 27 ago 2026": "Mi agente personal: la IA que crece contigo"
    }
   },
   {
@@ -162,7 +162,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Santa Marta, Colombia",
     "charlas": 1,
-    "may 2026": "¿Ya usas ChatGPT? ¿Y si tuvieras un agente?"
+    "1. may 2026": "¿Ya usas ChatGPT? ¿Y si tuvieras un agente?"
    }
   },
   {
@@ -177,7 +177,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    "properties": {
     "ciudad": "Montrose, Colorado, Estados Unidos",
     "charlas": 1,
-    "6 ago 2026": "Crea tu Web con IA"
+    "1. 6 ago 2026": "Crea tu Web con IA"
    }
   }
  ]
