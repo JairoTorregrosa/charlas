@@ -1,26 +1,11 @@
-<p align="center">
-  <img src=".github/banner.png" alt="Cetus, la ballena celeste, trazada como constelación en una carta estelar renacentista" width="880">
-</p>
+# Charlas — Jairo Torregrosa
 
-<h1 align="center">Charlas — Jairo Torregrosa</h1>
-
-<p align="center">
-  <em>Ex profundis ad astra</em> — desde las profundidades, a las estrellas.
-</p>
-
-<p align="center">
-  Esta es mi carta celeste. Cada charla es una constelación: el deck tal como se proyectó,<br>
-  la demo para correrla y la skill para repetirla con tu propio agente.
-</p>
-
-<p align="center">
-  <b>¿Vienes de un workshop?</b> Tu kit es una de estas tarjetas; la más reciente va primero.
-</p>
+Cada charla trae el deck tal como se proyectó y, cuando aplica, la demo y la skill. La más reciente va primero.
 
 <!-- indice:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
 <p align="center"><b>9</b> charlas · <b>280</b> slides · <b>4</b> ciudades · <b>6</b> skills</p>
 
-## Constelaciones
+## Charlas
 
 <table>
 <tr>
@@ -226,10 +211,6 @@ Cada PR corre `uv run scripts/catalogo.py --check`, que falla si falta alguno de
 Las carpetas y los PDF no se renombran: los decks ya impresos y sus QR apuntan a esas rutas.
 
 </details>
-
-<p align="center">
-  <img src=".github/sello.png" alt="Sello de impresor: Cetus enroscada en un astrolabio-ancla" width="120">
-</p>
 
 ## Licencia
 
