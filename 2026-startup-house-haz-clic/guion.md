@@ -4,7 +4,7 @@ Notas de orador de cada slide, en orden. La hora al inicio es la marca para ir a
 
 ## 1 · cover
 
-5:15. Me presento en 30 segundos. Soy Jairo, Claude Ambassador en Colombia y Sr AI Research Engineer en Mercado Libre, donde hago agentes personales para la gente de la empresa. Desde mayo he dado 14 charlas y talleres (Colombia 5.0 Magdalena y Casanare, Platzi Conf, La Salle, la Javeriana, Build Days, Claude for Gamers, meetups). Hace meses no escribo una línea de código a mano: le hablo a Claude. Todo lo de hoy sale de probar todo, todo el tiempo, para encontrar los límites.
+5:15. Me presento en 30 segundos. Soy Jairo, Claude Ambassador en Colombia y Sr AI Research Engineer en Mercado Libre. Desde mayo he dado 14 charlas y talleres (Colombia 5.0 Magdalena y Casanare, Platzi Conf, La Salle, la Javeriana, Build Days, Claude for Gamers, meetups). Hace meses no escribo una línea de código a mano: le hablo a Claude. Todo lo de hoy sale de probar todo, todo el tiempo, para encontrar los límites.
 
 ## 2 · manos
 
@@ -20,7 +20,7 @@ Notas de orador de cada slide, en orden. La hora al inicio es la marca para ir a
 
 ## 5 · mama-antes
 
-5:20. Contarla sin apuro. Leer la frase y dejar un silencio. Confirmar antes con ella que puedo contar su historia y usar su foto.
+5:20. Contarla sin apuro. Leer la frase y dejar un silencio.
 
 ## 6 · mama-camino
 
@@ -40,7 +40,7 @@ Notas de orador de cada slide, en orden. La hora al inicio es la marca para ir a
 
 ## 10 · cartelitos
 
-5:26. El show de los cartelitos. [Cómo va: quién sostiene cada cartelito y qué dice cada uno.] Después de esto, puro tip: micrófono, Opus arriba, ambición, un solo hilo.
+5:26. El show de los cartelitos. Después de esto, puro tip: micrófono, Opus arriba, ambición, un solo hilo.
 
 ## 11 · tip-voz
 
