@@ -34,7 +34,7 @@ Con la Messages API, el loop lo escribes tú. Con la Agent SDK, el loop corre en
    uv run pasos/0_preparacion.py
    ```
 
-5. En GitHub, crea tu copia del repo de práctica: abre [taller-cafe-origen-api](https://github.com/JairoTorregrosa/taller-cafe-origen-api) y usa **Use this template → Create a new repository** (público, en tu cuenta). Tiene vulnerabilidades puestas a propósito y un CI que corre los tests.
+5. En GitHub, crea un repo público `taller-cafe-origen-api` en tu cuenta y sube ahí el contenido de [`repo-practica/`](repo-practica/): `cp -R repo-practica ../taller-cafe-origen-api && cd ../taller-cafe-origen-api && git init && git add -A && git commit -m "repo de práctica" && gh repo create taller-cafe-origen-api --public --source . --push`. Tiene vulnerabilidades puestas a propósito y un CI que corre los tests.
 
 Si el paso 0 sale en verde, estás listo. No gasta créditos.
 

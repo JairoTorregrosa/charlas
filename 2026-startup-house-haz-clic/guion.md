@@ -16,7 +16,7 @@ Notas de orador de cada slide, en orden. La hora al inicio es la marca para ir a
 
 ## 4 · yo
 
-5:19. Transparencia total: esto es lo que consumí en los últimos 30 días. casi 10.000 millones de tokens (9.390 M) en 1.087 sesiones; a precios de API serían unos US$5.480 (Claude Code solo, US$5.356). El 96 % de mis tokens se fue por Claude Code; el resto por Codex, Grok Build, Antigravity, OpenCode y Pi. Días pico: más de 1.000 millones de tokens en un día (10 y 11 de noviembre). El caché me ahorró otros US$42.404. Remate: "Yo no pago esto. Pago el plan. La diferencia es el subsidio de la slide anterior."
+5:19. Transparencia total: esto es lo que consumí en los últimos 30 días. Casi 10.000 millones de tokens (9.390 M) en 1.087 sesiones; a precios de API serían unos US$5.480 (Claude Code solo, US$5.356). El 96 % de mis tokens se fue por Claude Code; el resto por Codex, Grok Build, Antigravity, OpenCode y Pi. Días pico: más de 1.000 millones de tokens en un día (10 y 11 de noviembre). El caché me ahorró otros US$42.404. Remate: "Yo no pago esto. Pago el plan. La diferencia es el subsidio de la slide anterior."
 
 ## 5 · mama-antes
 

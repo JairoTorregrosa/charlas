@@ -98,14 +98,14 @@ config:
 name: daily-dev-brief weekdays
 agent: ./agent.md
 environment_id: ./environment.yaml
-vault_ids: [vlt_011CgLSqCMnsnkiyk9hBbJYP]   # GitHub MCP credential (fine-grained PAT, 3 repos)
+vault_ids: [vlt_TU_VAULT_ID]   # GitHub MCP credential (fine-grained PAT, 3 repos)
 schedule: {type: cron, expression: "30 7 * * 1-5", timezone: America/Bogota}
 budget: {type: limit, max_list_cost: {amount: "2000", currency: USD}}
 initial_events:
   - type: user.define_outcome
     description: |
       Write today's brief.
-      Repositories: JairoTorregrosa/personal-site, JairoTorregrosa/askcodex, JairoTorregrosa/charlas.
+      Repositories: TU-USUARIO/repo-1, TU-USUARIO/repo-2, TU-USUARIO/repo-3.
       Language: Spanish.
     max_iterations: 2
     rubric:
