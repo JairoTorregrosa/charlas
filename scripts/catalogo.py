@@ -408,7 +408,7 @@ def indice(cat: Catalogo, paginas: dict[str, int]) -> str:
     return "\n".join([
         f'<p align="center">{resumen}</p>',
         "",
-        "## Constelaciones",
+        "## Charlas",
         "",
         "<table>",
         *(tarjeta(c) for c in recientes),
