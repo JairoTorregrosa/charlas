@@ -179,3 +179,18 @@ nombre = "agent-sdk-wizard"
 ruta = ".claude/skills/agent-sdk-wizard"
 que = "Wizard: revisa tu máquina, pregunta paso a paso y construye tu agente con la Agent SDK."
 usar = "/agent-sdk-wizard"
+
+[[charla]]
+kit = "2026-startup-house-haz-clic"
+titulo = "Haz clic con IA"
+gancho = "El subsidio de los planes de US$100 y US$200, la historia de mi mamá y cuatro prompts para copiar."
+fecha = "2026-11-26"
+formato = "Workshop · 30 min"
+evento = "Startup House Bogotá · Starter, 2600 e Innovalab CCB"
+evento_url = "https://www.ccb.org.co/servicios/haz-crecer-tu-empresa/innovacion-empresarial/aceleradora-innovalab"
+lugar = "Innovalab CCB"
+ciudad = "Bogotá"
+deck = "Haz-clic-con-IA-Startup-House-Bogota-2026.pdf"
+portada = 1
+demo = [{ nombre = "Los 4 prompts", ruta = "prompts.md" }]
+skills = []

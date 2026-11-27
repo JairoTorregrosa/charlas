@@ -18,11 +18,20 @@
 </p>
 
 <!-- indice:inicio · lo escribe scripts/catalogo.py desde charlas.toml · no lo edites a mano -->
-<p align="center"><b>8</b> charlas · <b>265</b> slides · <b>4</b> ciudades · <b>6</b> skills</p>
+<p align="center"><b>9</b> charlas · <b>280</b> slides · <b>4</b> ciudades · <b>6</b> skills</p>
 
 ## Constelaciones
 
 <table>
+<tr>
+<td width="38%"><a href="2026-startup-house-haz-clic/"><img src="2026-startup-house-haz-clic/portada.jpg" alt="Portada de «Haz clic con IA»" width="100%"></a></td>
+<td valign="top">
+<b><a href="2026-startup-house-haz-clic/">Haz clic con IA</a></b><br>
+<sub>26 nov 2026 · Innovalab CCB · Bogotá · Workshop · 30 min</sub><br>
+El subsidio de los planes de US$100 y US$200, la historia de mi mamá y cuatro prompts para copiar.<br>
+<a href="2026-startup-house-haz-clic/Haz-clic-con-IA-Startup-House-Bogota-2026.pdf">📑 Deck</a> · <a href="2026-startup-house-haz-clic/prompts.md">🧪 Demo</a> · <a href="https://www.ccb.org.co/servicios/haz-crecer-tu-empresa/innovacion-empresarial/aceleradora-innovalab">🎟️ Evento</a>
+</td>
+</tr>
 <tr>
 <td width="38%"><a href="2026-javeriana-agent-sdk/"><img src="2026-javeriana-agent-sdk/portada.jpg" alt="Portada de «Crea tu primer agente con la Claude Agent SDK»" width="100%"></a></td>
 <td valign="top">
@@ -109,6 +118,7 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
 | 6 | 19 sep 2026 | [Crea tu primer agente con la Claude Agent SDK](2026-bogota-agent-sdk/) | [Claude Community Bogotá · Claude Fest Colombia](https://luma.com/claude-be23) | Universidad Santo Tomás · Bogotá | Workshop · 3,5 h |
 | 7 | 24 oct 2026 | [Agentes en la nube con Claude Managed Agents](2026-lasalle-managed-agents/) | [Claude Community Bogotá](https://luma.com/claude-wbvh) | Universidad de La Salle · Bogotá | Workshop · 3 h |
 | 8 | 7 nov 2026 | [Crea tu primer agente con la Claude Agent SDK](2026-javeriana-agent-sdk/) | [Claude Community Bogotá](https://luma.com/claude-x1bt) | Pontificia Universidad Javeriana · Bogotá | Workshop · 3,5 h |
+| 9 | 26 nov 2026 | [Haz clic con IA](2026-startup-house-haz-clic/) | [Startup House Bogotá · Starter, 2600 e Innovalab CCB](https://www.ccb.org.co/servicios/haz-crecer-tu-empresa/innovacion-empresarial/aceleradora-innovalab) | Innovalab CCB · Bogotá | Workshop · 30 min |
 
 ## Mapa
 
@@ -127,12 +137,13 @@ La diferencia entre un chat y un agente, en cinco piezas: cerebro, manos, hábit
    },
    "properties": {
     "ciudad": "Bogotá, Colombia",
-    "charlas": 5,
+    "charlas": 6,
     "1. 22 ago 2026": "Construye tu primer agente de AI con Claude",
     "2. 29 ago 2026": "Crea tu primer agente con Claude Agent SDK",
     "3. 19 sep 2026": "Crea tu primer agente con la Claude Agent SDK",
     "4. 24 oct 2026": "Agentes en la nube con Claude Managed Agents",
-    "5. 7 nov 2026": "Crea tu primer agente con la Claude Agent SDK"
+    "5. 7 nov 2026": "Crea tu primer agente con la Claude Agent SDK",
+    "6. 26 nov 2026": "Haz clic con IA"
    }
   },
   {

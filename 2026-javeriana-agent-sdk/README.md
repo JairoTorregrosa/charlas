@@ -20,7 +20,7 @@
 
 </details>
 
-<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-lasalle-managed-agents/">Agentes en la nube con Claude Managed Agents</a></sub>
+<sub><a href="../README.md">← Todas las charlas</a> · anterior: <a href="../2026-lasalle-managed-agents/">Agentes en la nube con Claude Managed Agents</a> · siguiente: <a href="../2026-startup-house-haz-clic/">Haz clic con IA</a></sub>
 <!-- ficha:fin -->
 
 Segunda edición del [workshop de septiembre](../2026-bogota-agent-sdk/). Un solo hilo, **un asistente de viaje**, y siempre la misma pregunta:
