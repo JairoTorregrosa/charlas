@@ -9,7 +9,7 @@
 <tr><td>🎤 <b>Formato</b></td><td>Workshop · 3 h</td></tr>
 <tr><td>🎟️ <b>Evento</b></td><td><a href="https://luma.com/claude-wbvh">Claude Community Bogotá</a> · Luma</td></tr>
 <tr><td>📑 <b>Deck</b></td><td><a href="Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">30 slides en PDF</a> · <a href="https://github.com/JairoTorregrosa/charlas/raw/main/2026-lasalle-managed-agents/Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">descargar</a></td></tr>
-<tr><td>🧪 <b>Demo</b></td><td><a href="../2026-bogota-agent-sdk/managed-agents">el mismo agente en código (kit de septiembre)</a></td></tr>
+<tr><td>🧪 <b>Demo</b></td><td><a href="taller">taller/</a></td></tr>
 <tr><td>🛠️ <b>Skill</b></td><td><a href="https://github.com/JairoTorregrosa/jaiskills/tree/main/skills/models/managed-agents-wizard"><code>managed-agents-wizard</code></a></td></tr>
 </table>
 
@@ -64,7 +64,7 @@ claude
 | 3 · Itera | Lees las trazas y ajustas | [platform.claude.com](https://platform.claude.com) › Sessions |
 | 4 · Programa | El agente corre con horario | Deployment |
 
-¿Prefieres leerlo en código? El asistente de viaje del workshop de septiembre tiene su versión en Managed Agents: [`managed-agents/`](../2026-bogota-agent-sdk/managed-agents/).
+El taller completo, con sus pasos, datos y el repo de práctica, está en [`taller/`](taller/). El asistente de viaje del workshop de septiembre tiene su versión en Managed Agents: [`managed-agents/`](../2026-bogota-agent-sdk/managed-agents/).
 
 ## Comunidad
 
