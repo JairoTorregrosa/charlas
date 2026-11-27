@@ -32,7 +32,7 @@ Segunda edición: el asistente de viaje en diez piezas, hasta la salida estructu
 <b><a href="2026-lasalle-managed-agents/">Agentes en la nube con Claude Managed Agents</a></b><br>
 <sub>24 oct 2026 · Universidad de La Salle · Bogotá · Workshop · 3 h</sub><br>
 De Claude Code en el portátil a un agente remoto: Agent, Environment, Session, eventos y Deployment.<br>
-<a href="2026-lasalle-managed-agents/Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">📑 Deck</a> · <a href="2026-bogota-agent-sdk/managed-agents">🧪 Demo</a> · <a href="https://github.com/JairoTorregrosa/jaiskills/tree/main/skills/models/managed-agents-wizard">🛠️ Skill</a> · <a href="https://luma.com/claude-wbvh">🎟️ Luma</a>
+<a href="2026-lasalle-managed-agents/Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf">📑 Deck</a> · <a href="2026-lasalle-managed-agents/taller">🧪 Demo</a> · <a href="https://github.com/JairoTorregrosa/jaiskills/tree/main/skills/models/managed-agents-wizard">🛠️ Skill</a> · <a href="https://luma.com/claude-wbvh">🎟️ Luma</a>
 </td>
 </tr>
 <tr>

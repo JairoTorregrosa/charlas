@@ -149,7 +149,7 @@ lugar = "Universidad de La Salle"
 ciudad = "Bogotá"
 deck = "Agentes-en-la-nube-Claude-Managed-Agents-LaSalle-2026.pdf"
 portada = 1
-demo = [{ nombre = "el mismo agente en código (kit de septiembre)", ruta = "../2026-bogota-agent-sdk/managed-agents" }]
+demo = [{ nombre = "taller/", ruta = "taller" }]
 
 [[charla.skills]]
 nombre = "managed-agents-wizard"

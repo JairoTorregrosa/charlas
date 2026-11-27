@@ -61,6 +61,6 @@ export MANAGED_ENV_ID=env_...      # solo para Managed Agents; se crea en la Con
 cd notebooks && uv sync && uv run jupyter lab
 ```
 
-> El leaderboard del hackathon (`quick-golden-bench.vercel.app`) ya no está en línea. Las instrucciones de entrega quedan como registro.
+> El leaderboard del hackathon (`quick-golden-bench.vercel.app`) está fuera de línea. Las instrucciones de entrega quedan como registro.
 
 Comunidad: grupo de WhatsApp *Claude Code Colombia* (QR en la última slide).

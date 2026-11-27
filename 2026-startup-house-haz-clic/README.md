@@ -26,7 +26,8 @@ La IA buena cuesta US$100 o US$200 al mes y regala mucho más. Mi mamá, profe d
 
 | Parte | Slides | Qué pasa |
 |---|---|---|
-| 💸 El subsidio | 1–4 | ✋ ¿Quién paga por IA? · cuánto regala cada plan · mi consumo en 30 días |
+| 👋 Quién soy | 1 | Claude Ambassador · Sr AI Research Engineer |
+| 💸 El subsidio | 2–4 | ✋ ¿Quién paga por IA? · cuánto regala cada plan · mi consumo en 30 días |
 | 👩‍🏫 Mi mamá | 5–9 | De «¿y ahora qué hago?» a programar, publicar y dar charlas |
 | 🪧 Cartelitos | 10 | El show con el público |
 | 🛠️ 4 tips | 11–14 | [Prompts para copiar](prompts.md) |

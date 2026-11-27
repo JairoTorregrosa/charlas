@@ -1,0 +1,3 @@
+# Solo el contenedor. El token se agrega con `ant beta:vaults:credentials create` y nunca se escribe aquí.
+type: vault
+display_name: taller-vuln-patcher
